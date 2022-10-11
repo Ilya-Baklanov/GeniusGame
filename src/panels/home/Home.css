@@ -1,0 +1,161 @@
+.home-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(#8700FF 5%, #F6EBFF);
+}
+
+.home {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 349px;
+    height: 684px;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 0% 0%,
+            rgb(135, 0, 255, .25),
+            rgb(135, 0, 255, 0) 30%),
+        radial-gradient(circle at 0% 70%,
+            rgb(135, 0, 255, .25),
+            rgb(135, 0, 255, 0) 30%),
+        radial-gradient(circle at 100% 0%,
+            rgb(135, 0, 255, .25),
+            rgb(135, 0, 255, 0) 30%),
+        radial-gradient(circle at 100% 70%,
+            rgb(255, 178, 34, .25),
+            rgb(255, 178, 34, 0) 30%),
+        #F6EBFF;
+}
+
+@media (max-device-width: 480px) {
+    .home {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        width: 100vw;
+        height: 92vh;
+        overflow: hidden;
+
+        background:
+            radial-gradient(circle at 0% 0%,
+                rgb(135, 0, 255, .25),
+                rgb(135, 0, 255, 0) 30%),
+            radial-gradient(circle at 0% 70%,
+                rgb(135, 0, 255, .25),
+                rgb(135, 0, 255, 0) 30%),
+            radial-gradient(circle at 100% 0%,
+                rgb(135, 0, 255, .25),
+                rgb(135, 0, 255, 0) 30%),
+            radial-gradient(circle at 100% 70%,
+                rgb(255, 178, 34, .25),
+                rgb(255, 178, 34, 0) 30%),
+            #F6EBFF;
+    }
+}
+
+.home-earned {
+    position: absolute;
+    top: 4%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.home-earned-count {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+
+    margin-right: 5px;
+}
+
+.home-earned>svg>path {
+    fill: #9B37E5;
+}
+
+.greetings-wrapper {
+    position: absolute;
+    top: 9%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 115px;
+}
+
+.avatar {
+    border: 2px solid #9B37E5;
+    border-radius: 40px;
+    margin-bottom: 10px;
+}
+
+.greetings {
+    max-width: 250px;
+    height: 25px;
+
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+
+    text-align: center;
+
+    color: #000000;
+}
+
+.description {
+    position: absolute;
+    width: 243px;
+    height: 36px;
+    top: 27%;
+
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+
+    color: #5E5E5E;
+}
+
+.motivator-wrapper {
+    position: absolute;
+    top: 32%;
+    width: 100%;
+    height: 250px;
+}
+
+.start-game-button-wrapper {
+    position: absolute;
+    top: 74%;
+    width: 100%;
+    padding: 0 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Navbar */
+
+.navbar-container {
+    position: absolute;
+    bottom: 22px;
+    width: 100%;
+    padding: 0 17px;
+}

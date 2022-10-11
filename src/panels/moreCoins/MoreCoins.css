@@ -1,0 +1,22 @@
+.more-coins-push-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 17px;
+}
+
+.more-coins-push-description-wrapper {
+    width: 200px;
+    height: 30px;
+}
+
+.more-coins-push-description {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    white-space: break-spaces;
+    color: #5E5E5E;
+}

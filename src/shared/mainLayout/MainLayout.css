@@ -1,0 +1,39 @@
+.layout-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(#8700FF 5%, #F6EBFF);
+}
+
+.layout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 349px;
+  height: 684px;
+  padding: 31px 17px 39px 17px;
+  overflow: hidden;
+
+  background: #F6EBFF;
+}
+
+@media (max-device-width: 480px) {
+  .layout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  
+    width: 100vw;
+    height: 92vh;
+    padding: 31px 17px 39px 17px;
+    overflow: hidden;
+  
+    background: #F6EBFF;
+  }
+}

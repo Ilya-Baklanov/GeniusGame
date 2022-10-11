@@ -1,0 +1,78 @@
+.common-panel-earned {
+  position: absolute;
+  top: 4%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.common-panel-earned-count {
+  font-family: 'SB Sans Display';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 25px;
+  color: #000000;
+
+  margin-right: 5px;
+}
+
+.common-panel-earned>svg>path {
+  fill: #9B37E5;
+}
+
+.common-title-wrapper {
+  position: absolute;
+  top: 10%;
+  max-width: 250px;
+  height: 25px;
+}
+
+.common-title {
+  font-family: 'SB Sans Display';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 25px;
+  text-align: center;
+  color: #000000;
+}
+
+.common-description-wrapper {
+  position: absolute;
+  width: 243px;
+  height: 36px;
+  top: 16%;
+}
+
+.common-description {
+  font-family: 'SB Sans Display';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: #5E5E5E;
+}
+
+.common-additional-block {
+  position: absolute;
+  width: 243px;
+  height: 36px;
+  top: 16%;
+}
+
+.common-children {
+  position: absolute;
+  top: 25%;
+  
+  width: 100%;
+}
+
+.navbar-container {
+  position: absolute;
+  bottom: 22px;
+  width: 100%;
+  padding: 0 17px;
+}

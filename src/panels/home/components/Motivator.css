@@ -1,0 +1,84 @@
+.motivator {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.motivator-text {
+    width: 200px;
+    height: 66px;
+
+    font-family: 'test family';
+    font-style: normal;
+    font-weight: 750;
+    font-size: 36px;
+    line-height: 33px;
+    text-align: center;
+
+    white-space: break-spaces;
+
+    color: #7E04B1;
+}
+
+/* Pictures */
+
+.lamp {
+    position: absolute;
+    left: 0%;
+    top: 0%;
+}
+
+.headphones {
+    position: absolute;
+    left: 48%;
+    top: 15%;
+}
+
+.headset {
+    position: absolute;
+    left: 73%;
+    top: 10%;
+}
+
+.waffleIron-wrapper {
+    position: absolute;
+    right: 0%;
+    top: 33%;
+    width: 91px;
+    height: 158px;
+}
+
+.waffleIron {
+    position: absolute;
+    right: 0%;
+    top: 0%;
+}
+
+.wafer {
+    position: absolute;
+    left: 21%;
+    top: 29%;
+
+    z-index: 10;
+}
+
+.watch {
+    position: absolute;
+    left: 61%;
+    top: 70%;
+}
+
+.tablet {
+    position: absolute;
+    left: 35%;
+    top: 70%;
+}
+
+.laptop {
+    position: absolute;
+    left: 0%;
+    top: 47%;
+}

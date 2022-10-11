@@ -1,0 +1,116 @@
+.promocode-cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 435px;
+    padding: 0 12px 0 17px;
+
+    overflow: auto;
+}
+
+.promocode-cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr) 95px;
+    gap: 12px;
+
+    width: 315px;
+    margin-bottom: 30px;
+}
+
+.promocode-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 95px;
+    height: 126.67px;
+    padding: 29px 0 11px 0;
+    cursor: pointer;
+
+    background: #F6EAFF;
+    border: 1px solid #7E03B1;
+    backdrop-filter: blur(1.79884px);
+
+    border-radius: 10px;
+}
+
+.promocode-card.active {
+    background: linear-gradient(45deg, #24B571, 15%, #7E03B1, 90%, #FFB222);
+    border: none;
+}
+
+.promocode-card:last-child {
+    grid-column-start: 1;
+    grid-column-end: 4;
+
+    width: 315px;
+    height: 95px;
+    padding: 28px 0 18px 0;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    width: 5px;
+    background: #F6EBFF;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 5px;
+    height: 133px;
+    background: #7E03B1;
+    border-radius: 2.5px;
+}
+
+.promocode-card-denomination {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    text-align: center;
+    white-space: break-spaces;
+
+    color: #7E03B1;
+}
+
+.promocode-card-description {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 13px;
+    text-align: center;
+    white-space: break-spaces;
+
+    color: #7E03B1;
+}
+
+.promocode-card-description.active,
+.promocode-card-denomination.active {
+    color: #FFFFFF;
+}
+
+.promocode-rules {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    width: 100%;
+    padding: 0 0 9px 0;
+}
+
+.promocode-rules-link {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+
+    color: #7E03B1;
+}

@@ -1,0 +1,125 @@
+.gamers-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 17px;
+}
+
+.position-on-rating-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.position-on-rating-your {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    margin-right: 5px;
+}
+
+.position-on-rating-all {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #B167CF;
+}
+
+.gamers-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.gamers-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 53px;
+    padding-right: 15px;
+    margin-bottom: 9px;
+}
+
+.gamers-list-item:first-child {
+    background: #7E03B1;
+    border: 1px solid #EFEFEF;
+    border-radius: 30px;
+}
+
+.gamers-list-item-user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.gamers-list-item-avatar {
+    margin-right: 10px;
+    border: 1px solid #EFEFEF;
+    border-radius: 30px;
+    left: -1px;
+}
+
+.gamers-list-item-name-wrapper {}
+
+.gamers-list-item-name {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #3D3D3D;
+}
+
+.gamers-list-item:first-child .gamers-list-item-name {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+}
+
+.gamers-list-item-score-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.gamers-list-item-score {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #7E03B1;
+    text-align: right;
+    letter-spacing: -0.216563px;
+    margin-right: 5px;
+}
+
+.gamers-list-item:first-child .gamers-list-item-score {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #FFFFFF;
+    text-align: right;
+    letter-spacing: -0.216563px;
+    margin-right: 5px;
+}
+
+.gamers-list-item:first-child .gamers-list-item-score-wrapper>svg>path {
+    fill: #FFFFFF;
+}

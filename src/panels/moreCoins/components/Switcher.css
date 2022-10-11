@@ -1,0 +1,52 @@
+/* The push-switcher - the box around the push-slider */
+.push-switcher {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.push-switcher input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The push-slider */
+.push-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-transition: .4s;
+    transition: .4s;
+    background: #EDC8FF;
+    border-radius: 10px;
+}
+
+.push-slider::before {
+    position: absolute;
+    content: "";
+    width: 18px;
+    height: 18px;
+    left: 1px;
+    bottom: 1px;
+    -webkit-transition: .4s;
+    transition: .4s;
+    background: #BE8BD7;
+    border-radius: 10px;
+}
+
+input:checked+.push-slider::before {
+    background: #8C15A2;
+}
+
+input:checked+.push-slider::before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+}

@@ -1,0 +1,53 @@
+.card {
+    background-image: url('../../../assets/image/bag.svg'), linear-gradient(315deg, #24B571, 25%, #7E03B1, 85%, #FFB222);
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    transform: rotateY(180deg);
+    animation: 3.5s hideCard linear;
+    transition: transform 0.5s;
+  }
+
+  .card.preview {
+    background: #E6C5FF;
+    transform: rotateY(0);
+    filter: blur(3px);
+  }
+
+  .disable {
+    cursor: not-allowed;
+  }
+  
+  @keyframes hideCard {
+  
+    0%,
+    70% {
+      transform: rotateY(0);
+    }
+  
+    100% {
+      transform: rotateY(180deg);
+    }
+  }
+  
+  .card img {
+    max-width: 80%;
+    max-height: 80%;
+  }
+  
+  .card.checked {
+    background: #E6C5FF;
+    transform: rotateY(0);
+  }
+  
+  .card.correct {
+    background: linear-gradient(45deg, #24B571, 57%, #E6C5FF);
+  }
+  
+  .card.wrong {
+    background: linear-gradient(45deg, #E6C5FF, 57%, #fd7c9d);
+  }
+  

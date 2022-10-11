@@ -1,0 +1,54 @@
+.more-coins-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    width: 100%;
+    height: 66px;
+    border-radius: 15px;
+    padding: 15px;
+    background: linear-gradient(45deg, #24B571, 15%, #7E03B1, 90%, #FFB222);
+}
+
+.more-coins-card-content-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    width: 100%;
+}
+
+.more-coins-card-text {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    white-space: break-spaces;
+
+    color: #FDFDFD;
+}
+
+.more-coins-card-additional-coins-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.more-coins-card-additional-coins-text {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: right;
+    letter-spacing: -0.216563px;
+    color: #FFFFFF;
+
+    margin-right: 3px;
+}
+
+.more-coins-card-additional-coins-wrapper>svg>path {
+    fill: #FFFFFF;
+}

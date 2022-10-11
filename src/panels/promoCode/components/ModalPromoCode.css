@@ -1,0 +1,92 @@
+.promocode-modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.promocode-modal-promocode-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 315px;
+    height: 159px;
+    border: 1px solid #7E03B1;
+    backdrop-filter: blur(2.84028px);
+    border-radius: 15px;
+    padding: 54px 10px 30px 10px;
+    margin-bottom: 21px;
+}
+
+.promocode-modal-promocode-card-text {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+
+    color: #7E03B1;
+}
+
+.promocode-modal-promocode-card-description {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+
+    color: #7E03B1;
+}
+
+.promocode-modal-description-wrapper {
+    width: 315px;
+    margin-bottom: 25px;
+}
+
+.promocode-modal-description-text {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    color: #5E5E5E;
+}
+
+.promocode-modal-rules {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    width: 100%;
+    padding: 0 0 9px 0;
+    margin-bottom: 24px;
+}
+
+.promocode-modal-rules-link {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+
+    color: #7E03B1;
+}
+
+.promocode-modal-button-wrapper {
+    width: 315px;
+    margin-bottom: 36px;
+}
+
+.vkuiModalPage__in {
+    max-width: 349px;
+}
+
+@media (max-device-width: 480px) {
+    .vkuiModalPage__in {
+        max-width: 100%;
+    }
+}

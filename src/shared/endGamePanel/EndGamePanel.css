@@ -1,0 +1,130 @@
+/* HEADER */
+
+.end-game-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+  height: 47px;
+
+  margin-bottom: 29px;
+}
+
+.end-game-close-button-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  height: 100%;
+}
+
+.end-game-close-button {
+  width: 15px;
+  height: 15px;
+}
+
+/* MAIN */
+
+.end-game-main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 185px;
+}
+
+.end-game-earned-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  width: 205px;
+  height: 66px;
+
+  background: #F6EAFF;
+  border: 1px solid #7E03B1;
+  border-radius: 10px;
+}
+
+.end-game-earned-title {
+  font-family: 'SB Sans Display';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  
+  color: #7E04B1;
+}
+
+.end-game-earned {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.end-game-earned-count {
+  font-family: 'SB Sans Display';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 25px;
+
+  color: #000000;
+
+  margin-right: 5px;
+}
+
+.end-game-earned>svg>path {
+  fill: #9B37E5;
+}
+
+.end-game-title-wrapper {
+  width: 100%;
+  height: 30px;
+}
+
+.end-game-title {
+  font-family: 'SB Sans Display';
+  font-style: normal;
+  font-weight: 750;
+  font-size: 32px;
+  line-height: 92.9%;
+  text-align: center;
+  white-space: break-spaces;
+  color: #7E04B1;
+}
+
+.end-game-description-wrapper {
+  width: 190px;
+  height: 40px;
+}
+
+.end-game-description {
+  font-family: 'SB Sans Display';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  white-space: break-spaces;
+  color: #000000;
+}
+
+.end-game-button-wrapper {
+  width: 100%;
+  padding: 0 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.end-game-loader {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
