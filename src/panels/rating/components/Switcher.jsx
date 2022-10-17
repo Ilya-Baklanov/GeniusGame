@@ -6,7 +6,7 @@ import './Switcher.css';
 
 const Switcher = ({ onToggle }) => (
   <label htmlFor="switcher" className="switcher">
-    <input id="switcher" type="checkbox" />
+    <input id="switcher" onChange={onToggle} type="checkbox" />
     <div className="slider" />
     <div className="content-wrapper">
       <div className="switcher-label-text-wrapper">

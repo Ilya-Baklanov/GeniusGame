@@ -7,7 +7,6 @@ import bridge from '@vkontakte/vk-bridge';
 // import './assets/fonts/SBSansDisplay-Regular.otf';
 // import './assets/fonts/SBSansDisplay-SemiBold.otf';
 // import './assets/fonts/SBSansDisplay-Thin.otf';
-import './assets/fonts/testFont.otf';
 import App from './App';
 
 // Init VK  Mini App

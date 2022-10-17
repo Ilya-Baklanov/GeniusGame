@@ -43,11 +43,6 @@
     font-style: normal;
 } */
 
-    @font-face {
-      font-family: "test family";
-      src: url("./assets/fonts/testFont.otf") format("otf");
-    }
-
 * {
     box-sizing: border-box;
 }

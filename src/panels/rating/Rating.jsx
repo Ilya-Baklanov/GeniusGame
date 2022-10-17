@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import './Rating.css';
@@ -16,13 +16,20 @@ const Rating = ({ id, go, amountCoins }) => {
     { name: 'Маша Никонова', score: 7771, avatarSrc: 'https://windows10free.ru/uploads/posts/2017-02/1487679899_icon-user-640x640.png' },
   ];
 
+  const ratingSwitcherHandler = useCallback((e) => {
+    const isFriendsRating = !e.target.checked;
+    const isAllRating = e.target.checked;
+  }, []);
+
   return (
     <CommonPanel
       id={id}
       go={go}
       amountCoins={amountCoins}
       title="Рейтинг"
-      additionalBlock={<Switcher />}
+      additionalBlock={(
+        <Switcher onToggle={ratingSwitcherHandler} />
+)}
     >
       <GamersList
         positionOnRating={1045}

@@ -1,11 +1,3 @@
-export { ReactComponent as Headphones } from './headphones.svg';
-export { ReactComponent as Headset } from './headset.svg';
-export { ReactComponent as Lamp } from './lamp.svg';
-export { ReactComponent as Laptop } from './laptop.svg';
-export { ReactComponent as Tablet } from './tablet.svg';
-export { ReactComponent as Wafer } from './wafer.svg';
-export { ReactComponent as WaffleIron } from './waffleIron.svg';
-export { ReactComponent as Watch } from './watch.svg';
 export { ReactComponent as UserMain } from './userMain.svg';
 export { ReactComponent as PromoCode } from './promoCode.svg';
 export { ReactComponent as Rating } from './rating.svg';
