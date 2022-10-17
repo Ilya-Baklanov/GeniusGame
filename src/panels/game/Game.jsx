@@ -24,10 +24,10 @@ const Game = ({
 
   const endingTimeHandler = useCallback(() => {
     if (guessedCards === 0) {
-      onEndGame(guessedCards, userId);
+      onEndGame(guessedCards, userId, amountCoins);
       go(null, 'lossGame');
     } else {
-      onEndGame(guessedCards, userId);
+      onEndGame(guessedCards, userId, amountCoins);
       go(null, 'winGame');
     }
   }, [guessedCards]);
@@ -37,7 +37,7 @@ const Game = ({
   }, []);
 
   const winHandler = useCallback(() => {
-    onEndGame(guessedCards, userId);
+    onEndGame(guessedCards, userId, amountCoins);
     go(null, 'winGame');
   }, [guessedCards]);
 

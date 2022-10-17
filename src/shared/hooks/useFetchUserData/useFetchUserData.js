@@ -19,6 +19,7 @@ const useFetchUserData = () => {
         async function fetchUserCoins(user) {
             const keyValue = `${user.id}_geniusGame`;
             const coins = await bridge.send('VKWebAppStorageGet', { keys: [keyValue] });
+            console.log(coins);
             setAmountCoins(coins.keys[0].value);
         }
 

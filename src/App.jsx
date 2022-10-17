@@ -57,16 +57,18 @@ const App = () => {
     setActivePanel(e ? e.currentTarget.dataset.to : goTo);
   };
 
-  const endGameHandler = useCallback((earnedCoin, userId) => {
+  const endGameHandler = useCallback((earnedCoin, userId, amountCoin) => {
     const keyValue = `${userId}_geniusGame`;
+    console.log('Before', Number(earnedCoin) + Number(amountCoin));
     const result = bridge.send(
       'VKWebAppStorageSet',
       {
         key: keyValue,
-        value: String(earnedCoin + amountCoins),
+        value: String(Number(earnedCoin) + Number(amountCoin)),
       },
     );
-    seteErnedCoinOnCurrentGame(earnedCoin);
+    console.log('After game', result);
+    seteErnedCoinOnCurrentGame(Number(earnedCoin) + Number(amountCoin));
   }, []);
 
   const closeModal = () => {
@@ -101,7 +103,7 @@ const App = () => {
                   <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} />
                   <Rating id="rating" go={go} amountCoins={amountCoins} accessToken={accessToken} />
                   <LossPanel id="lossGame" go={go} />
-                  <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} />
+                  <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} amountCoins={amountCoins} />
                 </View>
               ) : (
                 <ScreenSpinner size="large" />

@@ -39,6 +39,26 @@
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
+    height: 45vh;
+    overflow: auto;
+}
+
+.gamers-list-container::-webkit-scrollbar {
+    width: 0px;
+}
+
+.gamers-list-item-wrapper {
+    width: 100%;
+    height: 53px;
+    background: #F6EAFF;
+    margin-bottom: 9px;
+}
+
+.gamers-list-item-wrapper:first-child {
+    position: sticky;
+    top: 0px;
+    z-index: 10;
+    box-shadow: 0px 0px 7px 9px #F6EAFF;
 }
 
 .gamers-list-item {
@@ -48,10 +68,9 @@
     width: 100%;
     height: 53px;
     padding-right: 15px;
-    margin-bottom: 9px;
 }
 
-.gamers-list-item:first-child {
+.gamers-list-item-wrapper:first-child .gamers-list-item {
     background: #7E03B1;
     border: 1px solid #EFEFEF;
     border-radius: 30px;
@@ -81,7 +100,7 @@
     color: #3D3D3D;
 }
 
-.gamers-list-item:first-child .gamers-list-item-name {
+.gamers-list-item-wrapper:first-child .gamers-list-item-name {
     font-family: 'SB Sans Display';
     font-style: normal;
     font-weight: 600;
@@ -108,7 +127,7 @@
     margin-right: 5px;
 }
 
-.gamers-list-item:first-child .gamers-list-item-score {
+.gamers-list-item-wrapper:first-child .gamers-list-item-score {
     font-family: 'SB Sans Display';
     font-style: normal;
     font-weight: 600;
@@ -120,6 +139,6 @@
     margin-right: 5px;
 }
 
-.gamers-list-item:first-child .gamers-list-item-score-wrapper>svg>path {
+.gamers-list-item-wrapper:first-child .gamers-list-item-score-wrapper>svg>path {
     fill: #FFFFFF;
 }
