@@ -31,7 +31,7 @@ const MoreCoins = ({ id, go, amountCoins }) => (
 MoreCoins.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
-  amountCoins: PropTypes.number,
+  amountCoins: PropTypes.string.isRequired,
 };
 
 export default MoreCoins;

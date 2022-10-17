@@ -13,7 +13,7 @@ import { APP_NAME } from '../../assets/constants/constants';
 import MainLayout from '../../shared/mainLayout/MainLayout';
 
 const Game = ({
-  id, go, amountCoins, onEndGame,
+  id, go, amountCoins, onEndGame, userId,
 }) => {
   const [isDisableGameboard, setIsDisableGameboard] = useState(true);
   const [guessedCards, setGuessedCards] = useState(0);
@@ -24,10 +24,10 @@ const Game = ({
 
   const endingTimeHandler = useCallback(() => {
     if (guessedCards === 0) {
-      onEndGame(guessedCards);
+      onEndGame(guessedCards, userId);
       go(null, 'lossGame');
     } else {
-      onEndGame(guessedCards);
+      onEndGame(guessedCards, userId);
       go(null, 'winGame');
     }
   }, [guessedCards]);
@@ -37,7 +37,7 @@ const Game = ({
   }, []);
 
   const winHandler = useCallback(() => {
-    onEndGame(guessedCards);
+    onEndGame(guessedCards, userId);
     go(null, 'winGame');
   }, [guessedCards]);
 
@@ -63,7 +63,7 @@ const Game = ({
             </Text>
             <div className="earned">
               <Text className="earned-count">
-                {amountCoins + guessedCards}
+                {parseInt(amountCoins, 10) + parseInt(guessedCards, 10)}
               </Text>
               <MoreCoins />
             </div>
@@ -71,7 +71,7 @@ const Game = ({
           <div className="timer">
             <Text className="time">
               <Timer
-                time={600}
+                time={60}
                 advanceСountdownTime={3}
                 onEndedAdvanceСountdownTime={endingAdvanceTimeHandler}
                 onEndedTime={endingTimeHandler}
@@ -100,8 +100,9 @@ const Game = ({
 Game.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
-  amountCoins: PropTypes.number,
+  amountCoins: PropTypes.string.isRequired,
   onEndGame: PropTypes.func,
+  userId: PropTypes.number.isRequired,
 };
 
 export default Game;

@@ -33,7 +33,7 @@ const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
 };
 
 PromoCodeCards.propTypes = {
-  amountCoins: PropTypes.number,
+  amountCoins: PropTypes.string.isRequired,
   onActivateModal: PropTypes.func,
 };
 

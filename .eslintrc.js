@@ -24,6 +24,7 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
+    'no-console': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
     'react/require-default-props': 'off',
     'react/no-array-index-key': 'off',

@@ -69,7 +69,7 @@ Home.propTypes = {
       title: PropTypes.string,
     }),
   }),
-  amountCoins: PropTypes.number,
+  amountCoins: PropTypes.string.isRequired,
 };
 
 export default Home;

@@ -14,6 +14,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import './global.css';
 import './App.css';
 
+import bridge from '@vkontakte/vk-bridge';
 import Home from './panels/home/Home';
 import Game from './panels/game/Game';
 import PromoCode from './panels/promoCode/PromoCode';
@@ -40,7 +41,9 @@ const App = () => {
     ...MOTIVATOR.map((item) => item.img),
   ]);
 
-  const { isFetchUserLoaded, fetchedUser, fetchedScheme } = useFetchUserData();
+  const {
+    isFetchUserLoaded, fetchedUser, fetchedScheme, accessToken, amountCoins,
+  } = useFetchUserData();
 
   useEffect(() => {
     if (isPicturesLoaded && isFetchUserLoaded) {
@@ -54,9 +57,15 @@ const App = () => {
     setActivePanel(e ? e.currentTarget.dataset.to : goTo);
   };
 
-  const amountCoins = 300;
-
-  const endGameHandler = useCallback((earnedCoin) => {
+  const endGameHandler = useCallback((earnedCoin, userId) => {
+    const keyValue = `${userId}_geniusGame`;
+    const result = bridge.send(
+      'VKWebAppStorageSet',
+      {
+        key: keyValue,
+        value: String(earnedCoin + amountCoins),
+      },
+    );
     seteErnedCoinOnCurrentGame(earnedCoin);
   }, []);
 
@@ -87,10 +96,10 @@ const App = () => {
               {isLoaded ? (
                 <View activePanel={activePanel}>
                   <Home id="home" fetchedUser={fetchedUser} go={go} amountCoins={amountCoins} />
-                  <Game id="gameBoard" go={go} amountCoins={amountCoins} onEndGame={endGameHandler} />
+                  <Game id="gameBoard" go={go} amountCoins={amountCoins} onEndGame={endGameHandler} userId={fetchedUser.id} />
                   <PromoCode id="promoCode" go={go} amountCoins={amountCoins} onActivateModal={activateModalPromoCodeHandler} />
                   <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} />
-                  <Rating id="rating" go={go} amountCoins={amountCoins} />
+                  <Rating id="rating" go={go} amountCoins={amountCoins} accessToken={accessToken} />
                   <LossPanel id="lossGame" go={go} />
                   <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} />
                 </View>

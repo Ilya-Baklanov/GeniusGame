@@ -23,7 +23,7 @@ const PromoCode = ({
 PromoCode.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
-  amountCoins: PropTypes.number,
+  amountCoins: PropTypes.string.isRequired,
   onActivateModal: PropTypes.func,
 };
 

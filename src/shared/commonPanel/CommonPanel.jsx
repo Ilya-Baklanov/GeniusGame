@@ -62,7 +62,7 @@ CommonPanel.propTypes = {
   description: PropTypes.string,
   additionalBlock: PropTypes.node,
   children: PropTypes.node,
-  amountCoins: PropTypes.number,
+  amountCoins: PropTypes.string.isRequired,
 };
 
 export default CommonPanel;
