@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import './Rating.css';
@@ -21,13 +21,20 @@ const Rating = ({
 
   const gamersList2 = useFetchFriendList(accessToken);
 
+  const ratingSwitcherHandler = useCallback((e) => {
+    const isFriendsRating = !e.target.checked;
+    const isAllRating = e.target.checked;
+  }, []);
+
   return (
     <CommonPanel
       id={id}
       go={go}
       amountCoins={amountCoins}
       title="Рейтинг"
-      additionalBlock={<Switcher />}
+      additionalBlock={(
+        <Switcher onToggle={ratingSwitcherHandler} />
+)}
     >
       <GamersList
         positionOnRating={1045}

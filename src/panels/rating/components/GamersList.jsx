@@ -17,20 +17,22 @@ const GamersList = ({ positionOnRating, gamersOnRating, gamersList }) => (
     </div>
     <div className="gamers-list-container">
       {gamersList && gamersList.map(({ avatarSrc, name, score }, index) => (
-        <div key={index} className="gamers-list-item">
-          <div className="gamers-list-item-user-info">
-            <Avatar src={avatarSrc} className="gamers-list-item-avatar" size={54} />
-            <div className="gamers-list-item-name-wrapper">
-              <Text className="gamers-list-item-name">
-                {name}
-              </Text>
+        <div key={index} className="gamers-list-item-wrapper">
+          <div className="gamers-list-item">
+            <div className="gamers-list-item-user-info">
+              <Avatar src={avatarSrc} className="gamers-list-item-avatar" size={54} />
+              <div className="gamers-list-item-name-wrapper">
+                <Text className="gamers-list-item-name">
+                  {name}
+                </Text>
+              </div>
             </div>
-          </div>
-          <div className="gamers-list-item-score-wrapper">
-            <Text className="gamers-list-item-score">
-              {score}
-            </Text>
-            <MoreCoins />
+            <div className="gamers-list-item-score-wrapper">
+              <Text className="gamers-list-item-score">
+                {score}
+              </Text>
+              <MoreCoins />
+            </div>
           </div>
         </div>
       ))}
