@@ -6,13 +6,13 @@ import './Card.css';
 const Card = ({
   item, index, handleClick, disable,
 }) => {
-  const itemClass = item.stat ? `checked ${item.stat}` : '';
+  const itemClass = item.stat ? `${item.stat === 'preview' ? item.stat : `checked ${item.stat}`}` : '';
 
   const clickHandler = useCallback(() => handleClick(index), [handleClick]);
 
   return (
     <div className={`card ${itemClass} ${disable ? 'disable' : ''}`} onClick={disable ? null : clickHandler}>
-      {item.stat !== '' && <img src={item.img} alt="" />}
+      {item.stat !== 'preview' && item.stat !== '' && <img src={item.img} alt="" />}
     </div>
   );
 };
