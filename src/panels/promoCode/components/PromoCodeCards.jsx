@@ -6,19 +6,20 @@ import './PromoCodeCards.css';
 import { PROMOCODES } from '../../../assets/constants/constants';
 
 const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
-  const promocodeCardsClickHandler = useCallback(() => {
-    onActivateModal();
+  const getActivePromoCodeClassName = useCallback((denomination) => (Math.floor(amountCoins / 100) === denomination / 100 ? 'active' : ''), [amountCoins]);
+  const promocodeCardsClickHandler = useCallback((denomination, promoCodeDescription) => {
+    onActivateModal(denomination, promoCodeDescription);
   }, []);
 
   return (
     <div className="promocode-cards-wrapper">
       <div className="promocode-cards-container">
         {PROMOCODES.map(({ denomination, description }, index) => (
-          <div key={index} onClick={promocodeCardsClickHandler} className={`promocode-card ${Math.floor(amountCoins / 100) === denomination / 100 ? 'active' : ''}`}>
-            <Text className={`promocode-card-denomination ${Math.floor(amountCoins / 100) === denomination / 100 ? 'active' : ''}`}>
+          <div key={index} onClick={() => promocodeCardsClickHandler(denomination, description)} className={`promocode-card ${getActivePromoCodeClassName(denomination)}`}>
+            <Text className={`promocode-card-denomination ${getActivePromoCodeClassName(denomination)}`}>
               {`${denomination}₽`}
             </Text>
-            <Text className={`promocode-card-description ${Math.floor(amountCoins / 100) === denomination / 100 ? 'active' : ''}`}>
+            <Text className={`promocode-card-description ${getActivePromoCodeClassName(denomination)}`}>
               {description}
             </Text>
           </div>

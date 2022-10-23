@@ -11,20 +11,20 @@ import { MoreCoins } from '../../../assets/image';
 const Card = ({
   onClick, goTo, text, additionalCoins, isComplete,
 }) => {
-  const isCompletedCondition = useMemo(() => (isComplete ? 'complete' : ''), [isComplete]);
+  const completedConditionClassName = useMemo(() => (isComplete ? 'complete' : ''), [isComplete]);
 
   return (
     <div
       onClick={onClick}
       data-to={goTo}
-      className={`more-coins-card ${isCompletedCondition}`}
+      className={`more-coins-card ${completedConditionClassName}`}
     >
       <div className="more-coins-card-content-container">
-        <Text className={`more-coins-card-text ${isCompletedCondition}`}>
+        <Text className={`more-coins-card-text ${completedConditionClassName}`}>
           {text}
         </Text>
-        <div className={`more-coins-card-additional-coins-wrapper ${isCompletedCondition}`}>
-          <Text className={`more-coins-card-additional-coins-text ${isCompletedCondition}`}>
+        <div className={`more-coins-card-additional-coins-wrapper ${completedConditionClassName}`}>
+          <Text className={`more-coins-card-additional-coins-text ${completedConditionClassName}`}>
             {`+${additionalCoins}`}
           </Text>
           <MoreCoins />
