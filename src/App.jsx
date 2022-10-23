@@ -30,7 +30,7 @@ import useFetchUserData from './shared/hooks/useFetchUserData/useFetchUserData';
 const App = () => {
   const [activePanel, setActivePanel] = useState('home');
   const [isLoaded, setIsLoaded] = useState(false);
-  const [earnedCoinOnCurrentGame, seteErnedCoinOnCurrentGame] = useState(0);
+  const [earnedCoinOnCurrentGame, setEarnedCoinOnCurrentGame] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
 
   const activateLoader = useCallback(() => { setIsLoaded(false); }, []);
@@ -42,7 +42,14 @@ const App = () => {
   ]);
 
   const {
-    isFetchUserLoaded, fetchedUser, fetchedScheme, accessToken, amountCoins,
+    isFetchUserLoaded,
+    fetchedUser,
+    fetchedScheme,
+    accessToken,
+    amountCoins,
+    refetchUserCoins,
+    postEarnedCoins,
+    isEarnedCoinsPosted,
   } = useFetchUserData();
 
   useEffect(() => {
@@ -59,15 +66,12 @@ const App = () => {
 
   const endGameHandler = useCallback((earnedCoin, userId) => {
     const keyValue = `${userId}_geniusGame`;
-    const result = bridge.send(
-      'VKWebAppStorageSet',
-      {
-        key: keyValue,
-        value: String(earnedCoin + amountCoins),
-      },
-    );
-    seteErnedCoinOnCurrentGame(earnedCoin);
-  }, []);
+    const allEarnedCoins = +earnedCoin + +amountCoins;
+    postEarnedCoins(keyValue, allEarnedCoins).then(() => {
+      refetchUserCoins(fetchedUser);
+      setEarnedCoinOnCurrentGame(earnedCoin);
+    });
+  }, [amountCoins]);
 
   const closeModal = () => {
     setActiveModal(null);
@@ -86,6 +90,43 @@ const App = () => {
     setActiveModal(MODAL_PROMO_CODE);
   }, []);
 
+  const joinGroupHandler = useCallback(() => {
+    console.log('JOINED');
+  }, []);
+
+  const repostHandler = useCallback(() => {
+    console.log('REPOST');
+  }, []);
+
+  const setStatusHandler = useCallback(() => {
+    console.log('STATUS');
+  }, []);
+
+  const inviteFriendsHandler = useCallback(() => {
+    console.log('INVITE');
+  }, []);
+
+  const subscribeToBotHandler = useCallback(() => {
+    console.log('SUBSCRIBE');
+  }, []);
+
+  const moreCoinsCardClickHandler = useCallback((cardId) => {
+    switch (cardId) {
+      case 'JOIN_GROUP':
+        return joinGroupHandler();
+      case 'REPOST':
+        return repostHandler();
+      case 'STATUS':
+        return setStatusHandler();
+      case 'INVITE_FRIENDS':
+        return inviteFriendsHandler();
+      case 'SUBSCRIBE_TO_BOT':
+        return subscribeToBotHandler();
+      default:
+        return console.log('Invalid CardId');
+    }
+  }, []);
+
   return (
     <ConfigProvider scheme={fetchedScheme}>
       <AdaptivityProvider>
@@ -98,10 +139,10 @@ const App = () => {
                   <Home id="home" fetchedUser={fetchedUser} go={go} amountCoins={amountCoins} />
                   <Game id="gameBoard" go={go} amountCoins={amountCoins} onEndGame={endGameHandler} userId={fetchedUser.id} />
                   <PromoCode id="promoCode" go={go} amountCoins={amountCoins} onActivateModal={activateModalPromoCodeHandler} />
-                  <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} />
+                  <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} onClickToCard={moreCoinsCardClickHandler} />
                   <Rating id="rating" go={go} amountCoins={amountCoins} accessToken={accessToken} />
                   <LossPanel id="lossGame" go={go} />
-                  <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} />
+                  <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} isLoading={!isEarnedCoinsPosted} />
                 </View>
               ) : (
                 <ScreenSpinner size="large" />

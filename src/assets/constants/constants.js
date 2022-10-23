@@ -49,11 +49,11 @@ export const PROMOCODES = [
 ];
 
 export const MORE_COINS_CARDS = [
-    { additionalCoins: 10, text: 'Вступи в официальную группу\nСберМегаМаркета в Вконтакте' },
-    { additionalCoins: 10, text: 'Сделай репост баннера игры\nк себе на страницу' },
-    { additionalCoins: 10, text: 'Установи фирменный\nстатус из игры' },
-    { additionalCoins: 5, text: 'Пригласи к участию друзей,\nпроследи, чтобы друг зашёл в игру' },
-    { additionalCoins: 10, text: 'Подпишись на чат-бота и получи\nдополнительный промокод' },
+    { id: 'JOIN_GROUP', additionalCoins: 10, text: 'Вступи в официальную группу\nСберМегаМаркета в Вконтакте' },
+    { id: 'REPOST', additionalCoins: 10, text: 'Сделай репост баннера игры\nк себе на страницу' },
+    { id: 'STATUS', additionalCoins: 10, text: 'Установи фирменный\nстатус из игры' },
+    { id: 'INVITE_FRIENDS', additionalCoins: 5, text: 'Пригласи к участию друзей,\nпроследи, чтобы друг зашёл в игру' },
+    { id: 'SUBSCRIBE_TO_BOT', additionalCoins: 10, text: 'Подпишись на чат-бота и получи\nдополнительный промокод' },
 ];
 
 export const MODAL_PROMO_CODE = 'modal_promo_code';

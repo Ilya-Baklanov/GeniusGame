@@ -13,7 +13,7 @@ import { APP_NAME } from '../../assets/constants/constants';
 import MainLayout from '../../shared/mainLayout/MainLayout';
 
 const Game = ({
-  id, go, amountCoins, onEndGame, userId,
+  id, go, onEndGame, userId,
 }) => {
   const [isDisableGameboard, setIsDisableGameboard] = useState(true);
   const [guessedCards, setGuessedCards] = useState(0);
@@ -63,7 +63,7 @@ const Game = ({
             </Text>
             <div className="earned">
               <Text className="earned-count">
-                {parseInt(amountCoins, 10) + parseInt(guessedCards, 10)}
+                {guessedCards}
               </Text>
               <MoreCoins />
             </div>
@@ -100,7 +100,6 @@ const Game = ({
 Game.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
-  amountCoins: PropTypes.string.isRequired,
   onEndGame: PropTypes.func,
   userId: PropTypes.number.isRequired,
 };
