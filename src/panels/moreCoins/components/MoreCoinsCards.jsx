@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './MoreCoinsCards.css';
-import { MORE_COINS_CARDS } from '../../../assets/constants/constants';
 import Card from './Card';
+import useGetMoreCoinsData from '../../../shared/hooks/useGetMoreCoinsData/useGetMoreCoinsData';
 
-const MoreCoinsCards = ({ go }) => (
-  <div className="more-coins-cards-wrapper">
-    {MORE_COINS_CARDS.map(({ text, additionalCoins }, index) => (
-      <Card
-        key={index}
-        text={text}
-        additionalCoins={additionalCoins}
-      />
-    ))}
-  </div>
-);
+const MoreCoinsCards = ({ go, onClickToCard }) => {
+  const { cardList } = useGetMoreCoinsData();
+
+  return (
+    <div className="more-coins-cards-wrapper">
+      {cardList.map(({
+        id,
+        text,
+        additionalCoins,
+        isComplete,
+      }, index) => (
+        <Card
+          key={index}
+          text={text}
+          additionalCoins={additionalCoins}
+          isComplete={isComplete}
+          onClick={() => onClickToCard(id)}
+        />
+      ))}
+    </div>
+  );
+};
 
 MoreCoinsCards.propTypes = {
   go: PropTypes.func.isRequired,
+  onClickToCard: PropTypes.func,
 };
 
 export default MoreCoinsCards;

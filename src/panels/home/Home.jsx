@@ -39,7 +39,7 @@ const Home = ({
             </Text>
           </div>
           <Text className="description">
-            Играй, зарабатывай монеты и трать их на покупки в СберМегаМаркете!
+            {'Играй, зарабатывай монеты и трать\n их на покупки в СберМегаМаркете!'}
           </Text>
           <div className="motivator-wrapper">
             <Motivator />

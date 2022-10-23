@@ -41,9 +41,8 @@
 
 .common-description-wrapper {
   position: absolute;
-  width: 243px;
-  height: 36px;
   top: 16%;
+  white-space: break-spaces;
 }
 
 .common-description {

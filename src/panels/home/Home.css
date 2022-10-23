@@ -120,8 +120,6 @@
 
 .description {
     position: absolute;
-    width: 243px;
-    height: 36px;
     top: 27%;
 
     font-family: 'SB Sans Display';
@@ -130,6 +128,7 @@
     font-size: 14px;
     line-height: 18px;
     text-align: center;
+    white-space: break-spaces;
 
     color: #5E5E5E;
 }
