@@ -5,6 +5,11 @@
     background: linear-gradient(45deg, #24B571, 25%, #7E03B1, 85%, #FFB222);
 }
 
+.main-button.disabled {
+    background: #EDC8FF;
+    cursor: not-allowed;
+}
+
 .main-button-text {
     font-family: 'SB Sans Display';
     font-style: normal;
@@ -13,4 +18,9 @@
     line-height: 30px;
 
     color: #FFFFFF;
+}
+
+.main-button-text.disabled {
+    color: #7E03B1;
+    filter: opacity(70%);
 }

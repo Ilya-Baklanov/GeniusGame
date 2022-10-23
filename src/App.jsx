@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from 'react';
 import {
   View,
   ScreenSpinner,
@@ -71,24 +76,39 @@ const App = () => {
       refetchUserCoins(fetchedUser);
       setEarnedCoinOnCurrentGame(earnedCoin);
     });
-  }, [amountCoins]);
+  }, [amountCoins, fetchedUser]);
 
   const closeModal = () => {
-    setActiveModal(null);
+    setActiveModal((prev) => ({
+      ...prev,
+      id: '',
+    }));
   };
 
-  const modal = (
+  const modal = useMemo(() => (
     <ModalRoot
-      activeModal={activeModal}
+      activeModal={activeModal ? activeModal.id : null}
       onClose={closeModal}
     >
-      <ModalPromoCode id={MODAL_PROMO_CODE} onClose={closeModal} />
+      <ModalPromoCode
+        id={MODAL_PROMO_CODE}
+        content={activeModal ? activeModal.content : null}
+        amountCoins={amountCoins}
+        onClose={closeModal}
+      />
     </ModalRoot>
-  );
+  ), [activeModal, amountCoins]);
 
-  const activateModalPromoCodeHandler = useCallback(() => {
-    setActiveModal(MODAL_PROMO_CODE);
-  }, []);
+  const activateModalPromoCodeHandler = useCallback((denomination, promoCodeDescription) => {
+    setActiveModal({
+      id: MODAL_PROMO_CODE,
+      content: {
+        denomination,
+        promoCodeDescription,
+      },
+      amountCoins,
+    });
+  }, [amountCoins]);
 
   const joinGroupHandler = useCallback(() => {
     console.log('JOINED');
