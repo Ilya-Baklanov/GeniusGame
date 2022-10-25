@@ -54,7 +54,7 @@ const Timer = ({
 
   return (
     <div>
-      {advanceСountdownTime && !isAdvanceTimeOver ? `${secondsLeft}...` : `${addZero(minutesLeft)} : ${addZero(secondsLeft)}`}
+      {advanceСountdownTime && !isAdvanceTimeOver ? `${secondsLeft}` : `${addZero(minutesLeft)} : ${addZero(secondsLeft)}`}
     </div>
   );
 };

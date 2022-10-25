@@ -7,7 +7,12 @@ import CommonPanel from '../../shared/commonPanel/CommonPanel';
 import MoreCoinsCards from './components/MoreCoinsCards';
 import Switcher from './components/Switcher';
 
-const MoreCoins = ({ id, go, amountCoins }) => {
+const MoreCoins = ({
+  id,
+  go,
+  amountCoins,
+  onClickToCard,
+}) => {
   const pushSwitcherHandler = useCallback((e) => {
     const isActivePush = e.target.checked;
   }, []);
@@ -21,7 +26,7 @@ const MoreCoins = ({ id, go, amountCoins }) => {
       description="Выполняй задания –
       зарабатывай ещё больше монет!"
     >
-      <MoreCoinsCards />
+      <MoreCoinsCards onClickToCard={onClickToCard} />
       <div className="more-coins-push-wrapper">
         <div className="more-coins-push-description-wrapper">
           <Text className="more-coins-push-description">
@@ -38,6 +43,7 @@ MoreCoins.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
   amountCoins: PropTypes.string.isRequired,
+  onClickToCard: PropTypes.func,
 };
 
 export default MoreCoins;

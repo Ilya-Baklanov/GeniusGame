@@ -5,7 +5,7 @@ import './WinPanel.css';
 import EndGamePanel from '../../shared/endGamePanel/EndGamePanel';
 
 const WinPanel = ({
-  id, go, earnedCoin, amountCoins,
+  id, go, earnedCoin, isLoading,
 }) => (
   <EndGamePanel
     id={id}
@@ -21,8 +21,8 @@ const WinPanel = ({
 WinPanel.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
-  earnedCoin: PropTypes.string.isRequired,
-  amountCoins: PropTypes.string.isRequired,
+  earnedCoin: PropTypes.number,
+  isLoading: PropTypes.bool,
 };
 
 export default WinPanel;

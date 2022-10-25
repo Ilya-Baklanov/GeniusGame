@@ -12,9 +12,9 @@
   }
 
   .card.preview {
-    background: #E6C5FF;
-    transform: rotateY(0);
-    filter: blur(3px);
+    background-image: url('../../../assets/image/bag.svg'), linear-gradient(315deg, #7d8d86, 25%, #9e9e9e, 85%, #9e937e);
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
   .disable {
@@ -22,7 +22,6 @@
   }
   
   @keyframes hideCard {
-  
     0%,
     70% {
       transform: rotateY(0);

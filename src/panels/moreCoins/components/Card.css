@@ -11,6 +11,11 @@
     background: linear-gradient(45deg, #24B571, 15%, #7E03B1, 90%, #FFB222);
 }
 
+.more-coins-card.complete {
+    background: #F6EAFF;
+    border: 1px solid #7E03B1;
+}
+
 .more-coins-card-content-container {
     display: flex;
     align-items: flex-start;
@@ -28,6 +33,10 @@
     white-space: break-spaces;
 
     color: #FDFDFD;
+}
+
+.more-coins-card-text.complete {
+    color: #7E03B1;
 }
 
 .more-coins-card-additional-coins-wrapper {
@@ -49,6 +58,14 @@
     margin-right: 3px;
 }
 
+.more-coins-card-additional-coins-text.complete {
+    color: #000000;
+}
+
 .more-coins-card-additional-coins-wrapper>svg>path {
     fill: #FFFFFF;
+}
+
+.more-coins-card-additional-coins-wrapper.complete>svg>path {
+    fill: #7E03B1;
 }

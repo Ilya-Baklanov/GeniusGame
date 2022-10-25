@@ -1,4 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from 'react';
 import {
   View,
   ScreenSpinner,
@@ -30,7 +35,7 @@ import useFetchUserData from './shared/hooks/useFetchUserData/useFetchUserData';
 const App = () => {
   const [activePanel, setActivePanel] = useState('home');
   const [isLoaded, setIsLoaded] = useState(false);
-  const [earnedCoinOnCurrentGame, seteErnedCoinOnCurrentGame] = useState(0);
+  const [earnedCoinOnCurrentGame, setEarnedCoinOnCurrentGame] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
 
   const activateLoader = useCallback(() => { setIsLoaded(false); }, []);
@@ -42,7 +47,14 @@ const App = () => {
   ]);
 
   const {
-    isFetchUserLoaded, fetchedUser, fetchedScheme, accessToken, amountCoins,
+    isFetchUserLoaded,
+    fetchedUser,
+    fetchedScheme,
+    accessToken,
+    amountCoins,
+    refetchUserCoins,
+    postEarnedCoins,
+    isEarnedCoinsPosted,
   } = useFetchUserData();
 
   useEffect(() => {
@@ -57,35 +69,82 @@ const App = () => {
     setActivePanel(e ? e.currentTarget.dataset.to : goTo);
   };
 
-  const endGameHandler = useCallback((earnedCoin, userId, amountCoin) => {
+  const endGameHandler = useCallback((earnedCoin, userId) => {
     const keyValue = `${userId}_geniusGame`;
-    console.log('Before', Number(earnedCoin) + Number(amountCoin));
-    const result = bridge.send(
-      'VKWebAppStorageSet',
-      {
-        key: keyValue,
-        value: String(Number(earnedCoin) + Number(amountCoin)),
-      },
-    );
-    console.log('After game', result);
-    seteErnedCoinOnCurrentGame(Number(earnedCoin) + Number(amountCoin));
-  }, []);
+    const allEarnedCoins = +earnedCoin + +amountCoins;
+    postEarnedCoins(keyValue, allEarnedCoins).then(() => {
+      refetchUserCoins(fetchedUser);
+      setEarnedCoinOnCurrentGame(earnedCoin);
+    });
+  }, [amountCoins, fetchedUser]);
 
   const closeModal = () => {
-    setActiveModal(null);
+    setActiveModal((prev) => ({
+      ...prev,
+      id: '',
+    }));
   };
 
-  const modal = (
+  const modal = useMemo(() => (
     <ModalRoot
-      activeModal={activeModal}
+      activeModal={activeModal ? activeModal.id : null}
       onClose={closeModal}
     >
-      <ModalPromoCode id={MODAL_PROMO_CODE} onClose={closeModal} />
+      <ModalPromoCode
+        id={MODAL_PROMO_CODE}
+        content={activeModal ? activeModal.content : null}
+        amountCoins={amountCoins}
+        onClose={closeModal}
+      />
     </ModalRoot>
-  );
+  ), [activeModal, amountCoins]);
 
-  const activateModalPromoCodeHandler = useCallback(() => {
-    setActiveModal(MODAL_PROMO_CODE);
+  const activateModalPromoCodeHandler = useCallback((denomination, promoCodeDescription) => {
+    setActiveModal({
+      id: MODAL_PROMO_CODE,
+      content: {
+        denomination,
+        promoCodeDescription,
+      },
+      amountCoins,
+    });
+  }, [amountCoins]);
+
+  const joinGroupHandler = useCallback(() => {
+    console.log('JOINED');
+  }, []);
+
+  const repostHandler = useCallback(() => {
+    console.log('REPOST');
+  }, []);
+
+  const setStatusHandler = useCallback(() => {
+    console.log('STATUS');
+  }, []);
+
+  const inviteFriendsHandler = useCallback(() => {
+    console.log('INVITE');
+  }, []);
+
+  const subscribeToBotHandler = useCallback(() => {
+    console.log('SUBSCRIBE');
+  }, []);
+
+  const moreCoinsCardClickHandler = useCallback((cardId) => {
+    switch (cardId) {
+      case 'JOIN_GROUP':
+        return joinGroupHandler();
+      case 'REPOST':
+        return repostHandler();
+      case 'STATUS':
+        return setStatusHandler();
+      case 'INVITE_FRIENDS':
+        return inviteFriendsHandler();
+      case 'SUBSCRIBE_TO_BOT':
+        return subscribeToBotHandler();
+      default:
+        return console.log('Invalid CardId');
+    }
   }, []);
 
   return (
@@ -100,10 +159,10 @@ const App = () => {
                   <Home id="home" fetchedUser={fetchedUser} go={go} amountCoins={amountCoins} />
                   <Game id="gameBoard" go={go} amountCoins={amountCoins} onEndGame={endGameHandler} userId={fetchedUser.id} />
                   <PromoCode id="promoCode" go={go} amountCoins={amountCoins} onActivateModal={activateModalPromoCodeHandler} />
-                  <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} />
+                  <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} onClickToCard={moreCoinsCardClickHandler} />
                   <Rating id="rating" go={go} amountCoins={amountCoins} accessToken={accessToken} />
                   <LossPanel id="lossGame" go={go} />
-                  <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} amountCoins={amountCoins} />
+                  <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} isLoading={!isEarnedCoinsPosted} />
                 </View>
               ) : (
                 <ScreenSpinner size="large" />

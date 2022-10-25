@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -9,32 +9,37 @@ import './Card.css';
 import { MoreCoins } from '../../../assets/image';
 
 const Card = ({
-  onClick, goTo, text, additionalCoins,
-}) => (
-  <div
-    onClick={onClick}
-    data-to={goTo}
-    className="more-coins-card"
-  >
-    <div className="more-coins-card-content-container">
-      <Text className="more-coins-card-text">
-        {text}
-      </Text>
-      <div className="more-coins-card-additional-coins-wrapper">
-        <Text className="more-coins-card-additional-coins-text">
-          {`+${additionalCoins}`}
+  onClick, goTo, text, additionalCoins, isComplete,
+}) => {
+  const completedConditionClassName = useMemo(() => (isComplete ? 'complete' : ''), [isComplete]);
+
+  return (
+    <div
+      onClick={onClick}
+      data-to={goTo}
+      className={`more-coins-card ${completedConditionClassName}`}
+    >
+      <div className="more-coins-card-content-container">
+        <Text className={`more-coins-card-text ${completedConditionClassName}`}>
+          {text}
         </Text>
-        <MoreCoins />
+        <div className={`more-coins-card-additional-coins-wrapper ${completedConditionClassName}`}>
+          <Text className={`more-coins-card-additional-coins-text ${completedConditionClassName}`}>
+            {`+${additionalCoins}`}
+          </Text>
+          <MoreCoins />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 Card.propTypes = {
   onClick: PropTypes.func,
   goTo: PropTypes.string,
   text: PropTypes.string,
   additionalCoins: PropTypes.string,
+  isComplete: PropTypes.bool,
 };
 
 export default Card;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Panel, PanelHeader, PanelHeaderBack, Text, IconButton,
+  Panel, PanelHeader, PanelHeaderBack, Text, IconButton, ScreenSpinner,
 } from '@vkontakte/vkui';
 
 import { MoreCoins, Close } from '../../assets/image';
@@ -34,7 +34,7 @@ const EndGamePanel = ({
         </div>
       </div>
 
-      {isLoading ? (<div className="end-game-loader">...Loading</div>) : (
+      {isLoading ? (<ScreenSpinner size="large" />) : (
         <>
           <div className="end-game-main-content">
             <div className="end-game-earned-wrapper">
