@@ -10,10 +10,27 @@ const useFetchUserData = () => {
     const [accessToken, setAccessToken] = useState(null);
     const [amountCoins, setAmountCoins] = useState(null);
 
+    // async function fetchUserCoins(user) {
+    //     const keyValue = `${user.id}_geniusGame`;
+    //     const coins = await bridge.send('VKWebAppStorageGet', { keys: [keyValue] });
+    //     setAmountCoins(coins.keys[0].value);
+    // }
+
     async function fetchUserCoins(user) {
-        const keyValue = `${user.id}_geniusGame`;
-        const coins = await bridge.send('VKWebAppStorageGet', { keys: [keyValue] });
-        setAmountCoins(coins.keys[0].value);
+        const response = await fetch(`http://localhost:8080/v1/api/getUserData/${user.id}`, {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'localhost:8080',
+            },
+        });
+        if (response.ok) {
+            const json = await response.json();
+            console.log(json);
+            setAmountCoins(json.coins);
+        } else {
+            console.log('error');
+        }
     }
 
     async function fetchTokenFromStorage(user) {
