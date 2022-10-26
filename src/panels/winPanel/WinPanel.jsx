@@ -14,7 +14,8 @@ const WinPanel = ({
     isMoreGamesAvailable={true}
     timeUntilNextGame={12}
     isLoading={false}
-    earnedCoin={String(Number(earnedCoin) - Number(amountCoins))}
+    earnedCoin={String(Number(earnedCoin))}
+     // String(Number(earnedCoin) - Number(amountCoins)) тут так было хз
   />
 );
 

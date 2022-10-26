@@ -16,7 +16,7 @@ const GamersList = ({ positionOnRating, gamersOnRating, gamersList }) => (
       </Text>
     </div>
     <div className="gamers-list-container">
-      {gamersList.map(({ avatarSrc, name, score }, index) => (
+      {gamersList && gamersList.map(({ avatarSrc, name, score }, index) => (
         <div key={index} className="gamers-list-item-wrapper">
           <div className="gamers-list-item">
             <div className="gamers-list-item-user-info">

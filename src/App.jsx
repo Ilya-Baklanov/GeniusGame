@@ -147,6 +147,27 @@ const App = () => {
     }
   }, []);
 
+  async function updateUserCoins(earnedCoin, user, amountCoin) {
+    console.log('before');
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'localhost:8080',
+      },
+      dataType: 'json',
+      body: JSON.stringify({
+        userId: user,
+        coins: String(Number(earnedCoin) + Number(amountCoin)),
+        lastGameDate: '0',
+        gameCount: '0',
+      }),
+    };
+    await fetch('http://localhost:8080/v1/api/up', requestOptions);
+    console.log('after');
+  }
+
   return (
     <ConfigProvider scheme={fetchedScheme}>
       <AdaptivityProvider>

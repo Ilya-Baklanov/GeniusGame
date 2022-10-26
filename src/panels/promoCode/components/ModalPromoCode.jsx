@@ -12,6 +12,7 @@ const ModalPromoCode = ({
   onClose,
   content,
   amountCoins,
+  promoCode,
 }) => {
   const { viewWidth } = useAdaptivity();
 
@@ -70,13 +71,38 @@ const ModalPromoCode = ({
             <MainButton
               text="Получить"
               disabled={!availablePromoCode}
-              onClick={() => console.log('HOBBA')}
+              onClick={promoCode} // наверно это не так должно быть)
             />
           </div>
         </div>
       </ModalPage>
     </AppearanceProvider>
   );
+};
+
+export const getPromoCode = async function fetchPromoCode(user) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'localhost:8080',
+    },
+    dataType: 'json',
+    body: JSON.stringify({
+      userId: 105560317, // тут юзер должен приходить
+      coins: '200', // тут должна быть цена купона, а не колво очков юзера
+      // значения брал для теста
+    }),
+  };
+  const response = await fetch('http://localhost:8080/v1/api/getPromo/', requestOptions);
+  if (response.ok) {
+    const json = await response.json();
+    console.log(json);
+  } else {
+    console.log('error');
+  }
+  return response.json().promo;
 };
 
 ModalPromoCode.propTypes = {
@@ -87,6 +113,7 @@ ModalPromoCode.propTypes = {
     promoCodeDescription: PropTypes.string,
   }),
   amountCoins: PropTypes.string,
+  promoCode: PropTypes.string.isRequired,
 };
 
 export default ModalPromoCode;
