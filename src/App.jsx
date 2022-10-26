@@ -110,8 +110,40 @@ const App = () => {
     });
   }, [amountCoins]);
 
+  async function updateUserCoins(earnedCoin, user, amountCoin) {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'localhost:8080',
+      },
+      dataType: 'json',
+      body: JSON.stringify({
+        userId: user,
+        coins: String(Number(earnedCoin) + Number(amountCoin)),
+        lastGameDate: '0',
+        gameCount: '0',
+      }),
+    };
+    await fetch('http://localhost:8080/v1/api/up', requestOptions);
+  }
+
   const joinGroupHandler = useCallback(() => {
-    console.log('JOINED');
+    async function getFriendList() {
+      const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
+        method: 'groups.isMember',
+        params: {
+          group_id: 'habr',
+          user_id: '105560317',
+          extended: '0',
+          v: '5.131',
+          access_token: accessToken,
+        },
+      });
+      console.log('SUBCRIBED? ', groupSubscribed.response);
+      updateUserCoins(10, fetchedUser.id, amountCoins);
+    }
   }, []);
 
   const repostHandler = useCallback(() => {
@@ -146,27 +178,6 @@ const App = () => {
         return console.log('Invalid CardId');
     }
   }, []);
-
-  async function updateUserCoins(earnedCoin, user, amountCoin) {
-    console.log('before');
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'localhost:8080',
-      },
-      dataType: 'json',
-      body: JSON.stringify({
-        userId: user,
-        coins: String(Number(earnedCoin) + Number(amountCoin)),
-        lastGameDate: '0',
-        gameCount: '0',
-      }),
-    };
-    await fetch('http://localhost:8080/v1/api/up', requestOptions);
-    console.log('after');
-  }
 
   return (
     <ConfigProvider scheme={fetchedScheme}>
