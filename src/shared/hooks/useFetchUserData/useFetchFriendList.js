@@ -38,7 +38,7 @@ const useFetchFriendList = (accessToken) => {
 			},
 			dataType: 'json',
 			body: JSON.stringify({
-				left: 5, // Здесь можно указывать границы
+				left: 5, // Здесь можно указывать границы, это как пример, но лучше балково 0-20 и т.д.
 				right: 7,
 			}),
 		};
@@ -49,7 +49,28 @@ const useFetchFriendList = (accessToken) => {
 		} else {
 			console.log('error');
 		}
-		return response.json();
+
+		const requestOptionsFriends = {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				'Access-Control-Allow-Origin': 'localhost:8080',
+			},
+			dataType: 'json',
+			body: JSON.stringify({
+				left: 0,
+				right: 20,
+				friendsList: ['1', '2', '4', '8', '12'],
+			}),
+		};
+		const responseFriends = await fetch('http://localhost:8080/v1/api/getTopPlayersFriends', requestOptionsFriends);
+		if (responseFriends.ok) {
+			const json = await responseFriends.json();
+			console.log(json);
+		} else {
+			console.log('error');
+		}
 	}
 
 	useEffect(() => {
