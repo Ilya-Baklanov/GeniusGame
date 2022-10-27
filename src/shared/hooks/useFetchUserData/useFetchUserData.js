@@ -70,14 +70,23 @@ const useFetchUserData = () => {
         setIsFetchUserLoaded(true);
     }
 
-    async function postEarnedCoins(keyValue, allEarnedCoins) {
-        bridge.send(
-            'VKWebAppStorageSet',
-            {
-                key: keyValue,
-                value: String(allEarnedCoins),
-            },
-        ).then(() => setIsEarnedCoinsPosted(true));
+    async function postEarnedCoins(allEarnedCoins, user) {
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': 'localhost:8080',
+                },
+                dataType: 'json',
+                body: JSON.stringify({
+                    userId: user.id,
+                    coins: allEarnedCoins,
+                    gameCount: '0',
+                }),
+            };
+            await fetch('http://localhost:8080/v1/api/up', requestOptions);
+            console.log('COinsUPDATED', allEarnedCoins);
     }
 
     useEffect(() => {

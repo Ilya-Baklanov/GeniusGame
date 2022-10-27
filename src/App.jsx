@@ -70,9 +70,8 @@ const App = () => {
   };
 
   const endGameHandler = useCallback((earnedCoin, userId) => {
-    const keyValue = `${userId}_geniusGame`;
     const allEarnedCoins = +earnedCoin + +amountCoins;
-    postEarnedCoins(keyValue, allEarnedCoins).then(() => {
+    postEarnedCoins(allEarnedCoins, fetchedUser).then(() => {
       refetchUserCoins(fetchedUser);
       setEarnedCoinOnCurrentGame(earnedCoin);
     });
@@ -110,25 +109,6 @@ const App = () => {
     });
   }, [amountCoins]);
 
-  async function updateUserCoins(earnedCoin, user, amountCoin) {
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'localhost:8080',
-      },
-      dataType: 'json',
-      body: JSON.stringify({
-        userId: user,
-        coins: String(Number(earnedCoin) + Number(amountCoin)),
-        lastGameDate: '0',
-        gameCount: '0',
-      }),
-    };
-    await fetch('http://localhost:8080/v1/api/up', requestOptions);
-  }
-
   const joinGroupHandler = useCallback(() => {
     async function getFriendList() {
       const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
@@ -142,9 +122,9 @@ const App = () => {
         },
       });
       console.log('SUBCRIBED? ', groupSubscribed.response);
-      updateUserCoins(10, fetchedUser.id, amountCoins);
     }
-  }, []);
+    getFriendList().then(() => postEarnedCoins(+amountCoins + 10, fetchedUser));
+  }, [amountCoins, accessToken]);
 
   const repostHandler = useCallback(() => {
     console.log('REPOST');
@@ -177,7 +157,7 @@ const App = () => {
       default:
         return console.log('Invalid CardId');
     }
-  }, []);
+  }, [joinGroupHandler]);
 
   return (
     <ConfigProvider scheme={fetchedScheme}>

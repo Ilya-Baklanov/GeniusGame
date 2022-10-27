@@ -29,7 +29,7 @@ const MoreCoinsCards = ({ go, onClickToCard }) => {
 };
 
 MoreCoinsCards.propTypes = {
-  go: PropTypes.func.isRequired,
+  go: PropTypes.func,
   onClickToCard: PropTypes.func,
 };
 
