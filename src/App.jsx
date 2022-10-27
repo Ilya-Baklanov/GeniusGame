@@ -55,6 +55,7 @@ const App = () => {
     refetchUserCoins,
     postEarnedCoins,
     isEarnedCoinsPosted,
+    notificationsState,
   } = useFetchUserData();
 
   useEffect(() => {
@@ -171,7 +172,7 @@ const App = () => {
                   <Home id="home" fetchedUser={fetchedUser} go={go} amountCoins={amountCoins} />
                   <Game id="gameBoard" go={go} amountCoins={amountCoins} onEndGame={endGameHandler} userId={fetchedUser.id} />
                   <PromoCode id="promoCode" go={go} amountCoins={amountCoins} onActivateModal={activateModalPromoCodeHandler} />
-                  <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} onClickToCard={moreCoinsCardClickHandler} />
+                  <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} onClickToCard={moreCoinsCardClickHandler} fetchedUser={fetchedUser} notificationsState={notificationsState} />
                   <Rating id="rating" go={go} amountCoins={amountCoins} accessToken={accessToken} />
                   <LossPanel id="lossGame" go={go} />
                   <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} isLoading={!isEarnedCoinsPosted} />

@@ -9,6 +9,7 @@ const useFetchUserData = () => {
     const [fetchedScheme, setScheme] = useState('bright_light');
     const [accessToken, setAccessToken] = useState(null);
     const [amountCoins, setAmountCoins] = useState(null);
+    const [notificationsState, setNotificationsState] = useState(null);
 
     // async function fetchUserCoins(user) {
     //     const keyValue = `${user.id}_geniusGame`;
@@ -28,17 +29,10 @@ const useFetchUserData = () => {
             const json = await response.json();
             console.log(json);
             setAmountCoins(json.coins);
+            setNotificationsState(json.notifications);
         } else {
             console.log('error');
         }
-    }
-
-    async function fetchTokenFromStorage(user) {
-        const keyValue = `${user.id}_token`;
-        const token = await bridge.send('VKWebAppStorageGet', { keys: [keyValue] });
-        setAccessToken(token.keys[0].value);
-        console.log('from storage');
-        console.log(token.keys[0].value);
     }
 
     async function fetchToken(user) {
@@ -65,7 +59,6 @@ const useFetchUserData = () => {
         const user = await bridge.send('VKWebAppGetUserInfo');
         setUser(user);
         await fetchUserCoins(user);
-        await fetchTokenFromStorage(user);
         await fetchToken(user);
         setIsFetchUserLoaded(true);
     }
@@ -107,6 +100,7 @@ const useFetchUserData = () => {
         refetchUserCoins: fetchUserCoins,
         postEarnedCoins,
         isEarnedCoinsPosted,
+        notificationsState,
     };
 };
 

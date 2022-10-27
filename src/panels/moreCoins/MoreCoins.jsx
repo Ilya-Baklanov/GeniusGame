@@ -12,9 +12,28 @@ const MoreCoins = ({
   go,
   amountCoins,
   onClickToCard,
+  fetchedUser,
+  notificationsState,
 }) => {
   const pushSwitcherHandler = useCallback((e) => {
-    const isActivePush = e.target.checked;
+    const isActivePush = e.target.checked ? 1 : 0;
+    async function updateNotificationStatus(user) {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'localhost:8080',
+        },
+        dataType: 'json',
+        body: JSON.stringify({
+          userId: user,
+          notifications: isActivePush,
+        }),
+      };
+      await fetch('http://localhost:8080/v1/api/updateNotificationStatus', requestOptions);
+    }
+    updateNotificationStatus(fetchedUser.id);
   }, []);
 
   return (
@@ -33,7 +52,7 @@ const MoreCoins = ({
             {'Подпишись на push,\nчтобы не пропустить новые игры'}
           </Text>
         </div>
-        <Switcher onToggle={pushSwitcherHandler} />
+        <Switcher onToggle={pushSwitcherHandler} state={notificationsState} />
       </div>
     </CommonPanel>
   );
@@ -44,6 +63,8 @@ MoreCoins.propTypes = {
   go: PropTypes.func.isRequired,
   amountCoins: PropTypes.string.isRequired,
   onClickToCard: PropTypes.func,
+  fetchedUser: PropTypes.string.isRequired,
+  notificationsState: PropTypes.string.isRequired,
 };
 
 export default MoreCoins;
