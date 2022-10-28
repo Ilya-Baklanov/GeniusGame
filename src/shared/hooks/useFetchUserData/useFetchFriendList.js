@@ -7,7 +7,6 @@ import bridge from '@vkontakte/vk-bridge';
 const useFetchFriendList = (accessToken) => {
 	const [friendList, setFriendList] = useState(null);
 
-	console.log('ACCESS_TOKEN: ', accessToken);
 	async function getFriendList() {
 		const list = await bridge.send('VKWebAppCallAPIMethod', {
 			method: 'friends.get',
@@ -20,13 +19,12 @@ const useFetchFriendList = (accessToken) => {
 			},
 		});
 
-		console.log('RESPONSE_LIST: ', list.response);
-
 		const array = list.response.items.map((item) => ({
 			name: `${item.first_name} ${item.last_name}`,
 			score: 0,
 			avatarSrc: item.photo_100,
 		}));
+
 		setFriendList(array);
 
 		const requestOptions = {

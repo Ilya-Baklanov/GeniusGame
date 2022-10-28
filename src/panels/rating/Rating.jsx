@@ -20,6 +20,7 @@ const Rating = ({
   ];
 
   const gamersList2 = useFetchFriendList(accessToken);
+
   const ratingSwitcherHandler = useCallback((e) => {
     const isFriendsRating = !e.target.checked;
     const isAllRating = e.target.checked;

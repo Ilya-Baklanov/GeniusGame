@@ -71,7 +71,8 @@ const ModalPromoCode = ({
             <MainButton
               text="Получить"
               disabled={!availablePromoCode}
-              onClick={promoCode} // наверно это не так должно быть)
+
+              // onClick={promoCode} // наверно это не так должно быть)
             />
           </div>
         </div>
