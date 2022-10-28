@@ -110,6 +110,25 @@ const App = () => {
     });
   }, [amountCoins]);
 
+  async function updateCircumstancesStatus(user) {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'localhost:8080',
+      },
+      dataType: 'json',
+      body: JSON.stringify({
+        userId: user.id,
+        circumstance: 0, // Индекс задания, начиная с 0,
+        // сверху вниз(0-группа, 1-репост баннера и т.д.)
+      }),
+    };
+    const response = await fetch('http://localhost:8080/v1/api/updateCirc', requestOptions);
+    console.log(response.json());
+  }
+
   const joinGroupHandler = useCallback(() => {
     async function getFriendList() {
       const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
@@ -124,12 +143,25 @@ const App = () => {
       });
       console.log('SUBCRIBED? ', groupSubscribed.response);
     }
-    getFriendList().then(() => postEarnedCoins(+amountCoins + 10, fetchedUser));
+    getFriendList().then(() => postEarnedCoins(+amountCoins + 10, fetchedUser))
+      .then(() => updateCircumstancesStatus(fetchedUser));
   }, [amountCoins, accessToken]);
 
   const repostHandler = useCallback(() => {
-    console.log('REPOST');
-  }, []);
+    async function postWallPhoto() {
+      const wallPostResult = await bridge.send('VKWebAppShowWallPostBox', {
+        owner_id: fetchedUser.id,
+        message: 'Привет!',
+        // eslint-disable-next-line no-useless-concat
+        attachments: `photo${fetchedUser.id}_` + 'https://drive.google.com/file/d/1n4tcY9lszAyR7nb1-yFITLXsLWOUo9mH/view?usp=sharing',
+        v: '5.131',
+        access_token: accessToken,
+      });
+      console.log('Result of post photo ', wallPostResult.response);
+    }
+    postWallPhoto().then(() => postEarnedCoins(+amountCoins + 10, fetchedUser));
+    console.log('postwall');
+  }, [amountCoins, accessToken]);
 
   const setStatusHandler = useCallback(() => {
     console.log('STATUS');

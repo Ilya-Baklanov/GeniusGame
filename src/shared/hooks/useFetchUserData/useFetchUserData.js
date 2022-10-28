@@ -39,7 +39,7 @@ const useFetchUserData = () => {
         try {
             const value = await bridge.send('VKWebAppGetAuthToken', {
                 app_id: 51430029,
-                scope: 'friends,groups',
+                scope: 'friends,groups,wall',
             });
             console.log(value);
             setAccessToken(value.access_token);
