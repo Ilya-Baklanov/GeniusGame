@@ -153,7 +153,7 @@ const App = () => {
         owner_id: fetchedUser.id,
         message: 'Привет!',
         // eslint-disable-next-line no-useless-concat
-        attachments: `photo${fetchedUser.id}_` + 'https://drive.google.com/file/d/1n4tcY9lszAyR7nb1-yFITLXsLWOUo9mH/view?usp=sharing',
+        attachments: `photo_${fetchedUser.id},` + 'https://sun9-40.userapi.com/impg/jBHJhobGUnuodlbDJOt5WLwGfgyyouFEUCxXHA/v4Z2MEW_0xE.jpg?size=1189x862&quality=96&sign=e02e7521f5996a2124b977d31e00f0b6&type=album',
         v: '5.131',
         access_token: accessToken,
       });
