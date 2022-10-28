@@ -55,6 +55,7 @@ const App = () => {
     refetchUserCoins,
     postEarnedCoins,
     isEarnedCoinsPosted,
+    notificationsState,
   } = useFetchUserData();
 
   useEffect(() => {
@@ -70,9 +71,8 @@ const App = () => {
   };
 
   const endGameHandler = useCallback((earnedCoin, userId) => {
-    const keyValue = `${userId}_geniusGame`;
     const allEarnedCoins = +earnedCoin + +amountCoins;
-    postEarnedCoins(keyValue, allEarnedCoins).then(() => {
+    postEarnedCoins(allEarnedCoins, fetchedUser).then(() => {
       refetchUserCoins(fetchedUser);
       setEarnedCoinOnCurrentGame(earnedCoin);
     });
@@ -111,8 +111,21 @@ const App = () => {
   }, [amountCoins]);
 
   const joinGroupHandler = useCallback(() => {
-    console.log('JOINED');
-  }, []);
+    async function getFriendList() {
+      const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
+        method: 'groups.isMember',
+        params: {
+          group_id: 'habr',
+          user_id: '105560317',
+          extended: '0',
+          v: '5.131',
+          access_token: accessToken,
+        },
+      });
+      console.log('SUBCRIBED? ', groupSubscribed.response);
+    }
+    getFriendList().then(() => postEarnedCoins(+amountCoins + 10, fetchedUser));
+  }, [amountCoins, accessToken]);
 
   const repostHandler = useCallback(() => {
     console.log('REPOST');
@@ -145,28 +158,7 @@ const App = () => {
       default:
         return console.log('Invalid CardId');
     }
-  }, []);
-
-  async function updateUserCoins(earnedCoin, user, amountCoin) {
-    console.log('before');
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'localhost:8080',
-      },
-      dataType: 'json',
-      body: JSON.stringify({
-        userId: user,
-        coins: String(Number(earnedCoin) + Number(amountCoin)),
-        lastGameDate: '0',
-        gameCount: '0',
-      }),
-    };
-    await fetch('http://localhost:8080/v1/api/up', requestOptions);
-    console.log('after');
-  }
+  }, [joinGroupHandler]);
 
   return (
     <ConfigProvider scheme={fetchedScheme}>
@@ -180,7 +172,7 @@ const App = () => {
                   <Home id="home" fetchedUser={fetchedUser} go={go} amountCoins={amountCoins} />
                   <Game id="gameBoard" go={go} amountCoins={amountCoins} onEndGame={endGameHandler} userId={fetchedUser.id} />
                   <PromoCode id="promoCode" go={go} amountCoins={amountCoins} onActivateModal={activateModalPromoCodeHandler} />
-                  <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} onClickToCard={moreCoinsCardClickHandler} />
+                  <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} onClickToCard={moreCoinsCardClickHandler} fetchedUser={fetchedUser} notificationsState={notificationsState} />
                   <Rating id="rating" go={go} amountCoins={amountCoins} accessToken={accessToken} />
                   <LossPanel id="lossGame" go={go} />
                   <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} isLoading={!isEarnedCoinsPosted} />

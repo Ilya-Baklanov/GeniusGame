@@ -9,6 +9,7 @@ const useFetchUserData = () => {
     const [fetchedScheme, setScheme] = useState('bright_light');
     const [accessToken, setAccessToken] = useState(null);
     const [amountCoins, setAmountCoins] = useState(null);
+    const [notificationsState, setNotificationsState] = useState(null);
 
     // async function fetchUserCoins(user) {
     //     const keyValue = `${user.id}_geniusGame`;
@@ -28,24 +29,17 @@ const useFetchUserData = () => {
             const json = await response.json();
             console.log(json);
             setAmountCoins(json.coins);
+            setNotificationsState(json.notifications);
         } else {
             console.log('error');
         }
-    }
-
-    async function fetchTokenFromStorage(user) {
-        const keyValue = `${user.id}_token`;
-        const token = await bridge.send('VKWebAppStorageGet', { keys: [keyValue] });
-        setAccessToken(token.keys[0].value);
-        console.log('from storage');
-        console.log(token.keys[0].value);
     }
 
     async function fetchToken(user) {
         try {
             const value = await bridge.send('VKWebAppGetAuthToken', {
                 app_id: 51430029,
-                scope: 'friends',
+                scope: 'friends,groups',
             });
             console.log(value);
             setAccessToken(value.access_token);
@@ -65,19 +59,27 @@ const useFetchUserData = () => {
         const user = await bridge.send('VKWebAppGetUserInfo');
         setUser(user);
         await fetchUserCoins(user);
-        await fetchTokenFromStorage(user);
         await fetchToken(user);
         setIsFetchUserLoaded(true);
     }
 
-    async function postEarnedCoins(keyValue, allEarnedCoins) {
-        bridge.send(
-            'VKWebAppStorageSet',
-            {
-                key: keyValue,
-                value: String(allEarnedCoins),
-            },
-        ).then(() => setIsEarnedCoinsPosted(true));
+    async function postEarnedCoins(allEarnedCoins, user) {
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': 'localhost:8080',
+                },
+                dataType: 'json',
+                body: JSON.stringify({
+                    userId: user.id,
+                    coins: allEarnedCoins,
+                    gameCount: '0',
+                }),
+            };
+            await fetch('http://localhost:8080/v1/api/up', requestOptions);
+            console.log('COinsUPDATED', allEarnedCoins);
     }
 
     useEffect(() => {
@@ -98,6 +100,7 @@ const useFetchUserData = () => {
         refetchUserCoins: fetchUserCoins,
         postEarnedCoins,
         isEarnedCoinsPosted,
+        notificationsState,
     };
 };
 
