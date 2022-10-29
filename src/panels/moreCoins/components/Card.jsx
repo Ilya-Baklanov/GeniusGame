@@ -15,7 +15,7 @@ const Card = ({
 
   return (
     <div
-      onClick={onClick}
+      onClick={isComplete ? null : onClick}
       data-to={goTo}
       className={`more-coins-card ${completedConditionClassName}`}
     >
@@ -23,12 +23,14 @@ const Card = ({
         <Text className={`more-coins-card-text ${completedConditionClassName}`}>
           {text}
         </Text>
-        <div className={`more-coins-card-additional-coins-wrapper ${completedConditionClassName}`}>
-          <Text className={`more-coins-card-additional-coins-text ${completedConditionClassName}`}>
-            {`+${additionalCoins}`}
-          </Text>
-          <MoreCoins />
-        </div>
+        {additionalCoins && (
+          <div className={`more-coins-card-additional-coins-wrapper ${completedConditionClassName}`}>
+            <Text className={`more-coins-card-additional-coins-text ${completedConditionClassName}`}>
+              {`+${additionalCoins}`}
+            </Text>
+            <MoreCoins />
+          </div>
+        )}
       </div>
     </div>
   );

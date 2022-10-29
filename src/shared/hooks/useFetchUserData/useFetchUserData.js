@@ -11,29 +11,29 @@ const useFetchUserData = () => {
     const [amountCoins, setAmountCoins] = useState(null);
     const [notificationsState, setNotificationsState] = useState(null);
 
-    // async function fetchUserCoins(user) {
-    //     const keyValue = `${user.id}_geniusGame`;
-    //     const coins = await bridge.send('VKWebAppStorageGet', { keys: [keyValue] });
-    //     setAmountCoins(coins.keys[0].value);
-    // }
-
     async function fetchUserCoins(user) {
-        const response = await fetch(`http://localhost:8080/v1/api/getUserData/${user.id}`, {
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'localhost:8080',
-            },
-        });
-        if (response.ok) {
-            const json = await response.json();
-            console.log(json);
-            setAmountCoins(json.coins);
-            setNotificationsState(json.notifications);
-        } else {
-            console.log('error');
-        }
+        const keyValue = `${user.id}_geniusGame`;
+        const coins = await bridge.send('VKWebAppStorageGet', { keys: [keyValue] });
+        setAmountCoins(coins.keys[0].value);
     }
+
+    // async function fetchUserCoins(user) {
+    //     const response = await fetch(`http://localhost:8080/v1/api/getUserData/${user.id}`, {
+    //         headers: {
+    //             Accept: 'application/json',
+    //             'Content-Type': 'application/json',
+    //             'Access-Control-Allow-Origin': 'localhost:8080',
+    //         },
+    //     });
+    //     if (response.ok) {
+    //         const json = await response.json();
+    //         console.log(json);
+    //         setAmountCoins(json.coins);
+    //         setNotificationsState(json.notifications);
+    //     } else {
+    //         console.log('error');
+    //     }
+    // }
 
     async function fetchToken(user) {
         try {
@@ -64,22 +64,22 @@ const useFetchUserData = () => {
     }
 
     async function postEarnedCoins(allEarnedCoins, user) {
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': 'localhost:8080',
-                },
-                dataType: 'json',
-                body: JSON.stringify({
-                    userId: user.id,
-                    coins: allEarnedCoins,
-                    gameCount: '0',
-                }),
-            };
-            await fetch('http://localhost:8080/v1/api/up', requestOptions);
-            console.log('COinsUPDATED', allEarnedCoins);
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'localhost:8080',
+            },
+            dataType: 'json',
+            body: JSON.stringify({
+                userId: user.id,
+                coins: allEarnedCoins,
+                gameCount: '0',
+            }),
+        };
+        await fetch('http://localhost:8080/v1/api/up', requestOptions);
+        console.log('COinsUPDATED', allEarnedCoins);
     }
 
     useEffect(() => {

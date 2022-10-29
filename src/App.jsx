@@ -26,11 +26,14 @@ import PromoCode from './panels/promoCode/PromoCode';
 import MoreCoins from './panels/moreCoins/MoreCoins';
 import Rating from './panels/rating/Rating';
 import usePreloadImage from './shared/hooks/usePreloadImage/usePreloadImage';
-import { CARDS, MODAL_PROMO_CODE, MOTIVATOR } from './assets/constants/constants';
+import {
+  CARDS, MODAL_PROMO_CODE, MOTIVATOR, MODAL_MORE_COINS,
+} from './assets/constants/constants';
 import LossPanel from './panels/lossPanel/LossPanel';
 import WinPanel from './panels/winPanel/WinPanel';
 import ModalPromoCode from './panels/promoCode/components/ModalPromoCode';
 import useFetchUserData from './shared/hooks/useFetchUserData/useFetchUserData';
+import ModalMoreCoins from './panels/moreCoins/components/ModalMoreCoins';
 
 const App = () => {
   const [activePanel, setActivePanel] = useState('home');
@@ -96,6 +99,11 @@ const App = () => {
         amountCoins={amountCoins}
         onClose={closeModal}
       />
+      <ModalMoreCoins
+        id={MODAL_MORE_COINS}
+        onClose={closeModal}
+        go={go}
+      />
     </ModalRoot>
   ), [activeModal, amountCoins]);
 
@@ -128,6 +136,12 @@ const App = () => {
     const response = await fetch('http://localhost:8080/v1/api/updateCirc', requestOptions);
     console.log(response.json());
   }
+
+  const activateModalMoreCoinsHandler = useCallback(() => {
+    setActiveModal({
+      id: MODAL_MORE_COINS,
+    });
+  }, [amountCoins]);
 
   const joinGroupHandler = useCallback(() => {
     async function getFriendList() {
@@ -165,6 +179,7 @@ const App = () => {
 
   const setStatusHandler = useCallback(() => {
     console.log('STATUS');
+    activateModalMoreCoinsHandler();
   }, []);
 
   const inviteFriendsHandler = useCallback(() => {
@@ -204,7 +219,14 @@ const App = () => {
                   <Home id="home" fetchedUser={fetchedUser} go={go} amountCoins={amountCoins} />
                   <Game id="gameBoard" go={go} amountCoins={amountCoins} onEndGame={endGameHandler} userId={fetchedUser.id} />
                   <PromoCode id="promoCode" go={go} amountCoins={amountCoins} onActivateModal={activateModalPromoCodeHandler} />
-                  <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} onClickToCard={moreCoinsCardClickHandler} fetchedUser={fetchedUser} notificationsState={notificationsState} />
+                  <MoreCoins
+                    id="moreCoins"
+                    go={go}
+                    amountCoins={amountCoins}
+                    onClickToCard={moreCoinsCardClickHandler}
+                    fetchedUser={fetchedUser}
+                    notificationsState={notificationsState}
+                  />
                   <Rating id="rating" go={go} amountCoins={amountCoins} accessToken={accessToken} />
                   <LossPanel id="lossGame" go={go} />
                   <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} isLoading={!isEarnedCoinsPosted} />

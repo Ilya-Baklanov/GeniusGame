@@ -1,11 +1,19 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
-  AppearanceProvider, Link, ModalPage, ModalPageHeader, PanelHeaderClose, Text, useAdaptivity,
+  AppearanceProvider,
+  Link,
+  ModalPage,
+  ModalPageHeader,
+  PanelHeaderClose,
+  Text,
+  useAdaptivity,
+  IconButton,
 } from '@vkontakte/vkui';
 
 import './ModalPromoCode.css';
 import MainButton from '../../../shared/mainButton/MainButton';
+import { CloseGray } from '../../../assets/image';
 
 const ModalPromoCode = ({
   id,
@@ -44,9 +52,11 @@ const ModalPromoCode = ({
         size="s"
         header={(
           <ModalPageHeader
-            after={
-              <PanelHeaderClose onClick={onClose} />
-              }
+            right={(
+              <IconButton onClick={onClose}>
+                <CloseGray />
+              </IconButton>
+            )}
           />
       )}
       >
@@ -114,7 +124,7 @@ ModalPromoCode.propTypes = {
     promoCodeDescription: PropTypes.string,
   }),
   amountCoins: PropTypes.string,
-  promoCode: PropTypes.string.isRequired,
+  promoCode: PropTypes.string,
 };
 
 export default ModalPromoCode;

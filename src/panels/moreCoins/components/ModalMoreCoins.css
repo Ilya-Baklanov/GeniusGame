@@ -1,0 +1,25 @@
+.more-coins-modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.more-coins-navbar-container {
+    position: absolute;
+    bottom: 22px;
+    width: 100%;
+    padding: 0 17px;
+}
+
+.vkuiModalPage__in {
+    max-width: 349px;
+    padding: 0 12px;
+}
+
+@media (max-device-width: 480px) {
+    .vkuiModalPage__in {
+        max-width: 100%;
+        padding: 0 12px;
+    }
+}

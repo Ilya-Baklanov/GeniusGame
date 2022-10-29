@@ -13,7 +13,7 @@ const useGetMoreCoinsData = () => {
     useEffect(() => {
         setCardList((previousCardList) => previousCardList.map((card, index) => ({
             ...card,
-            isComplete: index === 2,
+            // isComplete: index === 2,
         })));
     }, []);
 

@@ -50,10 +50,10 @@ export const PROMOCODES = [
 
 export const MORE_COINS_CARDS = [
     { id: 'JOIN_GROUP', additionalCoins: 10, text: 'Вступи в официальную группу\nСберМегаМаркета в Вконтакте' },
-    { id: 'REPOST', additionalCoins: 10, text: 'Сделай репост баннера игры\nк себе на страницу' },
-    { id: 'STATUS', additionalCoins: 10, text: 'Установи фирменный\nстатус из игры' },
-    { id: 'INVITE_FRIENDS', additionalCoins: 5, text: 'Пригласи к участию друзей,\nпроследи, чтобы друг зашёл в игру' },
-    { id: 'SUBSCRIBE_TO_BOT', additionalCoins: 10, text: 'Подпишись на чат-бота и получи\nдополнительный промокод' },
+    { id: 'REPOST', additionalCoins: 10, text: 'Раскрась баннер игры\nи поделись им на своей странице' },
+    { id: 'STATUS', additionalCoins: 10, text: 'Подбери фирменный статус\nпо настроению' },
+    { id: 'INVITE_FRIENDS', text: 'Пригласи к участию друзей' },
 ];
 
 export const MODAL_PROMO_CODE = 'modal_promo_code';
+export const MODAL_MORE_COINS = 'modal_more_coins';
