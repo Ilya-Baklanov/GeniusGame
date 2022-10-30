@@ -6,8 +6,8 @@ import style from './MoreCoinsCards.module.css';
 import Card from './Card';
 import useGetMoreCoinsData from '../../../shared/hooks/useGetMoreCoinsData/useGetMoreCoinsData';
 
-const MoreCoinsCards = ({ go, onClickToCard }) => {
-  const { cardList } = useGetMoreCoinsData();
+const MoreCoinsCards = ({ go, onClickToCard, circumstances }) => {
+  const { cardList } = useGetMoreCoinsData(circumstances);
 
   return (
     <div className={cn(style['more-coins-cards-wrapper'])}>
@@ -32,6 +32,7 @@ const MoreCoinsCards = ({ go, onClickToCard }) => {
 MoreCoinsCards.propTypes = {
   go: PropTypes.func,
   onClickToCard: PropTypes.func,
+  circumstances: PropTypes.string,
 };
 
 export default MoreCoinsCards;

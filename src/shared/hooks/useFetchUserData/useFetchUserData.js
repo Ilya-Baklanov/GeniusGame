@@ -8,12 +8,16 @@ const useFetchUserData = () => {
     const [fetchedScheme, setScheme] = useState('bright_light');
     const [accessToken, setAccessToken] = useState(null);
     const [userStat, setUserStat] = useState(null);
-    const [notificationsState, setNotificationsState] = useState(null);
+    const [isEarnedCoinsPosted, setIsEarnedCoinsPosted] = useState(false);
 
     const fetchUserCoins = useCallback(async (user) => {
-        const keyValue = `${user.id}_geniusGame`;
-        const coins = await bridge.send('VKWebAppStorageGet', { keys: [keyValue] });
-        setUserStat(coins.keys[0].value);
+        setUserStat({
+            circumstances: '01000',
+            coins: '777',
+            gameCount: '1',
+            notifications: '1',
+            userId: '752451680',
+        });
     }, []);
 
     // const fetchUserCoins = useCallback(async (user) => {
@@ -25,10 +29,9 @@ const useFetchUserData = () => {
     //         },
     //     });
     //     if (response.ok) {
-    //         const json = await response.json();
-    //         console.log(json);
-    //         setUserStat(json.coins);
-    //         setNotificationsState(json.notifications);
+    //         const data = await response.json();
+    //         console.log('USER_DATA: ', data);
+    //         setUserStat(data);
     //     } else {
     //         console.log('error');
     //     }
@@ -48,7 +51,7 @@ const useFetchUserData = () => {
         }
     }
 
-    async function fetchToken(user) {
+    const fetchToken = useCallback(async (user) => {
         try {
             const value = await bridge.send('VKWebAppGetAuthToken', {
                 app_id: 51430029,
@@ -91,7 +94,16 @@ const useFetchUserData = () => {
                 gameCount: '0',
             }),
         };
-        await fetch('http://localhost:8080/v1/api/up', requestOptions);
+        const response = await fetch('http://localhost:8080/v1/api/up', requestOptions);
+        if (response.ok) {
+            const data = await response.json();
+            console.log('UPDATED_USER_DATA: ', data);
+            setUserStat(data);
+            setIsEarnedCoinsPosted(true);
+        } else {
+            console.log('error');
+        }
+
         console.log('Coins_UPDATED', allEarnedCoins);
     }, []);
 
@@ -139,9 +151,8 @@ const useFetchUserData = () => {
         fetchedScheme,
         accessToken,
         userStat,
-        refetchUserCoins: fetchUserCoins,
         postEarnedCoins,
-        notificationsState,
+        isEarnedCoinsPosted,
         updateCircumstancesStatus,
         postWallPhoto,
     };

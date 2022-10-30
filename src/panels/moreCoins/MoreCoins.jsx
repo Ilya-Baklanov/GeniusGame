@@ -12,10 +12,9 @@ import Switcher from './components/Switcher';
 const MoreCoins = ({
   id,
   go,
-  amountCoins,
+  userStat,
   onClickToCard,
   fetchedUser,
-  notificationsState,
 }) => {
   const pushSwitcherHandler = useCallback((e) => {
     const isActivePush = e.target.checked ? 1 : 0;
@@ -42,19 +41,19 @@ const MoreCoins = ({
     <CommonPanel
       id={id}
       go={go}
-      amountCoins={amountCoins}
+      amountCoins={userStat.coins}
       title="Ещё монеты"
       description="Выполняй задания –
       зарабатывай ещё больше монет!"
     >
-      <MoreCoinsCards onClickToCard={onClickToCard} />
+      <MoreCoinsCards circumstances={userStat.circumstances} onClickToCard={onClickToCard} />
       <div className={cn(style['more-coins-push-wrapper'])}>
         <div className={cn(style['more-coins-push-description-wrapper'])}>
           <Text className={cn(style['more-coins-push-description'])}>
             {'Подпишись на push,\nчтобы не пропустить новые игры'}
           </Text>
         </div>
-        <Switcher onToggle={pushSwitcherHandler} state={notificationsState} />
+        <Switcher onToggle={pushSwitcherHandler} state={userStat.notifications} />
       </div>
     </CommonPanel>
   );
@@ -63,10 +62,15 @@ const MoreCoins = ({
 MoreCoins.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
-  amountCoins: PropTypes.string.isRequired,
+  userStat: PropTypes.shape({
+    circumstances: PropTypes.string,
+    coins: PropTypes.string,
+    gameCount: PropTypes.string,
+    notifications: PropTypes.string,
+    userId: PropTypes.string,
+  }),
   onClickToCard: PropTypes.func,
   fetchedUser: PropTypes.string.isRequired,
-  notificationsState: PropTypes.string,
 };
 
 export default MoreCoins;

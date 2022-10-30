@@ -14,7 +14,7 @@ import { APP_NAME } from '../../assets/constants/constants';
 import MainLayout from '../../shared/mainLayout/MainLayout';
 
 const Game = ({
-  id, go, onEndGame, userId,
+  id, go, onEndGame,
 }) => {
   const [isDisableGameboard, setIsDisableGameboard] = useState(true);
   const [guessedCards, setGuessedCards] = useState(0);
@@ -25,10 +25,10 @@ const Game = ({
 
   const endingTimeHandler = useCallback(() => {
     if (guessedCards === 0) {
-      onEndGame(guessedCards, userId);
+      onEndGame(guessedCards);
       go(null, 'lossGame');
     } else {
-      onEndGame(guessedCards, userId);
+      onEndGame(guessedCards);
       go(null, 'winGame');
     }
   }, [guessedCards]);
@@ -38,7 +38,7 @@ const Game = ({
   }, []);
 
   const winHandler = useCallback(() => {
-    onEndGame(guessedCards, userId);
+    onEndGame(guessedCards);
     go(null, 'winGame');
   }, [guessedCards]);
 
@@ -102,7 +102,6 @@ Game.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
   onEndGame: PropTypes.func,
-  userId: PropTypes.number.isRequired,
 };
 
 export default Game;
