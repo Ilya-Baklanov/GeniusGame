@@ -107,6 +107,7 @@ const App = () => {
         content={activeModal ? activeModal.content : null}
         amountCoins={userStat ? userStat.coins : '0'}
         onClose={closeModal}
+        user={userStat}
       />
       <ModalMoreCoins
         id={MODAL_MORE_COINS}
@@ -135,41 +136,55 @@ const App = () => {
 
   const repostHandler = useCallback(() => {
     console.log('REPOST_ACTIVATE');
-    postWallPhoto(fetchedUser, 'Привет!', accessToken).then(() => {
+    postWallPhoto(fetchedUser, 'Играй и покупай https://vk.com/app51430029', accessToken).then(() => {
       postEarnedCoins(+userStat.coins + 10, fetchedUser);
       updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
     });
   }, [userStat, accessToken, fetchedUser]);
 
-  const joinGroupHandler = useCallback(() => {
+  async function checkIsUserSubscribed() {
+    const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
+      method: 'groups.isMember',
+      params: {
+        group_id: 131445697,
+        user_id: '105560317',
+        extended: '0',
+        v: '5.131',
+        access_token: accessToken,
+      },
+    });
+    return groupSubscribed.response;
+  }
+
+  useEffect(() => console.log('USER STAT', userStat), [userStat]);
+
+  const joinGroupHandler = useCallback(async () => {
     async function joinGroup() {
       bridge.send('VKWebAppJoinGroup', {
-        group_id: 138201238,
+        group_id: 131445697,
       })
         .then((data) => {
           if (data.result) {
-            console.log('SUBCRIBED? ', 1);
+            console.log('VOT ETO RESULT');
+            postEarnedCoins(+userStat.coins + 10, fetchedUser);
+            updateCircumstancesStatus(fetchedUser, 0);
           }
         })
         .catch((error) => {
           // Ошибка
           console.log(error);
         });
-
-      // const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
-      //   method: 'groups.isMember',
-      //   params: {
-      //     group_id: 'habr',
-      //     user_id: '105560317',
-      //     extended: '0',
-      //     v: '5.131',
-      //     access_token: accessToken,
-      //   },
-      // });
-      // console.log('SUBCRIBED? ', groupSubscribed.response);
     }
-    joinGroup().then(() => postEarnedCoins(+userStat.coins + 10, fetchedUser))
-      .then(() => updateCircumstancesStatus(fetchedUser));
+
+    const isSub = await checkIsUserSubscribed();
+    if (isSub) {
+      // eslint-disable-next-line no-alert
+      alert('Вы уже подписаны');
+      postEarnedCoins(+userStat.coins + 10, fetchedUser);
+      updateCircumstancesStatus(fetchedUser, 0);
+    } else {
+      joinGroup();
+    }
   }, [userStat, accessToken]);
 
   const goToPosterPage = useCallback(() => {

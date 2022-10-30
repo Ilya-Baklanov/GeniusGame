@@ -11,7 +11,7 @@ const useGetMoreCoinsData = (circumstances) => {
             ...card,
             isComplete: circumstances[index] === '1',
         })));
-    }, []);
+    }, [circumstances]);
 
     return {
         cardList,
