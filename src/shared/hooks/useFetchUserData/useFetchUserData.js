@@ -64,7 +64,7 @@ const useFetchUserData = () => {
                 userId: user.id,
             }),
         };
-        const response = await fetch('http://localhost:8080/v1/api/getLeaderBoard', requestOptions);
+        const response = await fetch('http://localhost:8080/v1/api/getPlaceInTop', requestOptions);
         if (response.ok) {
             const data = await response.json();
             console.log('USER_DATA: ', data);
@@ -88,7 +88,7 @@ const useFetchUserData = () => {
                 friendsList: [1, 2, 3, 4, 5, 105560317],
             }),
         };
-        const response = await fetch('http://localhost:8080/v1/api/getLeaderBoardFriends', requestOptions);
+        const response = await fetch('http://localhost:8080/v1/api/getPlaceInTopFriends', requestOptions);
         if (response.ok) {
             const data = await response.json();
             console.log('USER_DATA: ', data);
