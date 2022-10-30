@@ -14,7 +14,6 @@ import {
   SplitLayout,
   SplitCol,
   ModalRoot,
-  PopoutWrapper,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import bridge from '@vkontakte/vk-bridge';
@@ -66,10 +65,8 @@ const App = () => {
     fetchedScheme,
     accessToken,
     userStat,
-    refetchUserCoins,
     postEarnedCoins,
     isEarnedCoinsPosted,
-    notificationsState,
     updateCircumstancesStatus,
     postWallPhoto,
   } = useFetchUserData();
@@ -86,10 +83,9 @@ const App = () => {
     setActivePanel(e ? e.currentTarget.dataset.to : goTo);
   };
 
-  const endGameHandler = useCallback((earnedCoin, userId) => {
-    const allEarnedCoins = +earnedCoin + +userStat;
+  const endGameHandler = useCallback((earnedCoin) => {
+    const allEarnedCoins = +earnedCoin + +userStat.coins;
     postEarnedCoins(allEarnedCoins, fetchedUser).then(() => {
-      refetchUserCoins(fetchedUser);
       setEarnedCoinOnCurrentGame(earnedCoin);
     });
   }, [userStat, fetchedUser]);
@@ -109,8 +105,9 @@ const App = () => {
       <ModalPromoCode
         id={MODAL_PROMO_CODE}
         content={activeModal ? activeModal.content : null}
-        amountCoins={userStat}
+        amountCoins={userStat ? userStat.coins : '0'}
         onClose={closeModal}
+        user={userStat}
       />
       <ModalMoreCoins
         id={MODAL_MORE_COINS}
@@ -127,7 +124,7 @@ const App = () => {
         denomination,
         promoCodeDescription,
       },
-      userStat,
+      // userStat,
     });
   }, [userStat]);
 
@@ -139,58 +136,61 @@ const App = () => {
 
   const repostHandler = useCallback(() => {
     console.log('REPOST_ACTIVATE');
-    postWallPhoto(fetchedUser, 'Привет!', accessToken).then(() => {
-      postEarnedCoins(+userStat + 10, fetchedUser);
+    postWallPhoto(fetchedUser, 'Играй и покупай https://vk.com/app51430029', accessToken).then(() => {
+      postEarnedCoins(+userStat.coins + 10, fetchedUser);
       updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
     });
   }, [userStat, accessToken, fetchedUser]);
 
-  const joinGroupHandler = useCallback(() => {
+  async function checkIsUserSubscribed() {
+    const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
+      method: 'groups.isMember',
+      params: {
+        group_id: 131445697,
+        user_id: '105560317',
+        extended: '0',
+        v: '5.131',
+        access_token: accessToken,
+      },
+    });
+    return groupSubscribed.response;
+  }
+
+  useEffect(() => console.log('USER STAT', userStat), [userStat]);
+
+  const joinGroupHandler = useCallback(async () => {
     async function joinGroup() {
       bridge.send('VKWebAppJoinGroup', {
-        group_id: 138201238,
+        group_id: 131445697,
       })
         .then((data) => {
           if (data.result) {
-            console.log('SUBCRIBED? ', 1);
+            console.log('VOT ETO RESULT');
+            postEarnedCoins(+userStat.coins + 10, fetchedUser);
+            updateCircumstancesStatus(fetchedUser, 0);
           }
         })
         .catch((error) => {
           // Ошибка
           console.log(error);
         });
-
-      // const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
-      //   method: 'groups.isMember',
-      //   params: {
-      //     group_id: 'habr',
-      //     user_id: '105560317',
-      //     extended: '0',
-      //     v: '5.131',
-      //     access_token: accessToken,
-      //   },
-      // });
-      // console.log('SUBCRIBED? ', groupSubscribed.response);
     }
-    joinGroup().then(() => postEarnedCoins(+amountCoins + 10, fetchedUser))
-      .then(() => updateCircumstancesStatus(fetchedUser));
-  }, [amountCoins, accessToken]);
 
-  const repostHandler = useCallback(() => {
-    async function postWallPhoto() {
-      const wallPostResult = await bridge.send('VKWebAppShowWallPostBox', {
-        owner_id: fetchedUser.id,
-        message: 'Привет!',
-        // eslint-disable-next-line no-useless-concat
-        attachments: `photo_${fetchedUser.id},` + 'https://sun9-40.userapi.com/impg/jBHJhobGUnuodlbDJOt5WLwGfgyyouFEUCxXHA/v4Z2MEW_0xE.jpg?size=1189x862&quality=96&sign=e02e7521f5996a2124b977d31e00f0b6&type=album',
-        v: '5.131',
-        access_token: accessToken,
-      });
-      console.log('Result of post photo ', wallPostResult.response);
+    const isSub = await checkIsUserSubscribed();
+    if (isSub) {
+      // eslint-disable-next-line no-alert
+      alert('Вы уже подписаны');
+      postEarnedCoins(+userStat.coins + 10, fetchedUser);
+      updateCircumstancesStatus(fetchedUser, 0);
+    } else {
+      joinGroup();
     }
-    postWallPhoto().then(() => postEarnedCoins(+amountCoins + 10, fetchedUser));
-    console.log('postwall');
-  }, [amountCoins, accessToken]);
+  }, [userStat, accessToken]);
+
+  const goToPosterPage = useCallback(() => {
+    console.log('GO TO POSTER_PAGE');
+    go(null, 'poster');
+  }, []);
 
   const setStatusHandler = useCallback(() => {
     console.log('STATUS');
@@ -227,22 +227,21 @@ const App = () => {
       <AdaptivityProvider>
         <AppRoot>
           <SplitLayout modal={modal}>
-            <SplitCol>
+            <SplitCol animate>
 
               {isLoaded ? (
                 <View activePanel={activePanel}>
-                  <Home id="home" fetchedUser={fetchedUser} go={go} amountCoins={userStat} />
-                  <Game id="gameBoard" go={go} amountCoins={userStat} onEndGame={endGameHandler} userId={fetchedUser.id} />
-                  <PromoCode id="promoCode" go={go} amountCoins={userStat} onActivateModal={activateModalPromoCodeHandler} />
+                  <Home id="home" fetchedUser={fetchedUser} go={go} amountCoins={userStat.coins} />
+                  <Game id="gameBoard" go={go} amountCoins={userStat.coins} onEndGame={endGameHandler} userId={fetchedUser.id} />
+                  <PromoCode id="promoCode" go={go} amountCoins={userStat.coins} onActivateModal={activateModalPromoCodeHandler} />
                   <MoreCoins
                     id="moreCoins"
                     go={go}
-                    amountCoins={userStat}
+                    userStat={userStat}
                     onClickToCard={moreCoinsCardClickHandler}
                     fetchedUser={fetchedUser}
-                    notificationsState={notificationsState}
                   />
-                  <Rating id="rating" go={go} amountCoins={userStat} accessToken={accessToken} />
+                  <Rating id="rating" go={go} amountCoins={userStat.coins} accessToken={accessToken} />
                   <LossPanel id="lossGame" go={go} />
                   <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} isLoading={!isEarnedCoinsPosted} />
                   <Poster id="poster" go={go} onRepost={repostHandler} />
