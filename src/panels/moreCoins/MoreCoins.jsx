@@ -15,6 +15,7 @@ const MoreCoins = ({
   userStat,
   onClickToCard,
   fetchedUser,
+  isLoading,
 }) => {
   const pushSwitcherHandler = useCallback((e) => {
     const isActivePush = e.target.checked ? 1 : 0;
@@ -34,8 +35,8 @@ const MoreCoins = ({
       };
       await fetch('http://localhost:8080/v1/api/updateNotificationStatus', requestOptions);
     }
-    updateNotificationStatus(fetchedUser.id);
-  }, []);
+    // updateNotificationStatus(fetchedUser.id);
+  }, [fetchedUser]);
 
   return (
     <CommonPanel
@@ -45,6 +46,7 @@ const MoreCoins = ({
       title="Ещё монеты"
       description="Выполняй задания –
       зарабатывай ещё больше монет!"
+      isLoading={isLoading}
     >
       <MoreCoinsCards circumstances={userStat.circumstances} onClickToCard={onClickToCard} />
       <div className={cn(style['more-coins-push-wrapper'])}>
@@ -53,7 +55,7 @@ const MoreCoins = ({
             {'Подпишись на push,\nчтобы не пропустить новые игры'}
           </Text>
         </div>
-        <Switcher onToggle={pushSwitcherHandler} state={userStat.notifications} />
+        <Switcher onToggle={pushSwitcherHandler} state={+userStat.notifications} />
       </div>
     </CommonPanel>
   );
@@ -70,7 +72,8 @@ MoreCoins.propTypes = {
     userId: PropTypes.string,
   }),
   onClickToCard: PropTypes.func,
-  fetchedUser: PropTypes.string.isRequired,
+  fetchedUser: PropTypes.shape(),
+  isLoading: PropTypes.bool,
 };
 
 export default MoreCoins;

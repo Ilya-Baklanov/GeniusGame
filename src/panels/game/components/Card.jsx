@@ -18,6 +18,8 @@ const Card = ({
         },
         {
           [style.checked]: !!item.stat && item.stat !== 'preview',
+        },
+        {
           [style[item.stat]]: !!item.stat && item.stat !== 'preview',
         },
         {

@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 
 import EndGamePanel from '../../shared/endGamePanel/EndGamePanel';
 
-const LossPanel = ({ id, go }) => (
+const LossPanel = ({
+  id, go, isMoreGamesAvailable, timeUntilNextGame,
+}) => (
   <EndGamePanel
     id={id}
     go={go}
     lose
-    isMoreGamesAvailable={true}
-    timeUntilNextGame={12}
+    isMoreGamesAvailable={isMoreGamesAvailable}
+    timeUntilNextGame={timeUntilNextGame}
     isLoading={false}
     earnedCoin={0}
   />
@@ -18,6 +20,8 @@ const LossPanel = ({ id, go }) => (
 LossPanel.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
+  isMoreGamesAvailable: PropTypes.bool,
+  timeUntilNextGame: PropTypes.number,
 };
 
 export default LossPanel;

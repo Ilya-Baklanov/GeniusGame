@@ -150,6 +150,40 @@
     justify-content: center;
 }
 
+.timer-until-next-game-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 81px;
+    border: 1px solid #7E03B1;
+    padding: 18px 0 17px 0;
+    border-radius: 10px;
+}
+
+.timer-until-next-game-text {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    
+    color: #7E03B1;
+}
+
+.timer-until-next-game-time {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    text-align: center;
+    
+    color: #7E03B1;
+}
+
 /* Navbar */
 
 .navbar-container {

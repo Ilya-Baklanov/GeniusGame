@@ -1,10 +1,26 @@
 import React, {
   useCallback,
-  useEffect, useMemo, useState,
+  useEffect,
+  useMemo,
+  useState,
 } from 'react';
 import PropTypes from 'prop-types';
 
-const addZero = (number) => (number > 9 ? number : `0${number}`);
+export const addZero = (number) => (number > 9 ? number : `0${number}`);
+
+export const timeHandler = (time) => {
+  const timeItems = time.split(':');
+  const hours = +timeItems[0];
+  const minutes = +timeItems[1];
+  const seconds = +timeItems[2];
+
+  const allSeconds = (seconds + minutes * 60 + hours * 3600);
+
+  return {
+    hours,
+    allSeconds,
+  };
+};
 
 /**
  *
@@ -17,15 +33,16 @@ const addZero = (number) => (number > 9 ? number : `0${number}`);
 const Timer = ({
   time, advanceСountdownTime, onEndedAdvanceСountdownTime, onEndedTime,
 }) => {
-  const [timeLeft, setTimeLeft] = useState(advanceСountdownTime);
+  const [timeLeft, setTimeLeft] = useState(advanceСountdownTime || time);
   const [isAdvanceTimeOver, setIsAdvanceTimeOver] = useState(false);
+  const hoursLeft = useMemo(() => Math.trunc((timeLeft / 3600) % 60), [timeLeft]);
   const minutesLeft = useMemo(() => Math.trunc((timeLeft / 60) % 60), [timeLeft]);
   const secondsLeft = useMemo(() => Math.trunc(timeLeft % 60), [timeLeft]);
 
   const setMainTime = useCallback(() => {
     setIsAdvanceTimeOver(true);
     setTimeLeft(time);
-  }, []);
+  }, [time]);
 
   useEffect(() => {
     const timerId = setInterval(() => {
@@ -52,7 +69,7 @@ const Timer = ({
 
   return (
     <div>
-      {advanceСountdownTime && !isAdvanceTimeOver ? `${secondsLeft}` : `${addZero(minutesLeft)} : ${addZero(secondsLeft)}`}
+      {advanceСountdownTime && !isAdvanceTimeOver ? `${secondsLeft}` : `${hoursLeft ? `${addZero(hoursLeft)} : ` : ''}${addZero(minutesLeft)} : ${addZero(secondsLeft)}`}
     </div>
   );
 };

@@ -72,4 +72,5 @@ export const MORE_COINS_CARDS = [
 ];
 
 export const MODAL_PROMO_CODE = 'modal_promo_code';
+export const MODAL_GET_PROMO_CODE = 'modal_get_promo_code';
 export const MODAL_MORE_COINS = 'modal_more_coins';

@@ -16,7 +16,7 @@ import Navbar from '../../shared/navbar/Navbar';
 import MainButton from '../../shared/mainButton/MainButton';
 
 const Poster = ({
-  id, go, userId, onRepost,
+  id, go, onRepost,
 }) => {
   const [colorizedItems, setColorizedItems] = useState([]);
 
@@ -127,7 +127,6 @@ const Poster = ({
 Poster.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
-  userId: PropTypes.number.isRequired,
   onRepost: PropTypes.func,
 };
 

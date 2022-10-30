@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import EndGamePanel from '../../shared/endGamePanel/EndGamePanel';
 
 const WinPanel = ({
-  id, go, earnedCoin, isLoading,
+  id, go, earnedCoin, isLoading, isMoreGamesAvailable, timeUntilNextGame,
 }) => (
   <EndGamePanel
     id={id}
     go={go}
     win
-    isMoreGamesAvailable={true}
-    timeUntilNextGame={12}
+    isMoreGamesAvailable={isMoreGamesAvailable}
+    timeUntilNextGame={timeUntilNextGame}
     isLoading={isLoading}
     earnedCoin={String(Number(earnedCoin))}
   />
@@ -22,6 +22,8 @@ WinPanel.propTypes = {
   go: PropTypes.func.isRequired,
   earnedCoin: PropTypes.number,
   isLoading: PropTypes.bool,
+  isMoreGamesAvailable: PropTypes.bool,
+  timeUntilNextGame: PropTypes.number,
 };
 
 export default WinPanel;

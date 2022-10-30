@@ -1,4 +1,4 @@
-.promocode-modal-wrapper {
+.wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,41 +7,21 @@
     /* justify-content: space-between; */
 }
 
-.promocode-modal-promocode-card {
+.promocode-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     width: 315px;
     height: 159px;
-    border: 1px solid #7E03B1;
+    background: linear-gradient(45deg, #24B571, 25%, #7E03B1, 85%, #FFB222);
     backdrop-filter: blur(2.84028px);
     border-radius: 15px;
-    padding: 54px 10px 30px 10px;
+    padding: 33px 10px 61px 10px;
     margin-bottom: 21px;
 }
 
-.promocode-modal-promocode-card.availablePromoCode {
-    border: none;
-    background: linear-gradient(45deg, #24B571, 25%, #7E03B1, 85%, #FFB222);
-}
-
-.promocode-modal-promocode-card-text {
-    font-family: 'SB Sans Display';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 30px;
-    text-align: center;
-
-    color: #7E03B1;
-}
-
-.promocode-modal-promocode-card-text.availablePromoCode {
-    color: #FFFFFF;
-}
-
-.promocode-modal-promocode-card-description {
+.promocode-card-description {
     font-family: 'SB Sans Display';
     font-style: normal;
     font-weight: 400;
@@ -49,19 +29,27 @@
     line-height: 15px;
     text-align: center;
 
-    color: #7E03B1;
-}
-
-.promocode-modal-promocode-card-description.availablePromoCode {
     color: #FFFFFF;
 }
 
-.promocode-modal-description-wrapper {
+.promocode-card-text {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.description-wrapper {
     width: 315px;
+    height: 180px;
     margin-bottom: 25px;
 }
 
-.promocode-modal-description-text {
+.description-text {
     font-family: 'SB Sans Display';
     font-style: normal;
     font-weight: 400;
@@ -70,17 +58,27 @@
     color: #5E5E5E;
 }
 
-.promocode-modal-rules {
+.rules {
     display: flex;
     align-items: center;
     justify-content: space-around;
 
-    width: 100%;
+    width: 230px;
     padding: 0 0 9px 0;
     margin-bottom: 24px;
 }
 
-.promocode-modal-rules-link {
+.rules-question {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+
+    color: #5E5E5E;
+}
+
+.rules-link {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 400;
@@ -89,9 +87,4 @@
     text-align: center;
 
     color: #7E03B1;
-}
-
-.promocode-modal-button-wrapper {
-    width: 315px;
-    margin-bottom: 36px;
 }

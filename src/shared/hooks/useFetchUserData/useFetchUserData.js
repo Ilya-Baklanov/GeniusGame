@@ -7,20 +7,26 @@ const useFetchUserData = () => {
     const [fetchedUser, setUser] = useState(null);
     const [fetchedScheme, setScheme] = useState('bright_light');
     const [accessToken, setAccessToken] = useState(null);
+    const [isFetchUserStatLoaded, setIsFetchUserStatLoaded] = useState(false);
     const [userStat, setUserStat] = useState(null);
     const [isEarnedCoinsPosted, setIsEarnedCoinsPosted] = useState(false);
+    const [serverTime, setServerTime] = useState('');
 
-    const fetchUserCoins = useCallback(async (user) => {
+    const fetchUserStat = useCallback(async (user) => {
+        setIsFetchUserStatLoaded(false);
         setUserStat({
             circumstances: '01000',
             coins: '777',
             gameCount: '1',
-            notifications: '1',
+            notifications: '0',
             userId: '752451680',
         });
+        setTimeout(() => setIsFetchUserStatLoaded(true), 1500);
     }, []);
 
-    // const fetchUserCoins = useCallback(async (user) => {
+    // PROD
+    // const fetchUserStat = useCallback(async (user) => {
+    //     setIsFetchUserStatLoaded(false);
     //     const response = await fetch(`http://localhost:8080/v1/api/getUserData/${user.id}`, {
     //         headers: {
     //             Accept: 'application/json',
@@ -32,24 +38,30 @@ const useFetchUserData = () => {
     //         const data = await response.json();
     //         console.log('USER_DATA: ', data);
     //         setUserStat(data);
+    //         setIsFetchUserStatLoaded(true);
     //     } else {
     //         console.log('error');
     //     }
     // }, []);
 
-    async function getServerTime() {
-        const serverTimeResp = await fetch('http://localhost:8080/v1/api/serverTime', {
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'localhost:8080',
-            },
-        });
-        if (serverTimeResp.ok) {
-            const json = await serverTimeResp.json();
-            console.log(json);
-        }
-    }
+    const getServerTime = useCallback(async () => {
+        setServerTime('20:40:15');
+    }, []);
+
+    // const getServerTime = useCallback(async () => {
+    //     const serverTimeResp = await fetch('http://localhost:8080/v1/api/serverTime', {
+    //         headers: {
+    //             Accept: 'application/json',
+    //             'Content-Type': 'application/json',
+    //             'Access-Control-Allow-Origin': 'localhost:8080',
+    //         },
+    //     });
+    //     if (serverTimeResp.ok) {
+    //         const json = await serverTimeResp.json();
+    //         console.log('SERVER_TIME: ', json);
+    //         setServerTime(json.serverTime);
+    //     }
+    // }, []);
 
     async function getPlaceInLeaderBoard(user) {
         const requestOptions = {
@@ -121,10 +133,11 @@ const useFetchUserData = () => {
     const fetchUserData = useCallback(async () => {
         const user = await bridge.send('VKWebAppGetUserInfo');
         setUser(user);
-        await fetchUserCoins(user);
+        await fetchUserStat(user);
         await fetchToken(user);
         await getPlaceInLeaderBoard(user);
         await getPlaceInFriendsLeaderBoard(user);
+        await getServerTime();
         setIsFetchUserLoaded(true);
     }, []);
 
@@ -191,6 +204,26 @@ const useFetchUserData = () => {
         console.log('Result of post photo ', wallPostResult.response);
     }, []);
 
+    const getPromoCode = useCallback(async (userId, coins) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'localhost:8080',
+            },
+            dataType: 'json',
+            body: JSON.stringify({
+                userId, // тут юзер должен приходить
+                coins, // тут должна быть цена купона, а не колво очков юзера
+            }),
+        };
+        const response = await fetch('http://localhost:8080/v1/api/getPromo/', requestOptions);
+        const json = await response.json();
+
+        return json.promo;
+    }, []);
+
     useEffect(() => {
         bridge.subscribe(({ detail: { type, data } }) => {
             if (type === 'VKWebAppUpdateConfig') {
@@ -206,10 +239,15 @@ const useFetchUserData = () => {
         fetchedScheme,
         accessToken,
         userStat,
+        refetchUserStat: fetchUserStat,
+        isFetchUserStatLoaded,
         postEarnedCoins,
         isEarnedCoinsPosted,
         updateCircumstancesStatus,
         postWallPhoto,
+        getServerTime,
+        serverTime,
+        getPromoCode,
     };
 };
 

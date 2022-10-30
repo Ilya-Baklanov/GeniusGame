@@ -1,4 +1,4 @@
-.card {
+.card :global {
     background-image: url('../../../assets/image/bag.svg'), linear-gradient(315deg, #24B571, 25%, #7E03B1, 85%, #FFB222);
     background-position: center;
     background-repeat: no-repeat;
@@ -21,7 +21,7 @@
     cursor: not-allowed;
   }
   
-  @keyframes hideCard {
+  @keyframes :global(hideCard) {
     0%,
     70% {
       transform: rotateY(0);

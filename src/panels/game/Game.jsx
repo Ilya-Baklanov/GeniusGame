@@ -14,10 +14,15 @@ import { APP_NAME } from '../../assets/constants/constants';
 import MainLayout from '../../shared/mainLayout/MainLayout';
 
 const Game = ({
-  id, go, onEndGame,
+  id, go, onEndGame, onCloseGame,
 }) => {
   const [isDisableGameboard, setIsDisableGameboard] = useState(true);
   const [guessedCards, setGuessedCards] = useState(0);
+
+  const closeGameHandler = useCallback(() => {
+    go(null, 'home');
+    onCloseGame();
+  }, [go, onCloseGame]);
 
   const endingAdvanceTimeHandler = useCallback(() => {
     setIsDisableGameboard(false);
@@ -51,7 +56,7 @@ const Game = ({
   return (
     <Panel id={id}>
       <PanelHeader
-        left={<PanelHeaderBack onClick={go} data-to="home" />}
+        left={<PanelHeaderBack onClick={closeGameHandler} />}
       >
         {APP_NAME}
       </PanelHeader>
@@ -81,8 +86,7 @@ const Game = ({
           </div>
           <div className={cn(style['close-button-wrapper'])}>
             <IconButton
-              onClick={go}
-              data-to="home"
+              onClick={closeGameHandler}
               className={cn(style['close-button'])}
             >
               <Close />
@@ -102,6 +106,7 @@ Game.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
   onEndGame: PropTypes.func,
+  onCloseGame: PropTypes.func,
 };
 
 export default Game;

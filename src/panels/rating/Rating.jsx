@@ -7,7 +7,7 @@ import Switcher from './components/Switcher';
 import useFetchFriendList from '../../shared/hooks/useFetchUserData/useFetchFriendList';
 
 const Rating = ({
-  id, go, amountCoins, accessToken,
+  id, go, amountCoins, accessToken, isLoading,
 }) => {
   const gamersList = [
     { name: 'Александра Алекова', score: 19087, avatarSrc: 'https://sun7.userapi.com/sun7-15/s/v1/ig2/C1ohN6evNFyooY-IMGnQ8DBPUMVe6SCqeRDiZyXWUeXO899iCkrEUhEgwnrI4srp6n2fRrrZRwGL__FIwkFIX0WI.jpg?size=1440x2160&quality=95&type=album' },
@@ -34,6 +34,7 @@ const Rating = ({
       additionalBlock={(
         <Switcher onToggle={ratingSwitcherHandler} />
 )}
+      isLoading={isLoading}
     >
       <GamersList
         positionOnRating={1045}
@@ -49,6 +50,7 @@ Rating.propTypes = {
   go: PropTypes.func.isRequired,
   amountCoins: PropTypes.string.isRequired,
   accessToken: PropTypes.string,
+  isLoading: PropTypes.bool,
 };
 
 export default Rating;
