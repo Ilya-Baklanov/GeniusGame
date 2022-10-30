@@ -35,6 +35,20 @@ const useFetchUserData = () => {
         }
     }
 
+    async function getServerTime() {
+        const serverTimeResp = await fetch('http://localhost:8080/v1/api/serverTime', {
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'localhost:8080',
+            },
+        });
+        if (serverTimeResp.ok) {
+            const json = await serverTimeResp.json();
+            console.log(json);
+        }
+    }
+
     async function fetchToken(user) {
         try {
             const value = await bridge.send('VKWebAppGetAuthToken', {

@@ -130,20 +130,33 @@ const App = () => {
   }
 
   const joinGroupHandler = useCallback(() => {
-    async function getFriendList() {
-      const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
-        method: 'groups.isMember',
-        params: {
-          group_id: 'habr',
-          user_id: '105560317',
-          extended: '0',
-          v: '5.131',
-          access_token: accessToken,
-        },
-      });
-      console.log('SUBCRIBED? ', groupSubscribed.response);
+    async function joinGroup() {
+      bridge.send('VKWebAppJoinGroup', {
+        group_id: 138201238,
+      })
+        .then((data) => {
+          if (data.result) {
+            console.log('SUBCRIBED? ', 1);
+          }
+        })
+        .catch((error) => {
+          // Ошибка
+          console.log(error);
+        });
+
+      // const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
+      //   method: 'groups.isMember',
+      //   params: {
+      //     group_id: 'habr',
+      //     user_id: '105560317',
+      //     extended: '0',
+      //     v: '5.131',
+      //     access_token: accessToken,
+      //   },
+      // });
+      // console.log('SUBCRIBED? ', groupSubscribed.response);
     }
-    getFriendList().then(() => postEarnedCoins(+amountCoins + 10, fetchedUser))
+    joinGroup().then(() => postEarnedCoins(+amountCoins + 10, fetchedUser))
       .then(() => updateCircumstancesStatus(fetchedUser));
   }, [amountCoins, accessToken]);
 
