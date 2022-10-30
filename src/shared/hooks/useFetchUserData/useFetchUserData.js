@@ -1,23 +1,22 @@
 /* eslint-disable indent */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 
 const useFetchUserData = () => {
     const [isFetchUserLoaded, setIsFetchUserLoaded] = useState(false);
-    const [isEarnedCoinsPosted, setIsEarnedCoinsPosted] = useState(false);
     const [fetchedUser, setUser] = useState(null);
     const [fetchedScheme, setScheme] = useState('bright_light');
     const [accessToken, setAccessToken] = useState(null);
-    const [amountCoins, setAmountCoins] = useState(null);
+    const [userStat, setUserStat] = useState(null);
     const [notificationsState, setNotificationsState] = useState(null);
 
-    async function fetchUserCoins(user) {
+    const fetchUserCoins = useCallback(async (user) => {
         const keyValue = `${user.id}_geniusGame`;
         const coins = await bridge.send('VKWebAppStorageGet', { keys: [keyValue] });
-        setAmountCoins(coins.keys[0].value);
-    }
+        setUserStat(coins.keys[0].value);
+    }, []);
 
-    // async function fetchUserCoins(user) {
+    // const fetchUserCoins = useCallback(async (user) => {
     //     const response = await fetch(`http://localhost:8080/v1/api/getUserData/${user.id}`, {
     //         headers: {
     //             Accept: 'application/json',
@@ -28,14 +27,14 @@ const useFetchUserData = () => {
     //     if (response.ok) {
     //         const json = await response.json();
     //         console.log(json);
-    //         setAmountCoins(json.coins);
+    //         setUserStat(json.coins);
     //         setNotificationsState(json.notifications);
     //     } else {
     //         console.log('error');
     //     }
-    // }
+    // }, []);
 
-    async function fetchToken(user) {
+    const fetchToken = useCallback(async (user) => {
         try {
             const value = await bridge.send('VKWebAppGetAuthToken', {
                 app_id: 51430029,
@@ -43,7 +42,7 @@ const useFetchUserData = () => {
             });
             console.log(value);
             setAccessToken(value.access_token);
-            const result = bridge.send(
+            bridge.send(
                 'VKWebAppStorageSet',
                 {
                     key: `${user.id}_token`,
@@ -53,17 +52,17 @@ const useFetchUserData = () => {
         } catch (error) {
             console.log(error);
         }
-    }
+    }, []);
 
-    async function fetchUserData() {
+    const fetchUserData = useCallback(async () => {
         const user = await bridge.send('VKWebAppGetUserInfo');
         setUser(user);
         await fetchUserCoins(user);
         await fetchToken(user);
         setIsFetchUserLoaded(true);
-    }
+    }, []);
 
-    async function postEarnedCoins(allEarnedCoins, user) {
+    const postEarnedCoins = useCallback(async (allEarnedCoins, user) => {
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -79,8 +78,37 @@ const useFetchUserData = () => {
             }),
         };
         await fetch('http://localhost:8080/v1/api/up', requestOptions);
-        console.log('COinsUPDATED', allEarnedCoins);
-    }
+        console.log('Coins_UPDATED', allEarnedCoins);
+    }, []);
+
+    const updateCircumstancesStatus = useCallback(async (user, circumstanceIndex) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'localhost:8080',
+            },
+            dataType: 'json',
+            body: JSON.stringify({
+                userId: user.id,
+                circumstance: circumstanceIndex,
+            }),
+        };
+        const response = await fetch('http://localhost:8080/v1/api/updateCirc', requestOptions);
+        console.log('updateCircumstancesStatus: ', response.json());
+    }, []);
+
+    const postWallPhoto = useCallback(async (user, message, token) => {
+        const wallPostResult = await bridge.send('VKWebAppShowWallPostBox', {
+            owner_id: user.id,
+            message,
+            attachments: `photo_${user.id},https://sun9-40.userapi.com/impg/jBHJhobGUnuodlbDJOt5WLwGfgyyouFEUCxXHA/v4Z2MEW_0xE.jpg?size=1189x862&quality=96&sign=e02e7521f5996a2124b977d31e00f0b6&type=album`,
+            v: '5.131',
+            access_token: token,
+        });
+        console.log('Result of post photo ', wallPostResult.response);
+    }, []);
 
     useEffect(() => {
         bridge.subscribe(({ detail: { type, data } }) => {
@@ -96,11 +124,12 @@ const useFetchUserData = () => {
         fetchedUser,
         fetchedScheme,
         accessToken,
-        amountCoins,
+        userStat,
         refetchUserCoins: fetchUserCoins,
         postEarnedCoins,
-        isEarnedCoinsPosted,
         notificationsState,
+        updateCircumstancesStatus,
+        postWallPhoto,
     };
 };
 

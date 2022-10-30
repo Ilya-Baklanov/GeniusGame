@@ -35,6 +35,23 @@ export const CARDS = [
     { id: 10, img: '/img/basket.png', stat: '' },
 ];
 
+export const STATUS_LIST = [
+    { text: 'на спокойном', img: '/img/cat1.png' },
+    { text: 'на созвоне\nбез камеры', img: '/img/cat2.png' },
+    { text: 'дайте поспать', img: '/img/cat3.png' },
+];
+
+export const POSTER_PICTURES = [
+    { name: 'coin1', img_w: '/img/coin1_w.png', img_c: '/img/coin1_c.png' },
+    { name: 'coin2', img_w: '/img/coin2_w.png', img_c: '/img/coin2_c.png' },
+    { name: 'coin3', img_w: '/img/coin3_w.png', img_c: '/img/coin3_c.png' },
+    { name: 'gamepad', img_w: '/img/gamepad_w.png', img_c: '/img/gamepad_c.png' },
+    { name: 'plus1', img_w: '/img/plus1_w.png', img_c: '/img/plus1_c.png' },
+    { name: 'plus2', img_w: '/img/plus2_w.png', img_c: '/img/plus2_c.png' },
+    { name: 'logo', img_w: '/img/logo_w.png', img_c: '/img/logo_b.png' },
+    { name: 'phone', img: '/img/phone.png' },
+];
+
 export const PROMOCODES = [
     { denomination: 100, description: 'Можно\n использовать\nпри заказе\nот 500₽' },
     { denomination: 200, description: 'Можно\n использовать\nпри заказе\nот 700₽' },
@@ -52,7 +69,6 @@ export const MORE_COINS_CARDS = [
     { id: 'JOIN_GROUP', additionalCoins: 10, text: 'Вступи в официальную группу\nСберМегаМаркета в Вконтакте' },
     { id: 'REPOST', additionalCoins: 10, text: 'Раскрась баннер игры\nи поделись им на своей странице' },
     { id: 'STATUS', additionalCoins: 10, text: 'Подбери фирменный статус\nпо настроению' },
-    { id: 'INVITE_FRIENDS', text: 'Пригласи к участию друзей' },
 ];
 
 export const MODAL_PROMO_CODE = 'modal_promo_code';

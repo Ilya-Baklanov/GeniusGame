@@ -1,21 +1,23 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Text } from '@vkontakte/vkui';
+import cn from 'classnames';
 
-import './Switcher.css';
+import { Text } from '@vkontakte/vkui';
+
+import style from './Switcher.module.css';
 
 const Switcher = ({ onToggle }) => (
-  <label htmlFor="switcher" className="switcher">
+  <label htmlFor="switcher" className={cn(style.switcher)}>
     <input id="switcher" onChange={onToggle} type="checkbox" />
-    <div className="slider" />
-    <div className="content-wrapper">
-      <div className="switcher-label-text-wrapper">
-        <Text className="switcher-label-left-text">
+    <div className={cn(style.slider)} />
+    <div className={cn(style['content-wrapper'])}>
+      <div className={cn(style['switcher-label-text-wrapper'])}>
+        <Text className={cn(style['switcher-label-left-text'])}>
           Друзья
         </Text>
       </div>
-      <div className="switcher-label-text-wrapper">
-        <Text className="switcher-label-right-text">
+      <div className={cn(style['switcher-label-text-wrapper'])}>
+        <Text className={cn(style['switcher-label-right-text'])}>
           Все игроки
         </Text>
       </div>

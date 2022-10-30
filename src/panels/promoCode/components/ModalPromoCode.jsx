@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
+
 import {
   AppearanceProvider,
   Link,
@@ -11,7 +13,7 @@ import {
   IconButton,
 } from '@vkontakte/vkui';
 
-import './ModalPromoCode.css';
+import style from './ModalPromoCode.module.css';
 import MainButton from '../../../shared/mainButton/MainButton';
 import { CloseGray } from '../../../assets/image';
 
@@ -60,24 +62,24 @@ const ModalPromoCode = ({
           />
       )}
       >
-        <div className="promocode-modal-wrapper">
-          <div className="promocode-modal-promocode-card">
-            <Text className="promocode-modal-promocode-card-text">
+        <div className={cn(style['promocode-modal-wrapper'])}>
+          <div className={cn(style['promocode-modal-promocode-card'])}>
+            <Text className={cn(style['promocode-modal-promocode-card-text'])}>
               {`Промокод на ${content.denomination}₽`}
             </Text>
-            <Text className="promocode-modal-promocode-card-description">
+            <Text className={cn(style['promocode-modal-promocode-card-description'])}>
               {content.promoCodeDescription}
             </Text>
           </div>
-          <div className="promocode-modal-description-wrapper">
-            <Text className="promocode-modal-description-text">
+          <div className={cn(style['promocode-modal-description-wrapper'])}>
+            <Text className={cn(style['promocode-modal-description-text'])}>
               {description}
             </Text>
           </div>
-          <div className="promocode-modal-rules">
-            <Link className="promocode-modal-rules-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Правила игры</Link>
+          <div className={cn(style['promocode-modal-rules'])}>
+            <Link className={cn(style['promocode-modal-rules-link'])} href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Правила игры</Link>
           </div>
-          <div className="promocode-modal-button-wrapper">
+          <div className={cn(style['promocode-modal-button-wrapper'])}>
             <MainButton
               text="Получить"
               disabled={!availablePromoCode}

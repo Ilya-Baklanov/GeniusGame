@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import {
   Panel, PanelHeader, PanelHeaderBack, Text,
 } from '@vkontakte/vkui';
 
 import Navbar from '../navbar/Navbar';
-import './CommonPanel.css';
+import style from './CommonPanel.module.css';
 import MainLayout from '../mainLayout/MainLayout';
 import { APP_NAME } from '../../assets/constants/constants';
 import { MoreCoins } from '../../assets/image';
@@ -22,33 +23,33 @@ const CommonPanel = ({
     </PanelHeader>
 
     <MainLayout>
-      <div className="common-panel-earned">
-        <Text className="common-panel-earned-count">
+      <div className={cn(style['common-panel-earned'])}>
+        <Text className={cn(style['common-panel-earned-count'])}>
           {amountCoins}
         </Text>
         <MoreCoins />
       </div>
       {title && (
-        <div className="common-title-wrapper">
-          <Text className="common-title">{title}</Text>
+        <div className={cn(style['common-title-wrapper'])}>
+          <Text className={cn(style['common-title'])}>{title}</Text>
         </div>
       )}
       {description && (
-      <div className="common-description-wrapper">
-        <Text className="common-description">{description}</Text>
+      <div className={cn(style['common-description-wrapper'])}>
+        <Text className={cn(style['common-description'])}>{description}</Text>
       </div>
       )}
       {additionalBlock && (
-        <div className="common-additional-block">
+        <div className={cn(style['common-additional-block'])}>
           {additionalBlock}
         </div>
       )}
       {children && (
-        <div className="common-children">
+        <div className={cn(style['common-children'])}>
           {children}
         </div>
       )}
-      <div className="navbar-container">
+      <div className={cn(style['navbar-container'])}>
         <Navbar id={id} go={go} />
       </div>
     </MainLayout>

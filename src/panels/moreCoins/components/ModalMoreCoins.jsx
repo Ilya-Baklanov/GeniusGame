@@ -1,55 +1,68 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  AppearanceProvider, Link, ModalPage, ModalPageHeader, IconButton, Text, useAdaptivity,
+  AppearanceProvider, ModalPage, ModalPageHeader, IconButton, Text, useAdaptivity,
 } from '@vkontakte/vkui';
+import cn from 'classnames';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-import './ModalMoreCoins.css';
-import MainButton from '../../../shared/mainButton/MainButton';
+import style from './ModalMoreCoins.module.css';
 import Navbar from '../../../shared/navbar/Navbar';
 import { CloseGray } from '../../../assets/image';
+import { STATUS_LIST } from '../../../assets/constants/constants';
 
 const ModalMoreCoins = ({
   id,
+  activePanelId,
   onClose,
-  go,
-}) => {
-  const { viewWidth } = useAdaptivity();
-
-  return (
-    <AppearanceProvider appearance="light">
-      <ModalPage
-        id={id}
-        onClose={onClose}
-        size="s"
-        header={(
-          <ModalPageHeader
-            right={(
-              <IconButton onClick={onClose}>
-                <CloseGray />
-              </IconButton>
+}) => (
+  <AppearanceProvider appearance="light">
+    <ModalPage
+      id={id}
+      onClose={onClose}
+      size="s"
+      header={(
+        <ModalPageHeader
+          right={(
+            <IconButton onClick={onClose}>
+              <CloseGray />
+            </IconButton>
           )}
-          />
+        />
       )}
-      >
-        <div className="more-coins-modal-wrapper">
-          <div className="more-coins-navbar-container">
-            <Navbar id={id} go={go} />
-          </div>
+    >
+      <div className={cn(style['more-coins-modal-wrapper'])}>
+        <div className={cn(style['more-coins-status-list-wrapper'])}>
+          {STATUS_LIST.map(({ img, text }, index) => (
+            <CopyToClipboard key={index} text={text}>
+              <div
+                className={cn(style['more-coins-status-list-item'])}
+              >
+                <img className={cn(style['more-coins-status-list-item-img'])} src={img} alt={text} />
+                <Text className={cn(style['more-coins-status-list-item-text'])}>
+                  {text}
+                </Text>
+              </div>
+            </CopyToClipboard>
+          ))}
         </div>
-      </ModalPage>
-    </AppearanceProvider>
-  );
-};
+
+        <div className={cn(style['more-coins-navbar-container'])}>
+          <Navbar id={activePanelId} />
+        </div>
+      </div>
+    </ModalPage>
+  </AppearanceProvider>
+);
 
 ModalMoreCoins.propTypes = {
   id: PropTypes.string.isRequired,
+  activePanelId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
   content: PropTypes.shape({
     denomination: PropTypes.number,
     promoCodeDescription: PropTypes.string,
   }),
-  go: PropTypes.func,
 };
 
 export default ModalMoreCoins;

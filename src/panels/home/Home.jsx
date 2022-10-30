@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import {
   Panel,
@@ -10,7 +11,7 @@ import {
 
 import { MoreCoins } from '../../assets/image';
 import Navbar from '../../shared/navbar/Navbar';
-import './Home.css';
+import style from './Home.module.css';
 import { APP_NAME } from '../../assets/constants/constants';
 import MainButton from '../../shared/mainButton/MainButton';
 import Motivator from './components/Motivator';
@@ -20,37 +21,37 @@ const Home = ({
 }) => (
   <Panel id={id}>
     <PanelHeader>{APP_NAME}</PanelHeader>
-    <div className="home-wrapper">
-      <div className="home">
-        <div className="home-earned">
-          <Text className="home-earned-count">
+    <div className={cn(style['home-wrapper'])}>
+      <div className={cn(style.home)}>
+        <div className={cn(style['home-earned'])}>
+          <Text className={cn(style['home-earned-count'])}>
             {amountCoins}
           </Text>
           <MoreCoins />
         </div>
         {fetchedUser && (
         <>
-          <div className="greetings-wrapper">
+          <div className={cn(style['greetings-wrapper'])}>
             {fetchedUser.photo_200 ? (
-              <Avatar src={fetchedUser.photo_200} className="avatar" size={80} />
+              <Avatar src={fetchedUser.photo_200} className={cn(style.avatar)} size={80} />
             ) : null}
-            <Text className="greetings">
+            <Text className={cn(style.greetings)}>
               {`Привет, ${fetchedUser.first_name}!`}
             </Text>
           </div>
-          <Text className="description">
+          <Text className={cn(style.description)}>
             {'Играй, зарабатывай монеты и трать\n их на покупки в СберМегаМаркете!'}
           </Text>
-          <div className="motivator-wrapper">
+          <div className={cn(style['motivator-wrapper'])}>
             <Motivator />
           </div>
         </>
         )}
-        <div className="start-game-button-wrapper">
+        <div className={cn(style['start-game-button-wrapper'])}>
           <MainButton text="Начать игру" onClick={go} goTo="gameBoard" />
         </div>
 
-        <div className="navbar-container">
+        <div className={cn(style['navbar-container'])}>
           <Navbar id={id} go={go} />
         </div>
       </div>

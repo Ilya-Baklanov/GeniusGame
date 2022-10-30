@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import {
   Panel, PanelHeader, PanelHeaderBack, Text, IconButton, ScreenSpinner,
 } from '@vkontakte/vkui';
 
 import { MoreCoins, Close } from '../../assets/image';
-import './EndGamePanel.css';
+import style from './EndGamePanel.module.css';
 import { APP_NAME } from '../../assets/constants/constants';
 import MainLayout from '../mainLayout/MainLayout';
 import MainButton from '../mainButton/MainButton';
@@ -22,12 +23,12 @@ const EndGamePanel = ({
     </PanelHeader>
 
     <MainLayout>
-      <div className="end-game-header">
-        <div className="end-game-close-button-wrapper">
+      <div className={cn(style['end-game-header'])}>
+        <div className={cn(style['end-game-close-button-wrapper'])}>
           <IconButton
             onClick={go}
             data-to="home"
-            className="end-game-close-button"
+            className={cn(style['end-game-close-button'])}
           >
             <Close />
           </IconButton>
@@ -36,34 +37,34 @@ const EndGamePanel = ({
 
       {isLoading ? (<ScreenSpinner size="large" />) : (
         <>
-          <div className="end-game-main-content">
-            <div className="end-game-earned-wrapper">
-              <Text className="end-game-earned-title">
+          <div className={cn(style['end-game-main-content'])}>
+            <div className={cn(style['end-game-earned-wrapper'])}>
+              <Text className={cn(style['end-game-earned-title'])}>
                 Заработано:
               </Text>
-              <div className="end-game-earned">
-                <Text className="end-game-earned-count">
+              <div className={cn(style['end-game-earned'])}>
+                <Text className={cn(style['end-game-earned-count'])}>
                   {earnedCoin}
                 </Text>
                 <MoreCoins />
               </div>
             </div>
 
-            <div className="end-game-title-wrapper">
-              <Text className="end-game-title">
+            <div className={cn(style['end-game-title-wrapper'])}>
+              <Text className={cn(style['end-game-title'])}>
                 {lose && 'Не грусти!'}
                 {win && 'Поздравляем!'}
               </Text>
             </div>
 
-            <div className="end-game-description-wrapper">
-              <Text className="end-game-description">
+            <div className={cn(style['end-game-description-wrapper'])}>
+              <Text className={cn(style['end-game-description'])}>
                 {isMoreGamesAvailable ? 'Ты можешь сыграть\nещё одну игру!' : `Следующая игра станет\nдоступна через ${timeUntilNextGame} часов.`}
               </Text>
             </div>
           </div>
 
-          <div className="end-game-button-wrapper">
+          <div className={cn(style['end-game-button-wrapper'])}>
             <MainButton
               text={isMoreGamesAvailable ? 'Играть' : 'На главную'}
               onClick={go}

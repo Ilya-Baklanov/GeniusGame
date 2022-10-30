@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import {
   Button,
   Text,
 } from '@vkontakte/vkui';
 
-import './MainButton.css';
+import style from './MainButton.module.css';
 
 const MainButton = ({
   text, onClick, goTo, disabled,
@@ -17,10 +18,10 @@ const MainButton = ({
     mode="secondary"
     onClick={onClick}
     data-to={goTo}
-    className={`main-button ${disabled ? 'disabled' : ''}`}
+    className={cn(style['main-button'], { [style.disabled]: disabled })}
     disabled={disabled}
   >
-    <Text className={`main-button-text ${disabled ? 'disabled' : ''}`}>
+    <Text className={cn(style['main-button-text'], { [style.disabled]: disabled })}>
       {text}
     </Text>
   </Button>

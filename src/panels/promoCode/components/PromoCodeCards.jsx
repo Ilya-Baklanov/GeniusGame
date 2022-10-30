@@ -1,33 +1,37 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Text } from '@vkontakte/vkui';
+import cn from 'classnames';
 
-import './PromoCodeCards.css';
+import style from './PromoCodeCards.module.css';
 import { PROMOCODES } from '../../../assets/constants/constants';
 
 const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
-  const getActivePromoCodeClassName = useCallback((denomination) => (Math.floor(amountCoins / 100) === denomination / 100 ? 'active' : ''), [amountCoins]);
+  const isActivePromoCode = useCallback(
+    (denomination) => Math.floor(amountCoins / 100) === denomination / 100,
+    [amountCoins],
+  );
   const promocodeCardsClickHandler = useCallback((denomination, promoCodeDescription) => {
     onActivateModal(denomination, promoCodeDescription);
   }, []);
 
   return (
-    <div className="promocode-cards-wrapper">
-      <div className="promocode-cards-container">
+    <div className={cn(style['promocode-cards-wrapper'])}>
+      <div className={cn(style['promocode-cards-container'])}>
         {PROMOCODES.map(({ denomination, description }, index) => (
-          <div key={index} onClick={() => promocodeCardsClickHandler(denomination, description)} className={`promocode-card ${getActivePromoCodeClassName(denomination)}`}>
-            <Text className={`promocode-card-denomination ${getActivePromoCodeClassName(denomination)}`}>
+          <div key={index} onClick={() => promocodeCardsClickHandler(denomination, description)} className={cn(style['promocode-card'], { [style.active]: isActivePromoCode(denomination) })}>
+            <Text className={cn(style['promocode-card-denomination'], { [style.active]: isActivePromoCode(denomination) })}>
               {`${denomination}₽`}
             </Text>
-            <Text className={`promocode-card-description ${getActivePromoCodeClassName(denomination)}`}>
+            <Text className={cn(style['promocode-card-description'], { [style.active]: isActivePromoCode(denomination) })}>
               {description}
             </Text>
           </div>
         ))}
       </div>
-      <div className="promocode-rules">
-        <Link className="promocode-rules-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Правила акции</Link>
-        <Link className="promocode-rules-link" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Правила игры</Link>
+      <div className={cn(style['promocode-rules'])}>
+        <Link className={cn(style['promocode-rules-link'])} href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Правила акции</Link>
+        <Link className={cn(style['promocode-rules-link'])} href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Правила игры</Link>
       </div>
     </div>
   );

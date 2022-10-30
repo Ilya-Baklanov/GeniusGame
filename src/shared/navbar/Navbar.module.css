@@ -29,3 +29,7 @@
 .navbar-button.active>svg>path {
     fill: #9B37E5;
 }
+
+.disabled {
+    cursor: not-allowed;
+}

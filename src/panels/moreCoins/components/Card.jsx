@@ -1,40 +1,37 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import {
   Text,
 } from '@vkontakte/vkui';
 
-import './Card.css';
+import style from './Card.module.css';
 import { MoreCoins } from '../../../assets/image';
 
 const Card = ({
   onClick, goTo, text, additionalCoins, isComplete,
-}) => {
-  const completedConditionClassName = useMemo(() => (isComplete ? 'complete' : ''), [isComplete]);
-
-  return (
-    <div
-      onClick={isComplete ? null : onClick}
-      data-to={goTo}
-      className={`more-coins-card ${completedConditionClassName}`}
-    >
-      <div className="more-coins-card-content-container">
-        <Text className={`more-coins-card-text ${completedConditionClassName}`}>
-          {text}
+}) => (
+  <div
+    onClick={isComplete ? null : onClick}
+    data-to={goTo}
+    className={cn(style['more-coins-card'], { [style.complete]: isComplete })}
+  >
+    <div className={cn(style['more-coins-card-content-container'])}>
+      <Text className={cn(style['more-coins-card-text'], { [style.complete]: isComplete })}>
+        {text}
+      </Text>
+      {additionalCoins && (
+      <div className={cn(style['more-coins-card-additional-coins-wrapper'], { [style.complete]: isComplete })}>
+        <Text className={cn(style['more-coins-card-additional-coins-text'], { [style.complete]: isComplete })}>
+          {`+${additionalCoins}`}
         </Text>
-        {additionalCoins && (
-          <div className={`more-coins-card-additional-coins-wrapper ${completedConditionClassName}`}>
-            <Text className={`more-coins-card-additional-coins-text ${completedConditionClassName}`}>
-              {`+${additionalCoins}`}
-            </Text>
-            <MoreCoins />
-          </div>
-        )}
+        <MoreCoins />
       </div>
+      )}
     </div>
-  );
-};
+  </div>
+);
 
 Card.propTypes = {
   onClick: PropTypes.func,

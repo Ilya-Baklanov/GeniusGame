@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './WinPanel.css';
 import EndGamePanel from '../../shared/endGamePanel/EndGamePanel';
 
 const WinPanel = ({
