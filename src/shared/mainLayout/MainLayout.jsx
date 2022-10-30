@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
-import './MainLayout.css';
+import style from './MainLayout.module.css';
 
 const MainLayout = ({ children }) => (
-  <div className="layout-wrapper">
-    <div className="layout">
+  <div className={cn(style['layout-wrapper'])}>
+    <div className={cn(style.layout)}>
       {children}
     </div>
   </div>

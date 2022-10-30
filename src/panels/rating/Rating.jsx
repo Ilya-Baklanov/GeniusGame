@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import './Rating.css';
 import CommonPanel from '../../shared/commonPanel/CommonPanel';
 import GamersList from './components/GamersList';
 import Switcher from './components/Switcher';

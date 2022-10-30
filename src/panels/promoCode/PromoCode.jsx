@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './PromoCode.css';
 import CommonPanel from '../../shared/commonPanel/CommonPanel';
 import PromoCodeCards from './components/PromoCodeCards';
 

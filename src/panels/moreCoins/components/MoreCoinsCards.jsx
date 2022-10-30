@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
-import './MoreCoinsCards.css';
+import style from './MoreCoinsCards.module.css';
 import Card from './Card';
 import useGetMoreCoinsData from '../../../shared/hooks/useGetMoreCoinsData/useGetMoreCoinsData';
 
@@ -9,7 +10,7 @@ const MoreCoinsCards = ({ go, onClickToCard }) => {
   const { cardList } = useGetMoreCoinsData();
 
   return (
-    <div className="more-coins-cards-wrapper">
+    <div className={cn(style['more-coins-cards-wrapper'])}>
       {cardList.map(({
         id,
         text,

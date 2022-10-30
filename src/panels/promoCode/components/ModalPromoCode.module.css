@@ -80,13 +80,3 @@
     width: 315px;
     margin-bottom: 36px;
 }
-
-.vkuiModalPage__in {
-    max-width: 349px;
-}
-
-@media (max-device-width: 480px) {
-    .vkuiModalPage__in {
-        max-width: 100%;
-    }
-}

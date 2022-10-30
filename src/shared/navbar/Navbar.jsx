@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import {
   IconButton,
@@ -10,47 +11,75 @@ import {
   UserMain, PromoCode, Rating, MoreCoins,
 } from '../../assets/image';
 
-import './Navbar.css';
+import style from './Navbar.module.css';
 
 const Navbar = ({ id, go }) => (
-  <div className="navbar">
+  <div className={cn(style.navbar)}>
     <IconButton
-      className={`navbar-button ${id === 'home' ? 'active' : ''}`}
+      className={cn(style['navbar-button'], {
+        [style.active]: id === 'home',
+        [style.disabled]: !go,
+      })}
       onClick={go}
       data-to="home"
     >
       <UserMain />
-      <Text className={`navbar-button_text ${id === 'home' ? 'active' : ''}`}>
+      <Text className={cn(style['navbar-button_text'], {
+        [style.active]: id === 'home',
+        [style.disabled]: !go,
+      })}
+      >
         Главная
       </Text>
     </IconButton>
     <IconButton
-      className={`navbar-button ${id === 'promoCode' ? 'active' : ''}`}
+      className={cn(style['navbar-button'], {
+        [style.active]: id === 'promoCode',
+        [style.disabled]: !go,
+      })}
       onClick={go}
       data-to="promoCode"
     >
       <PromoCode />
-      <Text className={`navbar-button_text ${id === 'promoCode' ? 'active' : ''}`}>
+      <Text className={cn(style['navbar-button_text'], {
+        [style.active]: id === 'promoCode',
+        [style.disabled]: !go,
+      })}
+      >
         Промокоды
       </Text>
     </IconButton>
     <IconButton
-      className={`navbar-button ${id === 'rating' ? 'active' : ''}`}
+      className={cn(style['navbar-button'], {
+        [style.active]: id === 'rating',
+        [style.disabled]: !go,
+      })}
       onClick={go}
       data-to="rating"
     >
       <Rating />
-      <Text className={`navbar-button_text ${id === 'rating' ? 'active' : ''}`}>
+      <Text className={cn(style['navbar-button_text'], {
+        [style.active]: id === 'rating',
+        [style.disabled]: !go,
+      })}
+      >
         Рейтинг
       </Text>
     </IconButton>
     <IconButton
-      className={`navbar-button ${id === 'moreCoins' ? 'active' : ''}`}
+      className={cn(style['navbar-button'], {
+        [style.active]: id === 'moreCoins',
+        [style.disabled]: !go,
+      })}
       onClick={go}
       data-to="moreCoins"
     >
       <MoreCoins />
-      <Text className={`navbar-button_text ${id === 'moreCoins' ? 'active' : ''}`}>
+      <Text className={cn(style['navbar-button_text'], {
+        [style.active]: id === 'moreCoins',
+        [style.disabled]: !go,
+      })}
+      >
         Ещё монеты
       </Text>
     </IconButton>
@@ -59,7 +88,7 @@ const Navbar = ({ id, go }) => (
 
 Navbar.propTypes = {
   id: PropTypes.string.isRequired,
-  go: PropTypes.func.isRequired,
+  go: PropTypes.func,
 };
 
 export default Navbar;

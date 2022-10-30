@@ -3,10 +3,11 @@ import React, {
   useCallback, useLayoutEffect, useState,
 } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import { CARDS } from '../../../assets/constants/constants';
 import Card from './Card';
-import './Cards.css';
+import style from './Cards.module.css';
 
 const arrayShuffle = (array) => {
   let j;
@@ -21,7 +22,7 @@ const arrayShuffle = (array) => {
   return array;
 };
 
-const Cards = ({ disable, onGuessed }) => {
+const Cards = ({ disable, onGuessed, previewDelay }) => {
   const [items, setItems] = useState(arrayShuffle(CARDS));
   const [indexActiveCard, setIndexActiveCard] = useState(null);
   const [isActiveChecking, setIsActiveChecking] = useState(false);
@@ -33,7 +34,7 @@ const Cards = ({ disable, onGuessed }) => {
     setTimeout(() => {
       editedCardsList = items.map((item) => ({ ...item, stat: '' }));
       setItems([...editedCardsList]);
-    }, 3000);
+    }, previewDelay * 1000);
   }, []);
 
   const check = useCallback((checkableCardIndex) => {
@@ -68,7 +69,7 @@ const Cards = ({ disable, onGuessed }) => {
   }, [indexActiveCard, items]);
 
   return (
-    <div className="cards-container">
+    <div className={cn(style['cards-container'])}>
       { items.map((item, index) => (
         <Card key={index} item={item} index={index} handleClick={handleClick} disable={disable || item.stat !== '' || isActiveChecking} />
       )) }
@@ -79,6 +80,7 @@ const Cards = ({ disable, onGuessed }) => {
 Cards.propTypes = {
   disable: PropTypes.bool,
   onGuessed: PropTypes.func,
+  previewDelay: PropTypes.number,
 };
 
 export default Cards;

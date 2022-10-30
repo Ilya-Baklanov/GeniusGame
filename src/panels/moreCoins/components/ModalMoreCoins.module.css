@@ -1,0 +1,47 @@
+.more-coins-modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-between; */
+
+    padding: 0 17px;
+}
+
+.more-coins-status-list-wrapper {
+    display: flex;
+    align-items: top;
+    justify-content: space-between;
+
+    width: 100%;
+    height: 97px;
+    margin-bottom: 32px;
+}
+
+.more-coins-status-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.more-coins-status-list-item-img {
+    margin-bottom: 10px;
+}
+
+.more-coins-status-list-item-text {
+    font-family: 'SB Sans Display';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+
+    white-space: break-spaces;
+
+    color: #A2A2A2;
+}
+
+.more-coins-navbar-container {
+    border-top: 1px solid #EFEFEF;    
+
+    width: 100%;
+}

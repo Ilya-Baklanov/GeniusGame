@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
 import {
   Panel, PanelHeader, PanelHeaderBack, Text, IconButton,
@@ -7,7 +8,7 @@ import {
 
 import { MoreCoins, Close } from '../../assets/image';
 import Cards from './components/Cards';
-import './Game.css';
+import style from './Game.module.css';
 import Timer from '../../shared/timer/Timer';
 import { APP_NAME } from '../../assets/constants/constants';
 import MainLayout from '../../shared/mainLayout/MainLayout';
@@ -56,20 +57,20 @@ const Game = ({
       </PanelHeader>
 
       <MainLayout>
-        <div className="header">
-          <div className="earned-wrapper">
-            <Text className="earned-title">
+        <div className={cn(style.header)}>
+          <div className={cn(style['earned-wrapper'])}>
+            <Text className={cn(style['earned-title'])}>
               Заработано:
             </Text>
-            <div className="earned">
-              <Text className="earned-count">
+            <div className={cn(style.earned)}>
+              <Text className={cn(style['earned-count'])}>
                 {guessedCards}
               </Text>
               <MoreCoins />
             </div>
           </div>
-          <div className="timer">
-            <Text className="time">
+          <div className={cn(style.timer)}>
+            <Text className={cn(style.time)}>
               <Timer
                 time={60}
                 advanceСountdownTime={3}
@@ -78,19 +79,19 @@ const Game = ({
               />
             </Text>
           </div>
-          <div className="close-button-wrapper">
+          <div className={cn(style['close-button-wrapper'])}>
             <IconButton
               onClick={go}
               data-to="home"
-              className="close-button"
+              className={cn(style['close-button'])}
             >
               <Close />
             </IconButton>
           </div>
         </div>
 
-        <div className="game-board">
-          <Cards disable={isDisableGameboard} onGuessed={guessingHandler} />
+        <div className={cn(style['game-board'])}>
+          <Cards disable={isDisableGameboard} onGuessed={guessingHandler} previewDelay={3} />
         </div>
       </MainLayout>
     </Panel>

@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
+
 import {
   View,
   ScreenSpinner,
@@ -13,24 +14,27 @@ import {
   SplitLayout,
   SplitCol,
   ModalRoot,
+  PopoutWrapper,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import bridge from '@vkontakte/vk-bridge';
 
 import './global.css';
-import './App.css';
-
-import bridge from '@vkontakte/vk-bridge';
 import Home from './panels/home/Home';
 import Game from './panels/game/Game';
 import PromoCode from './panels/promoCode/PromoCode';
 import MoreCoins from './panels/moreCoins/MoreCoins';
 import Rating from './panels/rating/Rating';
 import usePreloadImage from './shared/hooks/usePreloadImage/usePreloadImage';
-import { CARDS, MODAL_PROMO_CODE, MOTIVATOR } from './assets/constants/constants';
+import {
+  CARDS, MODAL_PROMO_CODE, MOTIVATOR, MODAL_MORE_COINS, STATUS_LIST, POSTER_PICTURES,
+} from './assets/constants/constants';
 import LossPanel from './panels/lossPanel/LossPanel';
 import WinPanel from './panels/winPanel/WinPanel';
 import ModalPromoCode from './panels/promoCode/components/ModalPromoCode';
 import useFetchUserData from './shared/hooks/useFetchUserData/useFetchUserData';
+import ModalMoreCoins from './panels/moreCoins/components/ModalMoreCoins';
+import Poster from './panels/poster/Poster';
 
 const App = () => {
   const [activePanel, setActivePanel] = useState('home');
@@ -44,6 +48,16 @@ const App = () => {
   const isPicturesLoaded = usePreloadImage([
     ...CARDS.map((card) => card.img),
     ...MOTIVATOR.map((item) => item.img),
+    ...STATUS_LIST.map((status) => status.img),
+    ...POSTER_PICTURES.map((posterPicture) => {
+      const pictureList = [];
+
+      if (posterPicture.img) pictureList.push(posterPicture.img);
+      if (posterPicture.img_c) pictureList.push(posterPicture.img_c);
+      if (posterPicture.img_w) pictureList.push(posterPicture.img_w);
+
+      return pictureList;
+    }).flat(),
   ]);
 
   const {
@@ -51,11 +65,13 @@ const App = () => {
     fetchedUser,
     fetchedScheme,
     accessToken,
-    amountCoins,
+    userStat,
     refetchUserCoins,
     postEarnedCoins,
     isEarnedCoinsPosted,
     notificationsState,
+    updateCircumstancesStatus,
+    postWallPhoto,
   } = useFetchUserData();
 
   useEffect(() => {
@@ -71,12 +87,12 @@ const App = () => {
   };
 
   const endGameHandler = useCallback((earnedCoin, userId) => {
-    const allEarnedCoins = +earnedCoin + +amountCoins;
+    const allEarnedCoins = +earnedCoin + +userStat;
     postEarnedCoins(allEarnedCoins, fetchedUser).then(() => {
       refetchUserCoins(fetchedUser);
       setEarnedCoinOnCurrentGame(earnedCoin);
     });
-  }, [amountCoins, fetchedUser]);
+  }, [userStat, fetchedUser]);
 
   const closeModal = () => {
     setActiveModal((prev) => ({
@@ -93,11 +109,16 @@ const App = () => {
       <ModalPromoCode
         id={MODAL_PROMO_CODE}
         content={activeModal ? activeModal.content : null}
-        amountCoins={amountCoins}
+        amountCoins={userStat}
+        onClose={closeModal}
+      />
+      <ModalMoreCoins
+        id={MODAL_MORE_COINS}
+        activePanelId={activePanel}
         onClose={closeModal}
       />
     </ModalRoot>
-  ), [activeModal, amountCoins]);
+  ), [activeModal, userStat]);
 
   const activateModalPromoCodeHandler = useCallback((denomination, promoCodeDescription) => {
     setActiveModal({
@@ -106,28 +127,23 @@ const App = () => {
         denomination,
         promoCodeDescription,
       },
-      amountCoins,
+      userStat,
     });
-  }, [amountCoins]);
+  }, [userStat]);
 
-  async function updateCircumstancesStatus(user) {
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'localhost:8080',
-      },
-      dataType: 'json',
-      body: JSON.stringify({
-        userId: user.id,
-        circumstance: 0, // Индекс задания, начиная с 0,
-        // сверху вниз(0-группа, 1-репост баннера и т.д.)
-      }),
-    };
-    const response = await fetch('http://localhost:8080/v1/api/updateCirc', requestOptions);
-    console.log(response.json());
-  }
+  const activateModalMoreCoinsHandler = useCallback(() => {
+    setActiveModal({
+      id: MODAL_MORE_COINS,
+    });
+  }, [userStat]);
+
+  const repostHandler = useCallback(() => {
+    console.log('REPOST_ACTIVATE');
+    postWallPhoto(fetchedUser, 'Привет!', accessToken).then(() => {
+      postEarnedCoins(+userStat + 10, fetchedUser);
+      updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
+    });
+  }, [userStat, accessToken, fetchedUser]);
 
   const joinGroupHandler = useCallback(() => {
     async function joinGroup() {
@@ -178,6 +194,7 @@ const App = () => {
 
   const setStatusHandler = useCallback(() => {
     console.log('STATUS');
+    activateModalMoreCoinsHandler();
   }, []);
 
   const inviteFriendsHandler = useCallback(() => {
@@ -193,7 +210,7 @@ const App = () => {
       case 'JOIN_GROUP':
         return joinGroupHandler();
       case 'REPOST':
-        return repostHandler();
+        return goToPosterPage();
       case 'STATUS':
         return setStatusHandler();
       case 'INVITE_FRIENDS':
@@ -214,13 +231,21 @@ const App = () => {
 
               {isLoaded ? (
                 <View activePanel={activePanel}>
-                  <Home id="home" fetchedUser={fetchedUser} go={go} amountCoins={amountCoins} />
-                  <Game id="gameBoard" go={go} amountCoins={amountCoins} onEndGame={endGameHandler} userId={fetchedUser.id} />
-                  <PromoCode id="promoCode" go={go} amountCoins={amountCoins} onActivateModal={activateModalPromoCodeHandler} />
-                  <MoreCoins id="moreCoins" go={go} amountCoins={amountCoins} onClickToCard={moreCoinsCardClickHandler} fetchedUser={fetchedUser} notificationsState={notificationsState} />
-                  <Rating id="rating" go={go} amountCoins={amountCoins} accessToken={accessToken} />
+                  <Home id="home" fetchedUser={fetchedUser} go={go} amountCoins={userStat} />
+                  <Game id="gameBoard" go={go} amountCoins={userStat} onEndGame={endGameHandler} userId={fetchedUser.id} />
+                  <PromoCode id="promoCode" go={go} amountCoins={userStat} onActivateModal={activateModalPromoCodeHandler} />
+                  <MoreCoins
+                    id="moreCoins"
+                    go={go}
+                    amountCoins={userStat}
+                    onClickToCard={moreCoinsCardClickHandler}
+                    fetchedUser={fetchedUser}
+                    notificationsState={notificationsState}
+                  />
+                  <Rating id="rating" go={go} amountCoins={userStat} accessToken={accessToken} />
                   <LossPanel id="lossGame" go={go} />
                   <WinPanel id="winGame" go={go} earnedCoin={earnedCoinOnCurrentGame} isLoading={!isEarnedCoinsPosted} />
+                  <Poster id="poster" go={go} onRepost={repostHandler} />
                 </View>
               ) : (
                 <ScreenSpinner size="large" />

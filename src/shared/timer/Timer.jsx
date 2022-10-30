@@ -4,8 +4,6 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import './Timer.css';
-
 const addZero = (number) => (number > 9 ? number : `0${number}`);
 
 /**
