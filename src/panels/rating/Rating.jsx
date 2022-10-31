@@ -1,29 +1,65 @@
-import React, { useCallback } from 'react';
+/* eslint-disable react/forbid-prop-types */
+import React, {
+  useCallback, useEffect, useMemo, useState,
+} from 'react';
 import PropTypes from 'prop-types';
 
 import CommonPanel from '../../shared/commonPanel/CommonPanel';
 import GamersList from './components/GamersList';
 import Switcher from './components/Switcher';
-import useFetchFriendList from '../../shared/hooks/useFetchUserData/useFetchFriendList';
 
 const Rating = ({
-  id, go, amountCoins, accessToken, isLoading,
+  id,
+  go,
+  amountCoins,
+  isLoading,
+  friendList,
+  fetchedUser,
+  placeInLeaderBoard,
+  placeInFriendsLeaderBoard,
+  topPlayers,
+  topPlayersFriends,
 }) => {
-  const gamersList = [
-    { name: 'Александра Алекова', score: 19087, avatarSrc: 'https://sun7.userapi.com/sun7-15/s/v1/ig2/C1ohN6evNFyooY-IMGnQ8DBPUMVe6SCqeRDiZyXWUeXO899iCkrEUhEgwnrI4srp6n2fRrrZRwGL__FIwkFIX0WI.jpg?size=1440x2160&quality=95&type=album' },
-    { name: 'Тима Емельянов', score: 15030, avatarSrc: 'https://windows10free.ru/uploads/posts/2017-02/1487679899_icon-user-640x640.png' },
-    { name: 'Сергей Хохлов', score: 10058, avatarSrc: 'https://windows10free.ru/uploads/posts/2017-02/1487679899_icon-user-640x640.png' },
-    { name: 'Руслан Гаджиев', score: 9543, avatarSrc: 'https://windows10free.ru/uploads/posts/2017-02/1487679899_icon-user-640x640.png' },
-    { name: 'Боня Жиглов', score: 8879, avatarSrc: 'https://windows10free.ru/uploads/posts/2017-02/1487679899_icon-user-640x640.png' },
-    { name: 'Маша Никонова', score: 7771, avatarSrc: 'https://windows10free.ru/uploads/posts/2017-02/1487679899_icon-user-640x640.png' },
-  ];
+  const [positionOnRating, setPositionOnRating] = useState();
+  const [gamersOnRating, setGamersOnRating] = useState();
 
-  const gamersList2 = useFetchFriendList(accessToken);
+  const gamersListInFriends = useMemo(
+    () => (friendList && fetchedUser && topPlayersFriends ? [{
+      name: `${fetchedUser.first_name} ${fetchedUser.last_name}`,
+      score: amountCoins,
+      avatarSrc: fetchedUser.photo_100,
+    }, ...topPlayersFriends.map((player) => {
+      const userInfo = friendList.find((friend) => friend.id === +player.userId);
+      return {
+        name: `${userInfo?.first_name} ${userInfo?.last_name}`,
+        score: player.coins,
+        avatarSrc: userInfo?.photo_100,
+      };
+    })] : null),
+    [friendList, fetchedUser, topPlayersFriends],
+  );
+
+  useEffect(() => { console.log('gamersListInFriends', gamersListInFriends); }, [gamersListInFriends]);
 
   const ratingSwitcherHandler = useCallback((e) => {
     const isFriendsRating = !e.target.checked;
     const isAllRating = e.target.checked;
-  }, []);
+
+    if (isFriendsRating) {
+      setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
+      setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
+    }
+
+    if (isAllRating) {
+      setPositionOnRating(placeInLeaderBoard.orderNumber);
+      setGamersOnRating(placeInLeaderBoard.totalUsersCount);
+    }
+  }, [placeInFriendsLeaderBoard, placeInLeaderBoard]);
+
+  useEffect(() => {
+    setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
+    setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
+  }, [placeInFriendsLeaderBoard, placeInLeaderBoard]);
 
   return (
     <CommonPanel
@@ -33,14 +69,16 @@ const Rating = ({
       title="Рейтинг"
       additionalBlock={(
         <Switcher onToggle={ratingSwitcherHandler} />
-)}
+        )}
       isLoading={isLoading}
     >
+      {gamersListInFriends && (
       <GamersList
-        positionOnRating={1045}
-        gamersOnRating={23576}
-        gamersList={gamersList2}
+        positionOnRating={positionOnRating}
+        gamersOnRating={gamersOnRating}
+        gamersList={gamersListInFriends}
       />
+      )}
     </CommonPanel>
   );
 };
@@ -49,8 +87,13 @@ Rating.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
   amountCoins: PropTypes.string.isRequired,
-  accessToken: PropTypes.string,
   isLoading: PropTypes.bool,
+  friendList: PropTypes.any,
+  fetchedUser: PropTypes.any,
+  placeInLeaderBoard: PropTypes.any,
+  placeInFriendsLeaderBoard: PropTypes.any,
+  topPlayers: PropTypes.any,
+  topPlayersFriends: PropTypes.any,
 };
 
 export default Rating;

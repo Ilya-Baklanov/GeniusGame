@@ -67,7 +67,7 @@ CommonPanel.propTypes = {
   description: PropTypes.string,
   additionalBlock: PropTypes.node,
   children: PropTypes.node,
-  amountCoins: PropTypes.string.isRequired,
+  amountCoins: PropTypes.string,
   isLoading: PropTypes.bool,
 };
 

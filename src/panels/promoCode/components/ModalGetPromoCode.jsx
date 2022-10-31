@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import {
   AppearanceProvider,
@@ -20,6 +21,7 @@ const ModalGetPromoCode = ({
   content,
   onClose,
 }) => {
+  const [isCopied, setIsCopied] = useState(false);
   const { viewWidth } = useAdaptivity();
 
   return (
@@ -39,17 +41,19 @@ const ModalGetPromoCode = ({
       )}
       >
         <div className={cn(style.wrapper)}>
-          <div className={cn(style['promocode-card'])}>
-            <Text className={cn(style['promocode-card-description'])}>
-              Ваш промокод:
-            </Text>
-            <Text className={cn(style['promocode-card-text'])}>
-              {content.promocode}
-            </Text>
-          </div>
+          <CopyToClipboard onCopy={() => setIsCopied(true)} text={content.promocode}>
+            <div className={cn(style['promocode-card'])}>
+              <Text className={cn(style['promocode-card-description'])}>
+                Ваш промокод:
+              </Text>
+              <Text className={cn(style['promocode-card-text'])}>
+                {content.promocode}
+              </Text>
+            </div>
+          </CopyToClipboard>
           <div className={cn(style['description-wrapper'])}>
             <Text className={cn(style['description-text'])}>
-              Текст
+              {isCopied ? 'Промокод скопирован' : ''}
             </Text>
           </div>
           <div className={cn(style.rules)}>

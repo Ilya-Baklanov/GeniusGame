@@ -82,17 +82,40 @@ const App = () => {
     getServerTime,
     serverTime,
     getPromoCode,
+    updateNotificationStatus,
+    getFriendList,
+    friendList,
+    getPlaceInLeaderBoard,
+    placeInLeaderBoard,
+    getTopPlayers,
+    topPlayers,
+    getPlaceInFriendsLeaderBoard,
+    placeInFriendsLeaderBoard,
+    getTopPlayersFriends,
+    topPlayersFriends,
   } = useFetchUserData();
 
   const serverTimeProcessed = useMemo(() => timeHandler(serverTime), [serverTime]);
   const resetTimeMorning = useMemo(() => timeHandler('10:00:00'), [serverTime]);
   const resetTimeEvening = useMemo(() => timeHandler('22:00:00'), [serverTime]);
+  const midnightTime = useMemo(() => timeHandler('24:00:00'), [serverTime]);
 
   const timeUntilNextGameInSeconds = useMemo(
-    () => (serverTimeProcessed.hours < 10
-      ? resetTimeMorning.allSeconds - serverTimeProcessed.allSeconds
-      : resetTimeEvening.allSeconds - serverTimeProcessed.allSeconds),
-    [serverTimeProcessed, resetTimeMorning, resetTimeEvening],
+    () => {
+      switch (true) {
+        case serverTimeProcessed.hours < 10:
+          return resetTimeMorning.allSeconds - serverTimeProcessed.allSeconds;
+        case serverTimeProcessed.hours >= 10 && serverTimeProcessed.hours < 22:
+          return resetTimeEvening.allSeconds - serverTimeProcessed.allSeconds;
+        case serverTimeProcessed.hours >= 22:
+          return (
+            midnightTime.allSeconds - serverTimeProcessed.allSeconds
+          ) + resetTimeMorning.allSeconds;
+        default:
+          return 0;
+      }
+    },
+    [serverTimeProcessed, resetTimeMorning, resetTimeEvening, midnightTime],
   );
 
   useEffect(() => {
@@ -116,7 +139,10 @@ const App = () => {
     }
   }, [userStat, fetchedUser]);
 
-  const closeGameHandler = useCallback(() => refetchUserStat(), [refetchUserStat]);
+  const closeGameHandler = useCallback(
+    () => refetchUserStat(fetchedUser),
+    [refetchUserStat, fetchedUser],
+  );
 
   const closeModal = () => {
     setActiveModal((prev) => ({
@@ -136,6 +162,7 @@ const App = () => {
   }, [userStat]);
 
   const activateModalGetPromoCodeHandler = useCallback((promocode) => {
+    refetchUserStat(fetchedUser);
     setActiveModal({
       id: MODAL_GET_PROMO_CODE,
       content: {
@@ -158,7 +185,7 @@ const App = () => {
       <ModalPromoCode
         id={MODAL_PROMO_CODE}
         content={activeModal ? activeModal.content : null}
-        amountCoins={userStat ? userStat.coins : '0'}
+        amountCoins={userStat ? userStat.coins || '0' : '0'}
         userId={fetchedUser ? fetchedUser.id : 0}
         onClose={closeModal}
         onActiveModalGetPromocode={activateModalGetPromoCodeHandler}
@@ -273,13 +300,13 @@ const App = () => {
           <SplitLayout modal={modal}>
             <SplitCol animate>
 
-              {isLoaded ? (
+              {isLoaded && userStat ? (
                 <View activePanel={activePanel}>
                   <Home
                     id="home"
                     fetchedUser={fetchedUser}
                     go={go}
-                    amountCoins={userStat.coins}
+                    amountCoins={userStat.coins || '0'}
                     isLoading={!isFetchUserStatLoaded}
                     gamesAvailable={+userStat.gameCount}
                     timeUntilNextGame={timeUntilNextGameInSeconds}
@@ -293,24 +320,33 @@ const App = () => {
                   <PromoCode
                     id="promoCode"
                     go={go}
-                    amountCoins={userStat.coins}
+                    amountCoins={userStat.coins || '0'}
                     onActivateModal={activateModalPromoCodeHandler}
                     isLoading={!isFetchUserStatLoaded}
                   />
                   <MoreCoins
                     id="moreCoins"
                     go={go}
-                    userStat={userStat}
+                    amountCoins={userStat.coins || '0'}
+                    circumstances={userStat.circumstances}
+                    notificationStatus={userStat.notifications}
                     onClickToCard={moreCoinsCardClickHandler}
                     fetchedUser={fetchedUser}
                     isLoading={!isFetchUserStatLoaded}
+                    onUpdateNotificationStatus={updateNotificationStatus}
                   />
                   <Rating
                     id="rating"
                     go={go}
-                    amountCoins={userStat.coins}
+                    amountCoins={userStat.coins || '0'}
                     accessToken={accessToken}
                     isLoading={!isFetchUserStatLoaded}
+                    friendList={friendList}
+                    fetchedUser={fetchedUser}
+                    placeInLeaderBoard={placeInLeaderBoard}
+                    placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
+                    topPlayers={topPlayers}
+                    topPlayersFriends={topPlayersFriends}
                   />
                   <LossPanel
                     id="lossGame"

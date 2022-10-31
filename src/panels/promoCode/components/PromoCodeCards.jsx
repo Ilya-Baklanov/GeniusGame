@@ -8,7 +8,7 @@ import { PROMOCODES } from '../../../assets/constants/constants';
 
 const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
   const isActivePromoCode = useCallback(
-    (denomination) => Math.floor(amountCoins / 100) === denomination / 100,
+    (denomination) => Math.floor(+amountCoins / 100) === denomination / 100,
     [amountCoins],
   );
   const promocodeCardsClickHandler = useCallback((denomination, promoCodeDescription) => {

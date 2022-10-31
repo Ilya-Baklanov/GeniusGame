@@ -37,7 +37,7 @@ Card.propTypes = {
   onClick: PropTypes.func,
   goTo: PropTypes.string,
   text: PropTypes.string,
-  additionalCoins: PropTypes.string,
+  additionalCoins: PropTypes.number,
   isComplete: PropTypes.bool,
 };
 

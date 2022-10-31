@@ -59,10 +59,10 @@ const Timer = ({
   useEffect(() => {
     if (timeLeft === 0) {
       if (!isAdvanceTimeOver) {
-        onEndedAdvanceСountdownTime();
+        onEndedAdvanceСountdownTime?.();
         setMainTime();
       } else {
-        onEndedTime();
+        onEndedTime?.();
       }
     }
   }, [timeLeft, isAdvanceTimeOver]);

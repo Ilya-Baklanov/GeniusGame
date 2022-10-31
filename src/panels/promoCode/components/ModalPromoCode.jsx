@@ -40,7 +40,7 @@ const ModalPromoCode = ({
         return 'Ты можешь забрать этот промокод или продолжить играть, чтобы заработать монеты на промокод ещё большего номинала.';
       case Math.floor(+amountCoins / 100) > content.denomination / 100:
         return 'У тебя есть возможность получить промокод с большим номиналом! Ты можешь забрать его или продолжить играть, чтобы заработать монеты на промокод ещё большего номинала.';
-      case Math.floor(+amountCoins / 100) < content.denomination / 100:
+      case Math.floor(+amountCoins / 100) < content.denomination / 100 || amountCoins === '0':
         return 'Пока у тебя недостаточно монет, чтобы получить этот промокод. Продолжай играть, чтобы заработать монеты на промокод!';
       default:
         return '';
