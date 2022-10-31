@@ -203,7 +203,7 @@ const useFetchUserData = () => {
         return value.access_token;
     }, []);
 
-    const postEarnedCoins = useCallback(async (allEarnedCoins, user) => {
+    const postEarnedCoins = useCallback(async (allEarnedCoins, user, gameCountChange) => {
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -215,7 +215,7 @@ const useFetchUserData = () => {
             body: JSON.stringify({
                 userId: user.id,
                 coins: allEarnedCoins,
-                gameCount: '0',
+                gameCount: gameCountChange,
             }),
         };
         const response = await fetch('https://sbermemorygame.ru/v1/api/up', requestOptions);

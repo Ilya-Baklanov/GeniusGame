@@ -133,7 +133,7 @@ const App = () => {
   const endGameHandler = useCallback((earnedCoin) => {
     if (earnedCoin > 0) {
       const allEarnedCoins = +earnedCoin + +userStat.coins;
-      postEarnedCoins(allEarnedCoins, fetchedUser).then(() => {
+      postEarnedCoins(allEarnedCoins, fetchedUser, '-1').then(() => {
         setEarnedCoinOnCurrentGame(earnedCoin);
       });
     }
@@ -208,7 +208,7 @@ const App = () => {
   const repostHandler = useCallback(() => {
     console.log('REPOST_ACTIVATE');
     postWallPhoto(fetchedUser, 'Играй и покупай https://vk.com/app51430029', accessToken).then(() => {
-      postEarnedCoins(+userStat.coins + 10, fetchedUser);
+      postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
       updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
     });
   }, [userStat, accessToken, fetchedUser]);
@@ -237,7 +237,7 @@ const App = () => {
         .then((data) => {
           if (data.result) {
             console.log('VOT ETO RESULT');
-            postEarnedCoins(+userStat.coins + 10, fetchedUser);
+            postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
             updateCircumstancesStatus(fetchedUser, 0);
           }
         })
@@ -251,7 +251,7 @@ const App = () => {
     if (isSub) {
       // eslint-disable-next-line no-alert
       alert('Вы уже подписаны');
-      postEarnedCoins(+userStat.coins + 10, fetchedUser);
+      postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
       updateCircumstancesStatus(fetchedUser, 0);
     } else {
       joinGroup();
