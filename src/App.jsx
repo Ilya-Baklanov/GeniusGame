@@ -268,9 +268,32 @@ const App = () => {
     activateModalMoreCoinsHandler();
   }, []);
 
+  async function sendInvites(token, userId) {
+    const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
+      method: 'apps.sendRequest',
+      params: {
+        user_id: userId,
+        text: 'GO V DOTY YA SOZDAL',
+        type: 'invite',
+        v: '5.131',
+        access_token: token,
+      },
+    });
+    return groupSubscribed.response;
+  }
+
   const inviteFriendsHandler = useCallback(() => {
-    console.log('INVITE');
-  }, []);
+    bridge.send('VKWebAppGetFriends', { multi: true })
+      .then((data) => {
+        if (data.users) {
+          data.users.map((id) => sendInvites(accessToken, id.id));
+        }
+      })
+      .catch((error) => {
+        // Ошибка
+        console.log(error);
+      });
+  }, [accessToken]);
 
   const subscribeToBotHandler = useCallback(() => {
     console.log('SUBSCRIBE');
