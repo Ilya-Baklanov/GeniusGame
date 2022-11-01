@@ -20,6 +20,7 @@ const GamersList = ({ positionOnRating, gamersOnRating, gamersList }) => {
       setTimeout(() => {
         setHasNextPage(items.length < gamersList.length - 1);
         setIsNextPageLoading(false);
+        // TO_DO сделать массив не из 10 элементов, а из 6-7 плюс оставшихся доступных
         setItems([...items].concat(
           new Array(10).fill(true).map((_, index) => gamersList[index]),
         ));
@@ -129,11 +130,11 @@ const GamersList = ({ positionOnRating, gamersOnRating, gamersList }) => {
 };
 
 GamersList.propTypes = {
-  positionOnRating: PropTypes.number,
-  gamersOnRating: PropTypes.number,
+  positionOnRating: PropTypes.string,
+  gamersOnRating: PropTypes.string,
   gamersList: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
-    score: PropTypes.number,
+    score: PropTypes.string,
     avatarSrc: PropTypes.string,
   })),
 };

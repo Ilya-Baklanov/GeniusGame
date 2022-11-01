@@ -17,19 +17,14 @@ const useFetchUserData = () => {
     const [placeInFriendsLeaderBoard, setPlaceInFriendsLeaderBoard] = useState(null);
     const [topPlayersFriends, setTopPlayersFriends] = useState(null);
 
-    // const fetchUserStat = useCallback(async (user) => {
-    //     setIsFetchUserStatLoaded(false);
-    //     setUserStat({
-    //         circumstances: '01000',
-    //         coins: '777',
-    //         gameCount: '1',
-    //         notifications: '0',
-    //         userId: '752451680',
-    //     });
-    //     setTimeout(() => setIsFetchUserStatLoaded(true), 1500);
-    // }, []);
+    const getUserInfo = useCallback(async (userId) => {
+        const userInfo = await bridge.send('VKWebAppGetUserInfo', {
+            user_id: userId,
+        });
+        console.log('getUserInfo: ', userInfo);
+        return userInfo;
+    }, []);
 
-    // PROD
     const fetchUserStat = useCallback(async (user) => {
         setIsFetchUserStatLoaded(false);
         const response = await fetch(`https://sbermemorygame.ru/v1/api/getUserData/${user.id}`, {
@@ -48,10 +43,6 @@ const useFetchUserData = () => {
             console.log('error');
         }
     }, []);
-
-    // const getServerTime = useCallback(async () => {
-    //     setServerTime('10:01:50');
-    // }, []);
 
     const getServerTime = useCallback(async () => {
         const serverTimeResp = await fetch('https://sbermemorygame.ru/v1/api/serverTime', {
@@ -331,6 +322,7 @@ const useFetchUserData = () => {
     }, []);
 
     return {
+        getUserInfo,
         isFetchUserLoaded,
         fetchedUser,
         fetchedScheme,

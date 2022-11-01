@@ -68,6 +68,7 @@ const App = () => {
   ]);
 
   const {
+    getUserInfo,
     isFetchUserLoaded,
     fetchedUser,
     fetchedScheme,
@@ -213,12 +214,12 @@ const App = () => {
     });
   }, [userStat, accessToken, fetchedUser]);
 
-  async function checkIsUserSubscribed() {
+  async function checkIsUserSubscribed(userId) {
     const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
       method: 'groups.isMember',
       params: {
         group_id: 131445697,
-        user_id: '105560317',
+        user_id: userId,
         extended: '0',
         v: '5.131',
         access_token: accessToken,
@@ -227,8 +228,6 @@ const App = () => {
     return groupSubscribed.response;
   }
 
-  useEffect(() => console.log('USER STAT', userStat), [userStat]);
-
   const joinGroupHandler = useCallback(async () => {
     async function joinGroup() {
       bridge.send('VKWebAppJoinGroup', {
@@ -236,18 +235,16 @@ const App = () => {
       })
         .then((data) => {
           if (data.result) {
-            console.log('VOT ETO RESULT');
             postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
             updateCircumstancesStatus(fetchedUser, 0);
           }
         })
         .catch((error) => {
-          // Ошибка
           console.log(error);
         });
     }
 
-    const isSub = await checkIsUserSubscribed();
+    const isSub = await checkIsUserSubscribed(fetchedUser.id);
     if (isSub) {
       // eslint-disable-next-line no-alert
       alert('Вы уже подписаны');
@@ -370,6 +367,7 @@ const App = () => {
                     placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
                     topPlayers={topPlayers}
                     topPlayersFriends={topPlayersFriends}
+                    getUserInfo={getUserInfo}
                   />
                   <LossPanel
                     id="lossGame"

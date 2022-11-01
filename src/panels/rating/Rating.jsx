@@ -19,9 +19,12 @@ const Rating = ({
   placeInFriendsLeaderBoard,
   topPlayers,
   topPlayersFriends,
+  getUserInfo,
 }) => {
   const [positionOnRating, setPositionOnRating] = useState();
   const [gamersOnRating, setGamersOnRating] = useState();
+  const [gamersListCommon, setGamersListCommon] = useState([]);
+  const [currentGamersList, setCurrentGamersList] = useState([]);
 
   const gamersListInFriends = useMemo(
     () => (friendList && fetchedUser && topPlayersFriends ? [{
@@ -39,7 +42,21 @@ const Rating = ({
     [friendList, fetchedUser, topPlayersFriends],
   );
 
-  useEffect(() => { console.log('gamersListInFriends', gamersListInFriends); }, [gamersListInFriends]);
+  useEffect(() => {
+    topPlayers.forEach((player) => {
+      getUserInfo(+player.userId)
+        .then((userInfo) => setGamersListCommon((prev) => ([
+          ...prev,
+          {
+            name: `${userInfo?.first_name} ${userInfo?.last_name}`,
+            score: player.coins,
+            avatarSrc: userInfo?.photo_100,
+          },
+        ])));
+    });
+  }, [topPlayers, getUserInfo]);
+
+  useEffect(() => { console.log('gamersListCommon', gamersListCommon); }, [gamersListCommon]);
 
   const ratingSwitcherHandler = useCallback((e) => {
     const isFriendsRating = !e.target.checked;
@@ -48,17 +65,20 @@ const Rating = ({
     if (isFriendsRating) {
       setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
       setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
+      setCurrentGamersList(gamersListInFriends);
     }
 
     if (isAllRating) {
       setPositionOnRating(placeInLeaderBoard.orderNumber);
       setGamersOnRating(placeInLeaderBoard.totalUsersCount);
+      setCurrentGamersList(gamersListCommon);
     }
-  }, [placeInFriendsLeaderBoard, placeInLeaderBoard]);
+  }, [placeInFriendsLeaderBoard, placeInLeaderBoard, gamersListCommon, gamersListInFriends]);
 
   useEffect(() => {
     setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
     setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
+    setCurrentGamersList(gamersListInFriends);
   }, [placeInFriendsLeaderBoard, placeInLeaderBoard]);
 
   return (
@@ -72,11 +92,11 @@ const Rating = ({
         )}
       isLoading={isLoading}
     >
-      {gamersListInFriends && (
+      {currentGamersList.length > 0 && (
       <GamersList
         positionOnRating={positionOnRating}
         gamersOnRating={gamersOnRating}
-        gamersList={gamersListInFriends}
+        gamersList={currentGamersList}
       />
       )}
     </CommonPanel>
@@ -94,6 +114,7 @@ Rating.propTypes = {
   placeInFriendsLeaderBoard: PropTypes.any,
   topPlayers: PropTypes.any,
   topPlayersFriends: PropTypes.any,
+  getUserInfo: PropTypes.func,
 };
 
 export default Rating;

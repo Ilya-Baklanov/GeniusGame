@@ -46,7 +46,7 @@ const Home = ({
                   </Text>
                 </div>
                 <Text className={cn(style.description)}>
-                  {'Играй, зарабатывай монеты и трать\n их на покупки в СберМегаМаркете!'}
+                  {'Играй, зарабатывай монеты и трать\nих на покупки в СберМегаМаркете!'}
                 </Text>
                 <div className={cn(style['motivator-wrapper'])}>
                   <Motivator />

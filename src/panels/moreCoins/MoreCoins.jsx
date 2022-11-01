@@ -34,8 +34,7 @@ const MoreCoins = ({
       go={go}
       amountCoins={amountCoins}
       title="Ещё монеты"
-      description="Выполняй задания –
-      зарабатывай ещё больше монет!"
+      description={'Выполняй задания –\nзарабатывай ещё больше монет!'}
       isLoading={isLoading}
     >
       <MoreCoinsCards circumstances={circumstances} onClickToCard={onClickToCard} />

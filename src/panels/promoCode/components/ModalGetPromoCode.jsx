@@ -53,7 +53,7 @@ const ModalGetPromoCode = ({
           </CopyToClipboard>
           <div className={cn(style['description-wrapper'])}>
             <Text className={cn(style['description-text'])}>
-              {isCopied ? 'Промокод скопирован' : ''}
+              {isCopied ? 'Промокод скопирован.' : ''}
             </Text>
           </div>
           <div className={cn(style.rules)}>

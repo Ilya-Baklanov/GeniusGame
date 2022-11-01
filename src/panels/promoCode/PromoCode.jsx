@@ -12,8 +12,7 @@ const PromoCode = ({
     go={go}
     amountCoins={amountCoins}
     title="Промокоды"
-    description="Обменивай монеты на промокоды
-  и делай покупки в СберМегаМаркете!"
+    description={'Обменивай монеты на промокоды\nи делай покупки в СберМегаМаркете!'}
     isLoading={isLoading}
   >
     <PromoCodeCards amountCoins={amountCoins} onActivateModal={onActivateModal} />

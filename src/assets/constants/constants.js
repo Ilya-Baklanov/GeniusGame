@@ -69,7 +69,7 @@ export const MORE_COINS_CARDS = [
     { id: 'JOIN_GROUP', additionalCoins: 10, text: 'Вступи в официальную группу\nСберМегаМаркета в Вконтакте' },
     { id: 'REPOST', additionalCoins: 10, text: 'Раскрась баннер игры\nи поделись им на своей странице' },
     { id: 'STATUS', additionalCoins: 10, text: 'Подбери фирменный статус\nпо настроению' },
-    { id: 'INVITE_FRIENDS', additionalCoins: 10, text: 'Пригласи к участию друзей' },
+    { id: 'INVITE_FRIENDS', text: 'Пригласи к участию друзей' },
 ];
 
 export const MODAL_PROMO_CODE = 'modal_promo_code';
