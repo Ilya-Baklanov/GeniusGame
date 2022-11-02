@@ -279,18 +279,12 @@ const App = () => {
     return groupSubscribed.response;
   }
 
-  const inviteFriendsHandler = useCallback(() => {
-    bridge.send('VKWebAppGetFriends', { multi: true })
-      .then((data) => {
-        if (data.users) {
-          data.users.map((id) => sendInvites(accessToken, id.id));
-        }
-      })
-      .catch((error) => {
-        // Ошибка
-        console.log(error);
-      });
-  }, [accessToken]);
+  const inviteFriendsHandler = useCallback(async () => {
+    console.log('VKWebAppShowInviteBox');
+    await bridge.send('VKWebAppShowInviteBox', {})
+      .then((data) => console.log(data.success))
+      .catch((error) => console.log(error));
+  }, []);
 
   const subscribeToBotHandler = useCallback(() => {
     console.log('SUBSCRIBE');
