@@ -19,7 +19,14 @@ import Motivator from './components/Motivator';
 import Timer from '../../shared/timer/Timer';
 
 const Home = ({
-  id, go, fetchedUser, amountCoins, gamesAvailable, isLoading, timeUntilNextGame,
+  id,
+  go,
+  fetchedUser,
+  amountCoins,
+  gamesAvailable,
+  isLoading,
+  timeUntilNextGame,
+  onEndedTimerUntilNextGame,
 }) => (
   <Panel id={id}>
     <PanelHeader>{APP_NAME}</PanelHeader>
@@ -61,7 +68,7 @@ const Home = ({
                     <div className={cn(style['timer-until-next-game-wrapper'])}>
                       <Text className={cn(style['timer-until-next-game-text'])}>До следующей игры осталось </Text>
                       <Text className={cn(style['timer-until-next-game-time'])}>
-                        <Timer time={timeUntilNextGame} />
+                        <Timer time={timeUntilNextGame} onEndedTime={onEndedTimerUntilNextGame} />
                       </Text>
                     </div>
                   )
@@ -93,6 +100,7 @@ Home.propTypes = {
   gamesAvailable: PropTypes.number,
   isLoading: PropTypes.bool,
   timeUntilNextGame: PropTypes.number,
+  onEndedTimerUntilNextGame: PropTypes.func,
 };
 
 export default Home;

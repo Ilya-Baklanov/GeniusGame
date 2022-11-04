@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 import React, {
-  useCallback, useEffect, useMemo, useState,
+  useCallback, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -17,69 +17,15 @@ const Rating = ({
   fetchedUser,
   placeInLeaderBoard,
   placeInFriendsLeaderBoard,
-  topPlayers,
-  topPlayersFriends,
   getUserInfo,
+  getTopPlayers,
+  getTopPlayersFriends,
 }) => {
-  const [positionOnRating, setPositionOnRating] = useState();
-  const [gamersOnRating, setGamersOnRating] = useState();
-  const [gamersListCommon, setGamersListCommon] = useState([]);
-  const [currentGamersList, setCurrentGamersList] = useState([]);
-
-  const gamersListInFriends = useMemo(
-    () => (friendList && fetchedUser && topPlayersFriends ? [{
-      name: `${fetchedUser.first_name} ${fetchedUser.last_name}`,
-      score: amountCoins,
-      avatarSrc: fetchedUser.photo_100,
-    }, ...topPlayersFriends.map((player) => {
-      const userInfo = friendList.find((friend) => friend.id === +player.userId);
-      return {
-        name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-        score: player.coins,
-        avatarSrc: userInfo?.photo_100,
-      };
-    })] : null),
-    [friendList, fetchedUser, topPlayersFriends],
-  );
-
-  useEffect(() => {
-    topPlayers.forEach((player) => {
-      getUserInfo(+player.userId)
-        .then((userInfo) => setGamersListCommon((prev) => ([
-          ...prev,
-          {
-            name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-            score: player.coins,
-            avatarSrc: userInfo?.photo_100,
-          },
-        ])));
-    });
-  }, [topPlayers, getUserInfo]);
-
-  useEffect(() => { console.log('gamersListCommon', gamersListCommon); }, [gamersListCommon]);
+  const [isAllRating, setIsAllRating] = useState(false);
 
   const ratingSwitcherHandler = useCallback((e) => {
-    const isFriendsRating = !e.target.checked;
-    const isAllRating = e.target.checked;
-
-    if (isFriendsRating) {
-      setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
-      setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
-      setCurrentGamersList(gamersListInFriends);
-    }
-
-    if (isAllRating) {
-      setPositionOnRating(placeInLeaderBoard.orderNumber);
-      setGamersOnRating(placeInLeaderBoard.totalUsersCount);
-      setCurrentGamersList(gamersListCommon);
-    }
-  }, [placeInFriendsLeaderBoard, placeInLeaderBoard, gamersListCommon, gamersListInFriends]);
-
-  useEffect(() => {
-    setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
-    setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
-    setCurrentGamersList(gamersListInFriends);
-  }, [placeInFriendsLeaderBoard, placeInLeaderBoard]);
+    setIsAllRating(e.target.checked);
+  }, []);
 
   return (
     <CommonPanel
@@ -92,13 +38,17 @@ const Rating = ({
         )}
       isLoading={isLoading}
     >
-      {currentGamersList.length > 0 && (
       <GamersList
-        positionOnRating={positionOnRating}
-        gamersOnRating={gamersOnRating}
-        gamersList={currentGamersList}
+        amountCoins={amountCoins}
+        isAllRating={isAllRating}
+        friendList={friendList}
+        fetchedUser={fetchedUser}
+        placeInLeaderBoard={placeInLeaderBoard}
+        placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
+        getUserInfo={getUserInfo}
+        getTopPlayers={getTopPlayers}
+        getTopPlayersFriends={getTopPlayersFriends}
       />
-      )}
     </CommonPanel>
   );
 };
@@ -112,9 +62,9 @@ Rating.propTypes = {
   fetchedUser: PropTypes.any,
   placeInLeaderBoard: PropTypes.any,
   placeInFriendsLeaderBoard: PropTypes.any,
-  topPlayers: PropTypes.any,
-  topPlayersFriends: PropTypes.any,
   getUserInfo: PropTypes.func,
+  getTopPlayers: PropTypes.func,
+  getTopPlayersFriends: PropTypes.func,
 };
 
 export default Rating;

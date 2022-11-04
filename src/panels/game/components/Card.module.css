@@ -6,9 +6,19 @@
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+    width: 69px;
+    height: 97px;
     transform: rotateY(180deg);
     animation: 3.5s hideCard linear;
     transition: transform 0.5s;
+    /* user-select: none; */
+  }
+
+  @media (max-device-width: 480px) {
+    .card {
+      width: 20vw;
+      height: 14vh;
+    }
   }
 
   .card.preview {

@@ -4,7 +4,7 @@ import { Link, Text } from '@vkontakte/vkui';
 import cn from 'classnames';
 
 import style from './PromoCodeCards.module.css';
-import { PROMOCODES } from '../../../assets/constants/constants';
+import { GAME_RULES, PROMOCODES, PROMOTION_RULES } from '../../../assets/constants/constants';
 
 const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
   const isActivePromoCode = useCallback(
@@ -30,8 +30,8 @@ const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
         ))}
       </div>
       <div className={cn(style['promocode-rules'])}>
-        <Link className={cn(style['promocode-rules-link'])} href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Правила акции</Link>
-        <Link className={cn(style['promocode-rules-link'])} href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Правила игры</Link>
+        <Link className={cn(style['promocode-rules-link'])} href={PROMOTION_RULES.href}>{PROMOTION_RULES.title}</Link>
+        <Link className={cn(style['promocode-rules-link'])} href={GAME_RULES.href}>{GAME_RULES.title}</Link>
       </div>
     </div>
   );

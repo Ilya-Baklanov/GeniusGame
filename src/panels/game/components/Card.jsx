@@ -10,26 +10,31 @@ const Card = ({
   const clickHandler = useCallback(() => handleClick(index), [handleClick]);
 
   return (
-    <div
-      className={cn(
-        style.card,
-        {
-          [style.preview]: !!item.stat && item.stat === 'preview',
-        },
-        {
-          [style.checked]: !!item.stat && item.stat !== 'preview',
-        },
-        {
-          [style[item.stat]]: !!item.stat && item.stat !== 'preview',
-        },
-        {
-          [style.disable]: disable,
-        },
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {item && (
+      <div
+        className={cn(
+          style.card,
+          {
+            [style.preview]: !!item.stat && item.stat === 'preview',
+          },
+          {
+            [style.checked]: !!item.stat && item.stat !== 'preview',
+          },
+          {
+            [style[item.stat]]: !!item.stat && item.stat !== 'preview',
+          },
+          {
+            [style.disable]: disable,
+          },
+        )}
+        onClick={disable ? null : clickHandler}
+      >
+        {item.stat !== 'preview' && item.stat !== '' && <img src={item.img} alt="" />}
+      </div>
       )}
-      onClick={disable ? null : clickHandler}
-    >
-      {item.stat !== 'preview' && item.stat !== '' && <img src={item.img} alt="" />}
-    </div>
+    </>
   );
 };
 

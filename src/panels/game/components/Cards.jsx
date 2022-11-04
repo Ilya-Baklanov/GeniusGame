@@ -5,7 +5,7 @@ import React, {
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import { CARDS } from '../../../assets/constants/constants';
+import { CARDS, CARDS_COUNT, NUMBER_UNIQUE_CARDS_IN_GAME } from '../../../assets/constants/constants';
 import Card from './Card';
 import style from './Cards.module.css';
 
@@ -22,8 +22,30 @@ const arrayShuffle = (array) => {
   return array;
 };
 
+function getRandomNumber(arr) {
+  const randomNumber = Math.ceil(Math.random() * CARDS_COUNT);
+  return arr.includes(randomNumber) ? getRandomNumber(arr) : randomNumber;
+}
+
+function toRandomArray(arrLength) {
+  const arr = [];
+
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < arrLength; i++) {
+    arr.push(getRandomNumber(arr));
+  }
+
+  return arr;
+}
+
+const randomNumbersArray = toRandomArray(NUMBER_UNIQUE_CARDS_IN_GAME);
+const listAllCardsNumberInGame = [...randomNumbersArray, ...randomNumbersArray];
+const shuffledListAllCardsNumberInGame = arrayShuffle(listAllCardsNumberInGame);
+
+const gameCards = shuffledListAllCardsNumberInGame.map((cardNumber) => CARDS[cardNumber]);
+
 const Cards = ({ disable, onGuessed, previewDelay }) => {
-  const [items, setItems] = useState(arrayShuffle(CARDS));
+  const [items, setItems] = useState(gameCards);
   const [indexActiveCard, setIndexActiveCard] = useState(null);
   const [isActiveChecking, setIsActiveChecking] = useState(false);
 

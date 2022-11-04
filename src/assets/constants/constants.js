@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-export const APP_NAME = 'Sber Game';
+export const APP_NAME = 'МегаИгра';
 
 export const MOTIVATOR = [
     { name: 'lamp', img: '/img/lamp.png' },
@@ -12,28 +12,13 @@ export const MOTIVATOR = [
     { name: 'laptop', img: '/img/laptop.png' },
 ];
 
-export const CARDS = [
-    { id: 1, img: '/img/boat.png', stat: '' },
-    { id: 1, img: '/img/boat.png', stat: '' },
-    { id: 2, img: '/img/chair.png', stat: '' },
-    { id: 2, img: '/img/chair.png', stat: '' },
-    { id: 3, img: '/img/boll.png', stat: '' },
-    { id: 3, img: '/img/boll.png', stat: '' },
-    { id: 4, img: '/img/coffeeMaker.png', stat: '' },
-    { id: 4, img: '/img/coffeeMaker.png', stat: '' },
-    { id: 5, img: '/img/grill.png', stat: '' },
-    { id: 5, img: '/img/grill.png', stat: '' },
-    { id: 6, img: '/img/headphone.png', stat: '' },
-    { id: 6, img: '/img/headphone.png', stat: '' },
-    { id: 7, img: '/img/mixer.png', stat: '' },
-    { id: 7, img: '/img/mixer.png', stat: '' },
-    { id: 8, img: '/img/mouse.png', stat: '' },
-    { id: 8, img: '/img/mouse.png', stat: '' },
-    { id: 9, img: '/img/smartphone.png', stat: '' },
-    { id: 9, img: '/img/smartphone.png', stat: '' },
-    { id: 10, img: '/img/weight.png', stat: '' },
-    { id: 10, img: '/img/weight.png', stat: '' },
-];
+export const CARDS_COUNT = 64;
+export const NUMBER_UNIQUE_CARDS_IN_GAME = 10;
+export const CARDS = Array(CARDS_COUNT).fill().map((_, index) => ({
+    id: index,
+    img: `/img/${index + 1}.png`,
+    stat: '',
+}));
 
 export const STATUS_LIST = [
     { text: 'на спокойном', img: '/img/cat1.png' },
@@ -75,3 +60,22 @@ export const MORE_COINS_CARDS = [
 export const MODAL_PROMO_CODE = 'modal_promo_code';
 export const MODAL_GET_PROMO_CODE = 'modal_get_promo_code';
 export const MODAL_MORE_COINS = 'modal_more_coins';
+
+export const POST_MESSAGE = 'Астрологи объявили неделю обмена монет из игры на реальные промокоды. Неделя продлится долго, скорей играй и получай подарки от СберМегаМаркета.';
+export const POST_PHOTO_ID = '-131445697_457296583';
+
+export const PROMOTION_RULES = {
+    title: 'Правила акции',
+    href: 'https://sbermegamarket.ru/promo/pravila-akczii-megaigra',
+};
+
+export const GAME_RULES = {
+    title: 'Правила игры',
+    href: 'https://docs.google.com/document/d/15JpFeHvjNW7036Bo-e0qJXUfLgE3ggCwFEhD3mVqlTs/edit',
+};
+
+export const CONTACTS_HELP = {
+    title: 'Свяжись с нами',
+    href: 'mailto:smm@sbermegamarket.ru',
+    question: 'Нужна помощь?',
+};

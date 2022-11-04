@@ -43,7 +43,15 @@
     overflow: auto;
 }
 
-.gamers-list-container::-webkit-scrollbar {
+.List::-webkit-scrollbar {
+    width: 0px;
+}
+
+.List::-webkit-scrollbar-track {
+    width: 0px;
+}
+
+.List::-webkit-scrollbar-thumb {
     width: 0px;
 }
 
@@ -56,7 +64,7 @@
 }
 
 .gamers-list-item-wrapper-first {
-    width: calc(100% - 5px);
+    width: 315px;
     height: 53px;
     position: sticky;
     top: 0px;

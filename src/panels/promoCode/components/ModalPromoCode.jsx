@@ -15,6 +15,7 @@ import {
 import style from './ModalPromoCode.module.css';
 import MainButton from '../../../shared/mainButton/MainButton';
 import { CloseGray } from '../../../assets/image';
+import { GAME_RULES } from '../../../assets/constants/constants';
 
 const ModalPromoCode = ({
   id,
@@ -87,7 +88,7 @@ const ModalPromoCode = ({
             </Text>
           </div>
           <div className={cn(style['promocode-modal-rules'])}>
-            <Link className={cn(style['promocode-modal-rules-link'])} href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Правила игры</Link>
+            <Link className={cn(style['promocode-modal-rules-link'])} href={GAME_RULES.href}>{GAME_RULES.title}</Link>
           </div>
           <div className={cn(style['promocode-modal-button-wrapper'])}>
             <MainButton

@@ -137,13 +137,21 @@ const App = () => {
       postEarnedCoins(allEarnedCoins, fetchedUser, '-1').then(() => {
         setEarnedCoinOnCurrentGame(earnedCoin);
       });
+      getPlaceInLeaderBoard(fetchedUser);
+      getPlaceInFriendsLeaderBoard(fetchedUser, friendList);
     }
-  }, [userStat, fetchedUser]);
+  }, [userStat, fetchedUser, friendList]);
 
   const closeGameHandler = useCallback(
-    () => refetchUserStat(fetchedUser),
-    [refetchUserStat, fetchedUser],
+    () => {
+      postEarnedCoins(+userStat.coins, fetchedUser, '-1');
+    },
+    [postEarnedCoins, fetchedUser, userStat],
   );
+
+  const endedTimerUntilNextGame = useCallback(() => {
+    refetchUserStat(fetchedUser);
+  }, [fetchedUser]);
 
   const closeModal = () => {
     setActiveModal((prev) => ({
@@ -208,7 +216,7 @@ const App = () => {
 
   const repostHandler = useCallback(() => {
     console.log('REPOST_ACTIVATE');
-    postWallPhoto(fetchedUser, 'Играй и покупай https://vk.com/app51430029', accessToken).then(() => {
+    postWallPhoto(fetchedUser, accessToken).then(() => {
       postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
       updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
     });
@@ -324,6 +332,7 @@ const App = () => {
                     isLoading={!isFetchUserStatLoaded}
                     gamesAvailable={+userStat.gameCount}
                     timeUntilNextGame={timeUntilNextGameInSeconds}
+                    onEndedTimerUntilNextGame={endedTimerUntilNextGame}
                   />
                   <Game
                     id="gameBoard"
@@ -359,9 +368,9 @@ const App = () => {
                     fetchedUser={fetchedUser}
                     placeInLeaderBoard={placeInLeaderBoard}
                     placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
-                    topPlayers={topPlayers}
-                    topPlayersFriends={topPlayersFriends}
                     getUserInfo={getUserInfo}
+                    getTopPlayers={getTopPlayers}
+                    getTopPlayersFriends={getTopPlayersFriends}
                   />
                   <LossPanel
                     id="lossGame"

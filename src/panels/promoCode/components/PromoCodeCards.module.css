@@ -50,16 +50,16 @@
     padding: 28px 0 18px 0;
 }
 
-::-webkit-scrollbar {
+.promocode-cards-wrapper::-webkit-scrollbar {
     width: 5px;
 }
 
-::-webkit-scrollbar-track {
+.promocode-cards-wrapper::-webkit-scrollbar-track {
     width: 5px;
     background: #F6EBFF;
 }
 
-::-webkit-scrollbar-thumb {
+.promocode-cards-wrapper::-webkit-scrollbar-thumb {
     width: 5px;
     height: 133px;
     background: #7E03B1;

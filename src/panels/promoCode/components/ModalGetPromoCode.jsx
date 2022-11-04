@@ -15,6 +15,7 @@ import {
 
 import style from './ModalGetPromoCode.module.css';
 import { CloseGray } from '../../../assets/image';
+import { CONTACTS_HELP } from '../../../assets/constants/constants';
 
 const ModalGetPromoCode = ({
   id,
@@ -57,8 +58,8 @@ const ModalGetPromoCode = ({
             </Text>
           </div>
           <div className={cn(style.rules)}>
-            <Text className={cn(style['rules-question'])}>Нужна помощь?</Text>
-            <Link className={cn(style['rules-link'])} href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Свяжись с нами</Link>
+            <Text className={cn(style['rules-question'])}>{CONTACTS_HELP.question}</Text>
+            <Link className={cn(style['rules-link'])} href={CONTACTS_HELP.href}>{CONTACTS_HELP.title}</Link>
           </div>
         </div>
       </ModalPage>
