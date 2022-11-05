@@ -33,7 +33,7 @@ const GamersList = ({
 
   useEffect(() => setRequestCache({}), [amountCoins]);
 
-  const itemCount = useMemo(() => gamersOnRating || 25, [gamersOnRating]);
+  const itemCount = useMemo(() => gamersOnRating, [gamersOnRating]);
 
   const personalStat = useMemo(() => ({
     name: `${fetchedUser.first_name} ${fetchedUser.last_name}`,
@@ -63,19 +63,15 @@ const GamersList = ({
       topPlayers.forEach((player) => {
         if (+player.userId !== +fetchedUser.id) {
           getUserInfo(+player.userId)
-            .then((userInfo) => setGamersListCommon((prev) => {
-              console.log('PREV_USER_INFO: ', prev);
-
-              return ([
-                ...prev,
-                {
-                  name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-                  score: player.coins,
-                  avatarSrc: userInfo?.photo_100,
-                  id: userInfo.id,
-                },
-              ]);
-            }));
+            .then((userInfo) => setGamersListCommon((prev) => ([
+              ...prev,
+              {
+                name: `${userInfo?.first_name} ${userInfo?.last_name}`,
+                score: player.coins,
+                avatarSrc: userInfo?.photo_100,
+                id: userInfo.id,
+              },
+            ])));
         }
       });
     }

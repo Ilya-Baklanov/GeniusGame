@@ -125,9 +125,10 @@ const App = () => {
     } else {
       activateLoader();
     }
-  }, [isPicturesLoaded]);
+  }, [isPicturesLoaded, isFetchUserLoaded]);
 
   const go = useCallback((e, goTo) => {
+    getServerTime();
     setActivePanel(e ? e.currentTarget.dataset.to : goTo);
   }, []);
 
@@ -150,8 +151,10 @@ const App = () => {
   );
 
   const endedTimerUntilNextGame = useCallback(() => {
-    refetchUserStat(fetchedUser);
-  }, [fetchedUser]);
+    setTimeout(() => {
+      refetchUserStat(fetchedUser);
+    }, 1500);
+  }, [fetchedUser, refetchUserStat]);
 
   const closeModal = () => {
     setActiveModal((prev) => ({
@@ -178,7 +181,7 @@ const App = () => {
         promocode,
       },
     });
-  }, [userStat]);
+  }, [userStat, refetchUserStat]);
 
   const activateModalMoreCoinsHandler = useCallback(() => {
     setActiveModal({

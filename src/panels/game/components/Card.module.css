@@ -11,7 +11,6 @@
     transform: rotateY(180deg);
     animation: 3.5s hideCard linear;
     transition: transform 0.5s;
-    /* user-select: none; */
   }
 
   @media (max-device-width: 480px) {
@@ -45,11 +44,19 @@
   .card img {
     max-width: 80%;
     max-height: 80%;
+    visibility: hidden;
+  }
+  .card.preview img{
+    visibility: hidden;
   }
   
   .card.checked {
     background: #E6C5FF;
     transform: rotateY(0);
+  }
+
+  .card.checked Img {
+    visibility: visible;
   }
   
   .card.correct {

@@ -27,7 +27,9 @@ const useFetchUserData = () => {
     }, []);
 
     const fetchUserStat = useCallback(async (user) => {
-        setIsFetchUserStatLoaded(false);
+        if (!userStat) {
+            setIsFetchUserStatLoaded(false);
+        }
         const response = await fetch(`https://sbermemorygame.ru/v1/api/getUserData/${user.id}`, {
             headers: {
                 Accept: 'application/json',
@@ -39,7 +41,7 @@ const useFetchUserData = () => {
         console.log('FETCH_USER_STAT: ', data);
         setUserStat(data);
         setIsFetchUserStatLoaded(true);
-    }, []);
+    }, [userStat]);
 
     const getServerTime = useCallback(async () => {
         const serverTimeResp = await fetch('https://sbermemorygame.ru/v1/api/serverTime', {
@@ -52,6 +54,7 @@ const useFetchUserData = () => {
         const json = await serverTimeResp.json();
         console.log('SERVER_TIME: ', json);
         setServerTime(json.serverTime);
+        // setServerTime('21:59:50');
     }, []);
 
     const getFriendList = useCallback(async (token) => {
@@ -225,6 +228,7 @@ const useFetchUserData = () => {
         const json = await responseFriends.json();
         console.log('TOP_PLAYERS_FRIENDS', json);
         return json.users;
+        // return gamersList.slice(start, end + 1);
     }, []);
 
     const fetchToken = useCallback(async (user) => {

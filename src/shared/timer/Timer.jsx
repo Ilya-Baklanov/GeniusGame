@@ -34,7 +34,8 @@ const Timer = ({
   time, advanceСountdownTime, onEndedAdvanceСountdownTime, onEndedTime,
 }) => {
   const [timeLeft, setTimeLeft] = useState(advanceСountdownTime || time);
-  const [isAdvanceTimeOver, setIsAdvanceTimeOver] = useState(false);
+  const [mainTimeOver, setMainTimeOver] = useState(false);
+  const [isAdvanceTimeOver, setIsAdvanceTimeOver] = useState(!advanceСountdownTime);
   const hoursLeft = useMemo(() => Math.trunc((timeLeft / 3600) % 60), [timeLeft]);
   const minutesLeft = useMemo(() => Math.trunc((timeLeft / 60) % 60), [timeLeft]);
   const secondsLeft = useMemo(() => Math.trunc(timeLeft % 60), [timeLeft]);
@@ -45,16 +46,17 @@ const Timer = ({
   }, [time]);
 
   useEffect(() => {
-    const timerId = setInterval(() => {
-      setTimeLeft((previousTimeLeft) => {
-        if (previousTimeLeft === 0) {
-          clearInterval(timerId);
-          return previousTimeLeft;
-        }
-        return previousTimeLeft - 1;
-      });
-    }, 1000);
-  }, []);
+    if (!mainTimeOver) {
+      const timerId = setInterval(() => {
+        setTimeLeft((previousTimeLeft) => {
+          if (previousTimeLeft === 1) {
+            clearInterval(timerId);
+          }
+          return previousTimeLeft - 1;
+        });
+      }, 1000);
+    }
+  }, [mainTimeOver, isAdvanceTimeOver]);
 
   useEffect(() => {
     if (timeLeft === 0) {
@@ -62,6 +64,7 @@ const Timer = ({
         onEndedAdvanceСountdownTime?.();
         setMainTime();
       } else {
+        setMainTimeOver(true);
         onEndedTime?.();
       }
     }

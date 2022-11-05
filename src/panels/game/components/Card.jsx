@@ -31,7 +31,7 @@ const Card = ({
         )}
         onClick={disable ? null : clickHandler}
       >
-        {item.stat !== 'preview' && item.stat !== '' && <img src={item.img} alt="" />}
+        <img src={item.img} alt="" />
       </div>
       )}
     </>
