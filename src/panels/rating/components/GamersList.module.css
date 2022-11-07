@@ -73,6 +73,12 @@
     margin-bottom: 5px;
 }
 
+@media (max-device-width: 480px) {
+    .gamers-list-item-wrapper-first {
+        width: 100%;
+    }
+}
+
 .gamers-list-item {
     display: flex;
     align-items: center;
@@ -92,6 +98,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    width: 80%;
 }
 
 .gamers-list-item-avatar {
@@ -101,7 +109,9 @@
     left: -1px;
 }
 
-.gamers-list-item-name-wrapper {}
+.gamers-list-item-name-wrapper {
+    width: 75%;
+}
 
 .gamers-list-item-name {
     font-family: 'SB Sans Display';
@@ -110,6 +120,9 @@
     font-size: 14px;
     line-height: 18px;
     color: #3D3D3D;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .gamers-list-item-wrapper-first .gamers-list-item-name {
@@ -119,6 +132,9 @@
     font-size: 14px;
     line-height: 18px;
     color: #FFFFFF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .gamers-list-item-score-wrapper {

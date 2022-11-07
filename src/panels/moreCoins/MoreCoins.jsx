@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -27,6 +27,10 @@ const MoreCoins = ({
       setSwitcherState(+res);
     });
   }, [fetchedUser, onUpdateNotificationStatus]);
+
+  useEffect(() => {
+    setSwitcherState(+notificationStatus);
+  }, [notificationStatus]);
 
   return (
     <CommonPanel

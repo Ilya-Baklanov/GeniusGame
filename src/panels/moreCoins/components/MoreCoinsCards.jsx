@@ -8,7 +8,6 @@ import useGetMoreCoinsData from '../../../shared/hooks/useGetMoreCoinsData/useGe
 
 const MoreCoinsCards = ({ go, onClickToCard, circumstances }) => {
   const { cardList } = useGetMoreCoinsData(circumstances);
-  console.log('circumstances: ', circumstances);
   return (
     <div className={cn(style['more-coins-cards-wrapper'])}>
       {cardList.map(({

@@ -6,9 +6,9 @@ import { Text } from '@vkontakte/vkui';
 
 import style from './Switcher.module.css';
 
-const Switcher = ({ onToggle }) => (
+const Switcher = ({ onToggle, isAllRating }) => (
   <label htmlFor="switcher" className={cn(style.switcher)}>
-    <input id="switcher" onChange={onToggle} type="checkbox" />
+    <input id="switcher" onChange={onToggle} checked={isAllRating} type="checkbox" />
     <div className={cn(style.slider)} />
     <div className={cn(style['content-wrapper'])}>
       <div className={cn(style['switcher-label-text-wrapper'])}>
@@ -27,6 +27,7 @@ const Switcher = ({ onToggle }) => (
 
 Switcher.propTypes = {
   onToggle: PropTypes.func,
+  isAllRating: PropTypes.bool,
 };
 
 export default Switcher;

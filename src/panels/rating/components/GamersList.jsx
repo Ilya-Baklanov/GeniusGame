@@ -23,15 +23,69 @@ const GamersList = ({
   getTopPlayers,
   getTopPlayersFriends,
 }) => {
-  const [topPlayers, setTopPlayers] = useState([]);
-  const [topPlayersFriends, setTopPlayersFriends] = useState([]);
   const [requestCache, setRequestCache] = useState({});
   const [positionOnRating, setPositionOnRating] = useState('');
   const [gamersOnRating, setGamersOnRating] = useState('');
+  const [topPlayers, setTopPlayers] = useState([]);
+  const [topPlayersFriends, setTopPlayersFriends] = useState([]);
   const [gamersListCommon, setGamersListCommon] = useState([]);
+  const [gamersListInFriends, setGamersListInFriends] = useState([]);
   const [currentGamersList, setCurrentGamersList] = useState([]);
 
   useEffect(() => setRequestCache({}), [amountCoins]);
+
+  useEffect(() => {
+    if (
+      placeInLeaderBoard
+      && fetchedUser
+      && gamersListCommon.length === 0
+    ) {
+      getTopPlayers(0, placeInLeaderBoard.totalUsersCount)
+        .then((response) => {
+          response.forEach((player) => {
+            if (+player.userId !== +fetchedUser.id) {
+              getUserInfo(+player.userId)
+                .then((userInfo) => setGamersListCommon((prev) => ([
+                  ...prev,
+                  {
+                    name: `${userInfo?.first_name} ${userInfo?.last_name}`,
+                    score: player.coins,
+                    avatarSrc: userInfo?.photo_100,
+                    id: userInfo.id,
+                  },
+                ])));
+            }
+          });
+        });
+    }
+  }, [placeInLeaderBoard, fetchedUser, gamersListCommon]);
+
+  useEffect(() => {
+    if (
+      friendList
+      && placeInFriendsLeaderBoard
+      && fetchedUser
+      && gamersListInFriends.length === 0
+    ) {
+      getTopPlayersFriends(friendList, 0, placeInFriendsLeaderBoard.totalUsersCount)
+        .then((response) => {
+          if (friendList && fetchedUser) {
+            response.forEach((player) => {
+              const userInfo = friendList.find((friend) => +player.userId === +friend.id);
+              setGamersListInFriends((prev) => ([
+                ...prev,
+                {
+                  name: `${userInfo?.first_name} ${userInfo?.last_name}`,
+                  score: player.coins,
+                  avatarSrc: userInfo?.photo_100,
+                  id: userInfo?.id,
+                },
+              ]));
+            });
+          }
+        });
+    }
+  }, [friendList, placeInFriendsLeaderBoard, fetchedUser, gamersListInFriends]);
 
   const itemCount = useMemo(() => gamersOnRating, [gamersOnRating]);
 
@@ -42,40 +96,47 @@ const GamersList = ({
     id: fetchedUser.id,
   }), [fetchedUser, amountCoins]);
 
-  const gamersListInFriends = useMemo(
-    () => (friendList && fetchedUser && topPlayersFriends
-      ? topPlayersFriends
-        .map((player) => {
-          const userInfo = friendList.find((friend) => friend.id === +player.userId);
-          return {
-            name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-            score: player.coins,
-            avatarSrc: userInfo?.photo_100,
-            id: userInfo.id,
-          };
-        })
-      : null),
-    [friendList, fetchedUser, topPlayersFriends],
-  );
+  // useEffect(
+  //   () => {
+  //     if (friendList && fetchedUser && topPlayersFriends) {
+  //       topPlayersFriends.forEach((player) => {
+  //         const userInfo = friendList.find((friend) => +player.userId === +friend.id);
+  //         setGamersListInFriends((prev) => ([
+  //           ...prev,
+  //           {
+  //             name: `${userInfo?.first_name} ${userInfo?.last_name}`,
+  //             score: player.coins,
+  //             avatarSrc: userInfo?.photo_100,
+  //             id: userInfo.id,
+  //           },
+  //         ]));
+  //       });
+  //     }
+  //   },
+  //   [friendList, fetchedUser, topPlayersFriends],
+  // );
 
-  useEffect(() => {
-    if (topPlayers) {
-      topPlayers.forEach((player) => {
-        if (+player.userId !== +fetchedUser.id) {
-          getUserInfo(+player.userId)
-            .then((userInfo) => setGamersListCommon((prev) => ([
-              ...prev,
-              {
-                name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-                score: player.coins,
-                avatarSrc: userInfo?.photo_100,
-                id: userInfo.id,
-              },
-            ])));
-        }
-      });
-    }
-  }, [topPlayers, getUserInfo, fetchedUser]);
+  // useEffect(
+  //   () => {
+  //     if (topPlayers) {
+  //       topPlayers.forEach((player) => {
+  //         if (+player.userId !== +fetchedUser.id) {
+  //           getUserInfo(+player.userId)
+  //             .then((userInfo) => setGamersListCommon((prev) => ([
+  //               ...prev,
+  //               {
+  //                 name: `${userInfo?.first_name} ${userInfo?.last_name}`,
+  //                 score: player.coins,
+  //                 avatarSrc: userInfo?.photo_100,
+  //                 id: userInfo.id,
+  //               },
+  //             ])));
+  //         }
+  //       });
+  //     }
+  //   },
+  //   [topPlayers, getUserInfo, fetchedUser],
+  // );
 
   useEffect(() => {
     if (
@@ -103,29 +164,27 @@ const GamersList = ({
     fetchedUser,
   ]);
 
-  useEffect(() => {
-    if (
-      placeInFriendsLeaderBoard
-      && placeInFriendsLeaderBoard
-      && gamersListInFriends
-    ) {
-      setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
-      setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
-      setCurrentGamersList(gamersListInFriends);
-    }
-  }, [placeInFriendsLeaderBoard, placeInLeaderBoard, gamersListInFriends]);
+  // useEffect(() => {
+  //   if (
+  //     placeInFriendsLeaderBoard
+  //     && placeInFriendsLeaderBoard
+  //     && gamersListInFriends
+  //   ) {
+  //     setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
+  //     setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
+  //     setCurrentGamersList(gamersListInFriends);
+  //   }
+  // }, [placeInFriendsLeaderBoard, placeInLeaderBoard, gamersListInFriends]);
 
-  const loadMoreItems = useCallback((visibleStartIndex, visibleStopIndex) => {
-    const newCacheKey = `${visibleStartIndex}:${visibleStopIndex}:${isAllRating ? 'all' : 'friends'}`;
+  const loadMorePlayers = useCallback((visibleStartIndex, visibleStopIndex) => {
+    const newCacheKey = `${visibleStartIndex}:${visibleStopIndex}:all`;
     if (requestCache[newCacheKey]) {
       return;
     }
 
     const length = visibleStopIndex - visibleStartIndex;
     const visibleRange = [...Array(length).keys()].map((x) => x + visibleStartIndex);
-    const itemsRetrieved = visibleRange.every((index) => (isAllRating
-      ? !!topPlayers?.[index]
-      : !!topPlayersFriends?.[index]));
+    const itemsRetrieved = visibleRange.every((index) => !!gamersListCommon?.[index]);
 
     if (itemsRetrieved) {
       setRequestCache((prev) => ({ ...prev, [newCacheKey]: newCacheKey }));
@@ -133,18 +192,78 @@ const GamersList = ({
     }
 
     // eslint-disable-next-line consistent-return
-    return isAllRating
-      ? getTopPlayers(visibleStartIndex, visibleStopIndex)
-        .then((response) => setTopPlayers((prev) => [...prev, ...response]))
-      : getTopPlayersFriends(friendList, visibleStartIndex, visibleStopIndex)
-        .then((response) => setTopPlayersFriends((prev) => [...prev, ...response]));
-  }, [requestCache, friendList, topPlayers, topPlayersFriends, isAllRating]);
+    return getTopPlayers(visibleStartIndex, visibleStopIndex)
+      .then((response) => {
+        response.forEach((player) => {
+          if (+player.userId !== +fetchedUser.id) {
+            getUserInfo(+player.userId)
+              .then((userInfo) => setGamersListCommon((prev) => ([
+                ...prev,
+                {
+                  name: `${userInfo?.first_name} ${userInfo?.last_name}`,
+                  score: player.coins,
+                  avatarSrc: userInfo?.photo_100,
+                  id: userInfo.id,
+                },
+              ])));
+          }
+        });
+        setRequestCache((prev) => ({ ...prev, [newCacheKey]: newCacheKey }));
+        // setTopPlayers((prev) => [...response]);
+      });
+  }, [
+    requestCache,
+    fetchedUser,
+    gamersListCommon,
+  ]);
+
+  const loadMorePlayersFriends = useCallback((visibleStartIndex, visibleStopIndex) => {
+    const newCacheKey = `${visibleStartIndex}:${visibleStopIndex}:friends`;
+    if (requestCache[newCacheKey]) {
+      return;
+    }
+
+    const length = visibleStopIndex - visibleStartIndex;
+    const visibleRange = [...Array(length).keys()].map((x) => x + visibleStartIndex);
+    const itemsRetrieved = visibleRange.every((index) => !!gamersListInFriends?.[index]);
+
+    if (itemsRetrieved) {
+      setRequestCache((prev) => ({ ...prev, [newCacheKey]: newCacheKey }));
+      return;
+    }
+
+    // eslint-disable-next-line consistent-return
+    return getTopPlayersFriends(friendList, visibleStartIndex, visibleStopIndex)
+      .then((response) => {
+        if (friendList && fetchedUser) {
+          response.forEach((player) => {
+            const userInfo = friendList.find((friend) => +player.userId === +friend.id);
+            setGamersListInFriends((prev) => ([
+              ...prev,
+              {
+                name: `${userInfo?.first_name} ${userInfo?.last_name}`,
+                score: player.coins,
+                avatarSrc: userInfo?.photo_100,
+                id: userInfo?.id,
+              },
+            ]));
+          });
+        }
+        setRequestCache((prev) => ({ ...prev, [newCacheKey]: newCacheKey }));
+        // setTopPlayersFriends((prev) => [...response]);
+      });
+  }, [
+    requestCache,
+    friendList,
+    fetchedUser,
+    gamersListInFriends,
+  ]);
 
   const isItemLoaded = useCallback(
     (index) => (isAllRating
-      ? !!topPlayers?.[index]
-      : !!topPlayersFriends?.[index]),
-    [topPlayers, topPlayersFriends, isAllRating],
+      ? !!gamersListCommon?.[index]
+      : !!gamersListInFriends?.[index]),
+    [gamersListCommon, gamersListInFriends, isAllRating],
   );
 
   return (
@@ -182,52 +301,86 @@ const GamersList = ({
           </div>
         </div>
         )}
-        <InfiniteLoader
+        {/* <div className={cn(style.List)}>
+          {currentGamersList && currentGamersList.map((item, index) => (
+            <div key={index + item.id} className={cn(style['gamers-list-item-wrapper'])}>
+              <div className={cn(style['gamers-list-item'])}>
+                <div className={cn(style['gamers-list-item-user-info'])}>
+                  <Avatar
+                    src={item.avatarSrc}
+                    className={cn(style['gamers-list-item-avatar'])}
+                    size={54}
+                  />
+                  <div className={cn(style['gamers-list-item-name-wrapper'])}>
+                    <Text className={cn(style['gamers-list-item-name'])}>
+                      {item.name}
+                    </Text>
+                  </div>
+                </div>
+                <div className={cn(style['gamers-list-item-score-wrapper'])}>
+                  <Text className={cn(style['gamers-list-item-score'])}>
+                    {item.score}
+                  </Text>
+                  <MoreCoins />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div> */}
+        {/* <InfiniteLoader
           isItemLoaded={isItemLoaded}
-          itemCount={itemCount}
-          loadMoreItems={loadMoreItems}
+          itemCount={100}
+          loadMoreItems={isAllRating ? loadMorePlayers : loadMorePlayersFriends}
         >
-          {({ onItemsRendered, ref }) => (
-            <List
-              className={cn(style.List)}
-              height={320}
-              itemCount={itemCount}
-              itemSize={62}
-              onItemsRendered={onItemsRendered}
-              ref={ref}
-              width="100%"
-            >
-              {({ index, style: defaultStyle }) => {
-                const item = currentGamersList?.[index];
+          {({ onItemsRendered, ref }) => ( */}
+        {
+              currentGamersList && (
+              <List
+                className={cn(style.List)}
+                height={320}
+                itemCount={gamersOnRating}
+                itemSize={62}
+              // onItemsRendered={onItemsRendered}
+              // ref={ref}
+                width="100%"
+              >
+                {({ index, style: defaultStyle }) => {
+                  const item = currentGamersList?.[index];
 
-                return item ? (
-                  <div style={defaultStyle} key={index} className={cn(style['gamers-list-item-wrapper'])}>
-                    <div className={cn(style['gamers-list-item'])}>
-                      <div className={cn(style['gamers-list-item-user-info'])}>
-                        <Avatar
-                          src={item.avatarSrc}
-                          className={cn(style['gamers-list-item-avatar'])}
-                          size={54}
-                        />
-                        <div className={cn(style['gamers-list-item-name-wrapper'])}>
-                          <Text className={cn(style['gamers-list-item-name'])}>
-                            {item.name}
+                  return item ? (
+                    <div
+                      style={defaultStyle}
+                      key={index + item.id}
+                      className={cn(style['gamers-list-item-wrapper'])}
+                    >
+                      <div className={cn(style['gamers-list-item'])}>
+                        <div className={cn(style['gamers-list-item-user-info'])}>
+                          <Avatar
+                            src={item.avatarSrc}
+                            className={cn(style['gamers-list-item-avatar'])}
+                            size={54}
+                          />
+                          <div className={cn(style['gamers-list-item-name-wrapper'])}>
+                            <Text className={cn(style['gamers-list-item-name'])}>
+                              {item.name}
+                            </Text>
+                          </div>
+                        </div>
+                        <div className={cn(style['gamers-list-item-score-wrapper'])}>
+                          <Text className={cn(style['gamers-list-item-score'])}>
+                            {item.score}
                           </Text>
+                          <MoreCoins />
                         </div>
                       </div>
-                      <div className={cn(style['gamers-list-item-score-wrapper'])}>
-                        <Text className={cn(style['gamers-list-item-score'])}>
-                          {item.score}
-                        </Text>
-                        <MoreCoins />
-                      </div>
                     </div>
-                  </div>
-                ) : null;
-              }}
-            </List>
-          )}
-        </InfiniteLoader>
+                  ) : null;
+                }}
+              </List>
+              )
+            }
+        {/* //   )} */}
+        {/* // </InfiniteLoader> */}
       </div>
     </div>
   );

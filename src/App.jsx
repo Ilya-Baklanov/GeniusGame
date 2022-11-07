@@ -218,7 +218,6 @@ const App = () => {
   ), [activeModal, userStat]);
 
   const repostHandler = useCallback(() => {
-    console.log('REPOST_ACTIVATE');
     postWallPhoto(fetchedUser, accessToken).then(() => {
       postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
       updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
@@ -267,12 +266,10 @@ const App = () => {
   }, [userStat, accessToken]);
 
   const goToPosterPage = useCallback(() => {
-    console.log('GO TO POSTER_PAGE');
     go(null, 'poster');
   }, []);
 
   const setStatusHandler = useCallback(() => {
-    console.log('STATUS');
     activateModalMoreCoinsHandler();
   }, []);
 

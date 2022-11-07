@@ -34,7 +34,7 @@ const Rating = ({
       amountCoins={amountCoins}
       title="Рейтинг"
       additionalBlock={(
-        <Switcher onToggle={ratingSwitcherHandler} />
+        <Switcher onToggle={ratingSwitcherHandler} isAllRating={isAllRating} />
         )}
       isLoading={isLoading}
     >

@@ -35,6 +35,7 @@ export const POSTER_PICTURES = [
     { name: 'plus2', img_w: '/img/plus2_w.png', img_c: '/img/plus2_c.png' },
     { name: 'logo', img_w: '/img/logo_w.png', img_c: '/img/logo_b.png' },
     { name: 'phone', img: '/img/phone.png' },
+    { name: 'BG', img: '/img/BG_1.png' },
 ];
 
 export const PROMOCODES = [
