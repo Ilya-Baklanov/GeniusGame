@@ -16,6 +16,10 @@ import style from './Navbar.module.css';
 const Navbar = ({ id, go }) => (
   <div className={cn(style.navbar)}>
     <IconButton
+      hasActive={false}
+      hasHover={false}
+      hoverMode=""
+      focusVisibleMode=""
       className={cn(style['navbar-button'], {
         [style.active]: id === 'home',
         [style.disabled]: !go,
@@ -33,6 +37,10 @@ const Navbar = ({ id, go }) => (
       </Text>
     </IconButton>
     <IconButton
+      hasActive={false}
+      hasHover={false}
+      hoverMode=""
+      focusVisibleMode=""
       className={cn(style['navbar-button'], {
         [style.active]: id === 'promoCode',
         [style.disabled]: !go,
@@ -50,6 +58,10 @@ const Navbar = ({ id, go }) => (
       </Text>
     </IconButton>
     <IconButton
+      hasActive={false}
+      hasHover={false}
+      hoverMode=""
+      focusVisibleMode=""
       className={cn(style['navbar-button'], {
         [style.active]: id === 'rating',
         [style.disabled]: !go,
@@ -67,6 +79,10 @@ const Navbar = ({ id, go }) => (
       </Text>
     </IconButton>
     <IconButton
+      hasActive={false}
+      hasHover={false}
+      hoverMode=""
+      focusVisibleMode=""
       className={cn(style['navbar-button'], {
         [style.active]: id === 'moreCoins',
         [style.disabled]: !go,

@@ -35,6 +35,10 @@ const Poster = ({
               onClick={go}
               data-to="moreCoins"
               className={cn(style['close-button'])}
+              hasActive={false}
+              hasHover={false}
+              hoverMode=""
+              focusVisibleMode=""
             >
               <Close />
             </IconButton>

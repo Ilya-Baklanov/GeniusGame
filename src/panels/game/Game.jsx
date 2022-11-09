@@ -88,6 +88,10 @@ const Game = ({
             <IconButton
               onClick={closeGameHandler}
               className={cn(style['close-button'])}
+              hasActive={false}
+              hasHover={false}
+              hoverMode=""
+              focusVisibleMode=""
             >
               <Close />
             </IconButton>

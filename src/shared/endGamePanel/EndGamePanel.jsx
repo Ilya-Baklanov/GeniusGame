@@ -44,6 +44,10 @@ const EndGamePanel = ({
         <div className={cn(style['end-game-header'])}>
           <div className={cn(style['end-game-close-button-wrapper'])}>
             <IconButton
+              hasActive={false}
+              hasHover={false}
+              hoverMode=""
+              focusVisibleMode=""
               onClick={go}
               data-to="home"
               className={cn(style['end-game-close-button'])}

@@ -24,7 +24,13 @@ const ModalMoreCoins = ({
       header={(
         <ModalPageHeader
           right={(
-            <IconButton onClick={onClose}>
+            <IconButton
+              hasActive={false}
+              hasHover={false}
+              hoverMode=""
+              focusVisibleMode=""
+              onClick={onClose}
+            >
               <CloseGray />
             </IconButton>
           )}
