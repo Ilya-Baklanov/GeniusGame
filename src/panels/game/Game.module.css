@@ -20,7 +20,7 @@
 .earned-wrapper {}
 
 .earned-title {
-  font-family: 'SB Sans Display';
+  
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -36,7 +36,7 @@
 }
 
 .earned-count {
-  font-family: 'SB Sans Display';
+  
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
@@ -65,7 +65,7 @@
 }
 
 .time {
-  font-family: 'SB Sans Display';
+  
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

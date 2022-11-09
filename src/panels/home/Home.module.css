@@ -72,7 +72,7 @@
 }
 
 .home-earned-count {
-    font-family: 'SB Sans Display';
+    
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -107,7 +107,7 @@
     max-width: 250px;
     height: 25px;
 
-    font-family: 'SB Sans Display';
+    
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -122,7 +122,7 @@
     position: absolute;
     top: 27%;
 
-    font-family: 'SB Sans Display';
+    
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -164,7 +164,7 @@
 }
 
 .timer-until-next-game-text {
-    font-family: 'SB Sans Display';
+    
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -174,7 +174,7 @@
 }
 
 .timer-until-next-game-time {
-    font-family: 'SB Sans Display';
+    
     font-style: normal;
     font-weight: 600;
     font-size: 20px;

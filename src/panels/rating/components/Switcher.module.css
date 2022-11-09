@@ -78,7 +78,7 @@ input:checked+.slider::before {
 }
 
 .switcher-label-left-text {
-    font-family: 'SB Sans Display';
+    
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -87,7 +87,7 @@ input:checked+.slider::before {
 }
 
 input:checked~.content-wrapper .switcher-label-text-wrapper .switcher-label-left-text {
-    font-family: 'SB Sans Display';
+    
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -96,7 +96,7 @@ input:checked~.content-wrapper .switcher-label-text-wrapper .switcher-label-left
 }
 
 .switcher-label-right-text {
-    font-family: 'SB Sans Display';
+    
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -105,7 +105,7 @@ input:checked~.content-wrapper .switcher-label-text-wrapper .switcher-label-left
 }
 
 input:checked~.content-wrapper .switcher-label-text-wrapper .switcher-label-right-text {
-    font-family: 'SB Sans Display';
+    
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
