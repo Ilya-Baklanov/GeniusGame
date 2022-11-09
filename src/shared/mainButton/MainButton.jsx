@@ -10,7 +10,7 @@ import {
 import style from './MainButton.module.css';
 
 const MainButton = ({
-  text, onClick, goTo, disabled,
+  text, onClick, goTo, disabled, isAnimated,
 }) => (
   <Button
     stretched
@@ -18,7 +18,7 @@ const MainButton = ({
     mode="secondary"
     onClick={onClick}
     data-to={goTo}
-    className={cn(style['main-button'], { [style.disabled]: disabled })}
+    className={cn(style['main-button'], { [style.disabled]: disabled }, { [style.animated]: isAnimated })}
     disabled={disabled}
   >
     <Text className={cn(style['main-button-text'], { [style.disabled]: disabled })}>
@@ -32,6 +32,7 @@ MainButton.propTypes = {
   onClick: PropTypes.func,
   goTo: PropTypes.string,
   disabled: PropTypes.bool,
+  isAnimated: PropTypes.bool,
 };
 
 export default MainButton;

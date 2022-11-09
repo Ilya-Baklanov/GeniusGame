@@ -63,7 +63,7 @@ const Home = ({
               <div className={cn(style['start-game-button-wrapper'])}>
                 {
                 gamesAvailable > 0
-                  ? <MainButton text="Начать игру" onClick={go} goTo="gameBoard" />
+                  ? <MainButton text="Начать игру" onClick={go} goTo="gameBoard" isAnimated />
                   : (
                     <div className={cn(style['timer-until-next-game-wrapper'])}>
                       <Text className={cn(style['timer-until-next-game-text'])}>До следующей игры осталось </Text>

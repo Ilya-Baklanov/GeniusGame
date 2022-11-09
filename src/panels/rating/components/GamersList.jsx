@@ -38,7 +38,7 @@ const GamersList = ({
     if (
       placeInLeaderBoard
     ) {
-      getTopPlayers(0, 10)
+      getTopPlayers(0, placeInLeaderBoard.totalUsersCount)
         .then((response) => {
           setTopPlayers(response);
         });
