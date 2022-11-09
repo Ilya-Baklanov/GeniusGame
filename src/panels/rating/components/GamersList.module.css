@@ -43,15 +43,15 @@
     overflow: auto;
 }
 
-.List::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 0px;
 }
 
-.List::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     width: 0px;
 }
 
-.List::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     width: 0px;
 }
 

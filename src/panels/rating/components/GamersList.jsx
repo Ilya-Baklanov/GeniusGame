@@ -7,7 +7,7 @@ import InfiniteLoader from 'react-window-infinite-loader';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import { Avatar, Text } from '@vkontakte/vkui';
+import { Avatar, Text, ScreenSpinner } from '@vkontakte/vkui';
 
 import style from './GamersList.module.css';
 import { MoreCoins } from '../../../assets/image';
@@ -37,28 +37,43 @@ const GamersList = ({
   useEffect(() => {
     if (
       placeInLeaderBoard
-      && fetchedUser
-      && gamersListCommon.length === 0
     ) {
-      getTopPlayers(0, placeInLeaderBoard.totalUsersCount)
+      getTopPlayers(0, 10)
         .then((response) => {
-          response.forEach((player) => {
-            if (+player.userId !== +fetchedUser.id) {
-              getUserInfo(+player.userId)
-                .then((userInfo) => setGamersListCommon((prev) => ([
-                  ...prev,
-                  {
-                    name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-                    score: player.coins,
-                    avatarSrc: userInfo?.photo_100,
-                    id: userInfo.id,
-                  },
-                ])));
-            }
-          });
+          setTopPlayers(response);
         });
     }
-  }, [placeInLeaderBoard, fetchedUser, gamersListCommon]);
+  }, [placeInLeaderBoard]);
+
+  useEffect(() => {
+    console.log('topPlayers: ', topPlayers);
+    if (topPlayers && fetchedUser) {
+      topPlayers.forEach((player) => {
+        if (+player.userId !== +fetchedUser.id) {
+          setTimeout(() => {
+            console.log('player: ', player);
+            getUserInfo(+player.userId)
+              .then((userInfo) => setGamersListCommon((prev) => {
+                const playerInfo = {
+                  name: `${userInfo?.first_name} ${userInfo?.last_name}`,
+                  score: player.coins,
+                  avatarSrc: userInfo?.photo_100,
+                  id: userInfo.id,
+                };
+
+                console.log('player: ', player);
+                console.log('userInfo: ', userInfo);
+                console.log('playerInfo: ', playerInfo);
+                return [
+                  ...prev,
+                  playerInfo,
+                ];
+              }));
+          }, 100);
+        }
+      });
+    }
+  }, [topPlayers, fetchedUser]);
 
   useEffect(() => {
     if (
@@ -146,6 +161,7 @@ const GamersList = ({
       && gamersListInFriends
     ) {
       if (isAllRating) {
+        console.log('gamersListCommon: ', gamersListCommon);
         setPositionOnRating(placeInLeaderBoard.orderNumber);
         setGamersOnRating(placeInLeaderBoard.totalUsersCount);
         setCurrentGamersList(gamersListCommon);
@@ -266,6 +282,12 @@ const GamersList = ({
     [gamersListCommon, gamersListInFriends, isAllRating],
   );
 
+  useEffect(() => {
+    console.log('currentGamersList: ', currentGamersList);
+    console.log('currentGamersList.length: ', currentGamersList.length);
+    console.log('gamersOnRating: ', gamersOnRating);
+  }, [currentGamersList, gamersOnRating]);
+
   return (
     <div className={cn(style['gamers-list-wrapper'])}>
       <div className={cn(style['position-on-rating-wrapper'])}>
@@ -302,30 +324,39 @@ const GamersList = ({
         </div>
         )}
         {/* <div className={cn(style.List)}>
-          {currentGamersList && currentGamersList.map((item, index) => (
-            <div key={index + item.id} className={cn(style['gamers-list-item-wrapper'])}>
-              <div className={cn(style['gamers-list-item'])}>
-                <div className={cn(style['gamers-list-item-user-info'])}>
-                  <Avatar
-                    src={item.avatarSrc}
-                    className={cn(style['gamers-list-item-avatar'])}
-                    size={54}
-                  />
-                  <div className={cn(style['gamers-list-item-name-wrapper'])}>
-                    <Text className={cn(style['gamers-list-item-name'])}>
-                      {item.name}
-                    </Text>
+          {
+            currentGamersList
+            && gamersOnRating
+            && currentGamersList.length === gamersOnRating - 1 ? (
+              <>
+                {currentGamersList.map((item, index) => (
+                  <div key={index + item.id} className={cn(style['gamers-list-item-wrapper'])}>
+                    <div className={cn(style['gamers-list-item'])}>
+                      <div className={cn(style['gamers-list-item-user-info'])}>
+                        <Avatar
+                          src={item.avatarSrc}
+                          className={cn(style['gamers-list-item-avatar'])}
+                          size={54}
+                        />
+                        <div className={cn(style['gamers-list-item-name-wrapper'])}>
+                          <Text className={cn(style['gamers-list-item-name'])}>
+                            {item.name}
+                          </Text>
+                        </div>
+                      </div>
+                      <div className={cn(style['gamers-list-item-score-wrapper'])}>
+                        <Text className={cn(style['gamers-list-item-score'])}>
+                          {item.score}
+                        </Text>
+                        <MoreCoins />
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className={cn(style['gamers-list-item-score-wrapper'])}>
-                  <Text className={cn(style['gamers-list-item-score'])}>
-                    {item.score}
-                  </Text>
-                  <MoreCoins />
-                </div>
-              </div>
-            </div>
-          ))}
+                ))}
+              </>
+              )
+              : (<ScreenSpinner size="large" />)
+            }
         </div> */}
         {/* <InfiniteLoader
           isItemLoaded={isItemLoaded}
@@ -338,7 +369,7 @@ const GamersList = ({
               <List
                 className={cn(style.List)}
                 height={320}
-                itemCount={gamersOnRating}
+                itemCount={gamersOnRating - 1}
                 itemSize={62}
               // onItemsRendered={onItemsRendered}
               // ref={ref}
