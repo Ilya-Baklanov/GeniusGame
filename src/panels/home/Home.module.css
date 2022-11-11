@@ -18,47 +18,26 @@
     overflow: hidden;
 
     background:
-        radial-gradient(circle at 0% 0%,
-            rgb(135, 0, 255, .25),
-            rgb(135, 0, 255, 0) 30%),
-        radial-gradient(circle at 0% 70%,
-            rgb(135, 0, 255, .25),
-            rgb(135, 0, 255, 0) 30%),
-        radial-gradient(circle at 100% 0%,
-            rgb(135, 0, 255, .25),
-            rgb(135, 0, 255, 0) 30%),
-        radial-gradient(circle at 100% 70%,
-            rgb(255, 178, 34, .25),
-            rgb(255, 178, 34, 0) 30%),
-        #F6EBFF;
+    radial-gradient(circle at 0% 0%,
+        rgb(135, 0, 255, .25),
+        rgb(135, 0, 255, 0) 30%),
+    radial-gradient(circle at 0% 70%,
+        rgb(135, 0, 255, .25),
+        rgb(135, 0, 255, 0) 30%),
+    radial-gradient(circle at 100% 0%,
+        rgb(135, 0, 255, .25),
+        rgb(135, 0, 255, 0) 30%),
+    radial-gradient(circle at 100% 70%,
+        rgb(255, 178, 34, .25),
+        rgb(255, 178, 34, 0) 30%),
+    #F6EBFF;
 }
 
 @media (max-device-width: 480px) {
     .home {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
         width: 100vw;
-        height: 92vh;
+        height: 100vh;
         overflow: hidden;
-
-        background:
-            radial-gradient(circle at 0% 0%,
-                rgb(135, 0, 255, .25),
-                rgb(135, 0, 255, 0) 30%),
-            radial-gradient(circle at 0% 70%,
-                rgb(135, 0, 255, .25),
-                rgb(135, 0, 255, 0) 30%),
-            radial-gradient(circle at 100% 0%,
-                rgb(135, 0, 255, .25),
-                rgb(135, 0, 255, 0) 30%),
-            radial-gradient(circle at 100% 70%,
-                rgb(255, 178, 34, .25),
-                rgb(255, 178, 34, 0) 30%),
-            #F6EBFF;
     }
 }
 

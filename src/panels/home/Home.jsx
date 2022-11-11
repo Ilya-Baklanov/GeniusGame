@@ -8,6 +8,8 @@ import {
   Avatar,
   Text,
   ScreenSpinner,
+  useAdaptivity,
+  ViewWidth,
 } from '@vkontakte/vkui';
 
 import { MoreCoins } from '../../assets/image';
@@ -27,63 +29,71 @@ const Home = ({
   isLoading,
   timeUntilNextGame,
   onEndedTimerUntilNextGame,
-}) => (
-  <Panel id={id}>
-    <PanelHeader>{APP_NAME}</PanelHeader>
-    {
-      isLoading
-        ? (<ScreenSpinner size="large" />)
-        : (
-          <div className={cn(style['home-wrapper'])}>
-            <div className={cn(style.home)}>
-              <div className={cn(style['home-earned'])}>
-                <Text className={cn(style['home-earned-count'])}>
-                  {amountCoins}
-                </Text>
-                <MoreCoins />
-              </div>
-              {fetchedUser && (
-              <>
-                <div className={cn(style['greetings-wrapper'])}>
-                  {fetchedUser.photo_200 ? (
-                    <Avatar src={fetchedUser.photo_200} className={cn(style.avatar)} size={80} />
-                  ) : null}
-                  <Text className={cn(style.greetings)}>
-                    {`Привет, ${fetchedUser.first_name}!`}
-                  </Text>
-                </div>
-                <Text className={cn(style.description)}>
-                  {'Играй, зарабатывай монеты и трать\nих на покупки в СберМегаМаркете!'}
-                </Text>
-                <div className={cn(style['motivator-wrapper'])}>
-                  <Motivator />
-                </div>
-              </>
-              )}
-              <div className={cn(style['start-game-button-wrapper'])}>
-                {
-                gamesAvailable > 0
-                  ? <MainButton text="Начать игру" onClick={go} goTo="gameBoard" isAnimated />
-                  : (
-                    <div className={cn(style['timer-until-next-game-wrapper'])}>
-                      <Text className={cn(style['timer-until-next-game-text'])}>До следующей игры осталось </Text>
-                      <Text className={cn(style['timer-until-next-game-time'])}>
-                        <Timer time={timeUntilNextGame} onEndedTime={onEndedTimerUntilNextGame} />
-                      </Text>
-                    </div>
-                  )
-                }
-              </div>
+}) => {
+  const { viewWidth } = useAdaptivity();
 
-              <div className={cn(style['navbar-container'])}>
-                <Navbar id={id} go={go} />
+  console.log('viewWidth: ', viewWidth);
+  console.log('ViewWidth: ', ViewWidth);
+
+  return (
+    <Panel id={id}>
+      {viewWidth >= ViewWidth.TABLET && (
+      <PanelHeader>{APP_NAME}</PanelHeader>
+      )}
+      {
+        isLoading
+          ? (<ScreenSpinner size="large" />)
+          : (
+            <div className={cn(style['home-wrapper'])}>
+              <div className={cn(style.home)}>
+                <div className={cn(style['home-earned'])}>
+                  <Text className={cn(style['home-earned-count'])}>
+                    {amountCoins}
+                  </Text>
+                  <MoreCoins />
+                </div>
+                {fetchedUser && (
+                <>
+                  <div className={cn(style['greetings-wrapper'])}>
+                    {fetchedUser.photo_200 ? (
+                      <Avatar src={fetchedUser.photo_200} className={cn(style.avatar)} size={80} />
+                    ) : null}
+                    <Text className={cn(style.greetings)}>
+                      {`Привет, ${fetchedUser.first_name}!`}
+                    </Text>
+                  </div>
+                  <Text className={cn(style.description)}>
+                    {'Играй, зарабатывай монеты и трать\nих на покупки в СберМегаМаркете!'}
+                  </Text>
+                  <div className={cn(style['motivator-wrapper'])}>
+                    <Motivator />
+                  </div>
+                </>
+                )}
+                <div className={cn(style['start-game-button-wrapper'])}>
+                  {
+                  gamesAvailable > 0
+                    ? <MainButton text="Начать игру" onClick={go} goTo="gameBoard" isAnimated />
+                    : (
+                      <div className={cn(style['timer-until-next-game-wrapper'])}>
+                        <Text className={cn(style['timer-until-next-game-text'])}>До следующей игры осталось </Text>
+                        <Text className={cn(style['timer-until-next-game-time'])}>
+                          <Timer time={timeUntilNextGame} onEndedTime={onEndedTimerUntilNextGame} />
+                        </Text>
+                      </div>
+                    )
+                  }
+                </div>
+                <div className={cn(style['navbar-container'])}>
+                  <Navbar id={id} go={go} />
+                </div>
               </div>
             </div>
-          </div>
-        )
-      }
-  </Panel>
-);
+          )
+        }
+    </Panel>
+  );
+};
 
 Home.propTypes = {
   id: PropTypes.string.isRequired,

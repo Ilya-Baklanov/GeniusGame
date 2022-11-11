@@ -43,6 +43,10 @@ import Poster from './panels/poster/Poster';
 import ModalGetPromoCode from './panels/promoCode/components/ModalGetPromoCode';
 import { timeHandler } from './shared/timer/Timer';
 
+const { body } = document;
+console.log('body.clientWidth: ', body.clientWidth);
+console.log('body.offsetWidth: ', body.offsetWidth);
+
 const App = () => {
   const [activePanel, setActivePanel] = useState('home');
   const [isLoaded, setIsLoaded] = useState(false);

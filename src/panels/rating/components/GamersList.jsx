@@ -34,73 +34,42 @@ const GamersList = ({
 
   useEffect(() => setRequestCache({}), [amountCoins]);
 
-  useEffect(() => {
-    if (
-      placeInLeaderBoard
-    ) {
-      getTopPlayers(0, placeInLeaderBoard.totalUsersCount)
-        .then((response) => {
-          setTopPlayers(response);
-        });
-    }
-  }, [placeInLeaderBoard]);
+  // useEffect(() => {
+  //   if (
+  //     placeInLeaderBoard
+  //   ) {
+  //     getTopPlayers(0, placeInLeaderBoard.totalUsersCount)
+  //       .then((response) => {
+  //         setGamersListCommon(response.map((player) => ({
+  //           name: `${player?.firstName} ${player?.secondName}`,
+  //           score: player.coins,
+  //           avatarSrc: player?.photo,
+  //           id: player.id,
+  //         })));
+  //       });
+  //   }
+  // }, [placeInLeaderBoard]);
 
-  useEffect(() => {
-    console.log('topPlayers: ', topPlayers);
-    if (topPlayers && fetchedUser) {
-      topPlayers.forEach((player) => {
-        if (+player.userId !== +fetchedUser.id) {
-          setTimeout(() => {
-            console.log('player: ', player);
-            getUserInfo(+player.userId)
-              .then((userInfo) => setGamersListCommon((prev) => {
-                const playerInfo = {
-                  name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-                  score: player.coins,
-                  avatarSrc: userInfo?.photo_100,
-                  id: userInfo.id,
-                };
-
-                console.log('player: ', player);
-                console.log('userInfo: ', userInfo);
-                console.log('playerInfo: ', playerInfo);
-                return [
-                  ...prev,
-                  playerInfo,
-                ];
-              }));
-          }, 100);
-        }
-      });
-    }
-  }, [topPlayers, fetchedUser]);
-
-  useEffect(() => {
-    if (
-      friendList
-      && placeInFriendsLeaderBoard
-      && fetchedUser
-      && gamersListInFriends.length === 0
-    ) {
-      getTopPlayersFriends(friendList, 0, placeInFriendsLeaderBoard.totalUsersCount)
-        .then((response) => {
-          if (friendList && fetchedUser) {
-            response.forEach((player) => {
-              const userInfo = friendList.find((friend) => +player.userId === +friend.id);
-              setGamersListInFriends((prev) => ([
-                ...prev,
-                {
-                  name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-                  score: player.coins,
-                  avatarSrc: userInfo?.photo_100,
-                  id: userInfo?.id,
-                },
-              ]));
-            });
-          }
-        });
-    }
-  }, [friendList, placeInFriendsLeaderBoard, fetchedUser, gamersListInFriends]);
+  // useEffect(() => {
+  //   if (
+  //     friendList
+  //     && placeInFriendsLeaderBoard
+  //     && fetchedUser
+  //     && gamersListInFriends.length === 0
+  //   ) {
+  //     getTopPlayersFriends(friendList, 0, placeInFriendsLeaderBoard.totalUsersCount)
+  //       .then((response) => {
+  //         setGamersListInFriends(response
+  //           .filter((player) => +player.id !== +fetchedUser.id)
+  //           .map((player) => ({
+  //             name: `${player?.firstName} ${player?.secondName}`,
+  //             score: player.coins,
+  //             avatarSrc: player?.photo,
+  //             id: player.id,
+  //           })));
+  //       });
+  //   }
+  // }, [friendList, placeInFriendsLeaderBoard, fetchedUser, gamersListInFriends]);
 
   const itemCount = useMemo(() => gamersOnRating, [gamersOnRating]);
 
@@ -111,48 +80,6 @@ const GamersList = ({
     id: fetchedUser.id,
   }), [fetchedUser, amountCoins]);
 
-  // useEffect(
-  //   () => {
-  //     if (friendList && fetchedUser && topPlayersFriends) {
-  //       topPlayersFriends.forEach((player) => {
-  //         const userInfo = friendList.find((friend) => +player.userId === +friend.id);
-  //         setGamersListInFriends((prev) => ([
-  //           ...prev,
-  //           {
-  //             name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-  //             score: player.coins,
-  //             avatarSrc: userInfo?.photo_100,
-  //             id: userInfo.id,
-  //           },
-  //         ]));
-  //       });
-  //     }
-  //   },
-  //   [friendList, fetchedUser, topPlayersFriends],
-  // );
-
-  // useEffect(
-  //   () => {
-  //     if (topPlayers) {
-  //       topPlayers.forEach((player) => {
-  //         if (+player.userId !== +fetchedUser.id) {
-  //           getUserInfo(+player.userId)
-  //             .then((userInfo) => setGamersListCommon((prev) => ([
-  //               ...prev,
-  //               {
-  //                 name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-  //                 score: player.coins,
-  //                 avatarSrc: userInfo?.photo_100,
-  //                 id: userInfo.id,
-  //               },
-  //             ])));
-  //         }
-  //       });
-  //     }
-  //   },
-  //   [topPlayers, getUserInfo, fetchedUser],
-  // );
-
   useEffect(() => {
     if (
       placeInFriendsLeaderBoard
@@ -161,7 +88,6 @@ const GamersList = ({
       && gamersListInFriends
     ) {
       if (isAllRating) {
-        console.log('gamersListCommon: ', gamersListCommon);
         setPositionOnRating(placeInLeaderBoard.orderNumber);
         setGamersOnRating(placeInLeaderBoard.totalUsersCount);
         setCurrentGamersList(gamersListCommon);
@@ -179,18 +105,6 @@ const GamersList = ({
     isAllRating,
     fetchedUser,
   ]);
-
-  // useEffect(() => {
-  //   if (
-  //     placeInFriendsLeaderBoard
-  //     && placeInFriendsLeaderBoard
-  //     && gamersListInFriends
-  //   ) {
-  //     setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
-  //     setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
-  //     setCurrentGamersList(gamersListInFriends);
-  //   }
-  // }, [placeInFriendsLeaderBoard, placeInLeaderBoard, gamersListInFriends]);
 
   const loadMorePlayers = useCallback((visibleStartIndex, visibleStopIndex) => {
     const newCacheKey = `${visibleStartIndex}:${visibleStopIndex}:all`;
@@ -210,22 +124,17 @@ const GamersList = ({
     // eslint-disable-next-line consistent-return
     return getTopPlayers(visibleStartIndex, visibleStopIndex)
       .then((response) => {
-        response.forEach((player) => {
-          if (+player.userId !== +fetchedUser.id) {
-            getUserInfo(+player.userId)
-              .then((userInfo) => setGamersListCommon((prev) => ([
-                ...prev,
-                {
-                  name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-                  score: player.coins,
-                  avatarSrc: userInfo?.photo_100,
-                  id: userInfo.id,
-                },
-              ])));
-          }
-        });
+        console.log('getTopPlayers: ', response);
+        setGamersListCommon((prev) => ([
+          ...prev,
+          ...response.map((player) => ({
+            name: `${player?.firstName} ${player?.secondName}`,
+            score: player.coins,
+            avatarSrc: player?.photo,
+            id: player.id,
+          })),
+        ]));
         setRequestCache((prev) => ({ ...prev, [newCacheKey]: newCacheKey }));
-        // setTopPlayers((prev) => [...response]);
       });
   }, [
     requestCache,
@@ -251,22 +160,19 @@ const GamersList = ({
     // eslint-disable-next-line consistent-return
     return getTopPlayersFriends(friendList, visibleStartIndex, visibleStopIndex)
       .then((response) => {
-        if (friendList && fetchedUser) {
-          response.forEach((player) => {
-            const userInfo = friendList.find((friend) => +player.userId === +friend.id);
-            setGamersListInFriends((prev) => ([
-              ...prev,
-              {
-                name: `${userInfo?.first_name} ${userInfo?.last_name}`,
-                score: player.coins,
-                avatarSrc: userInfo?.photo_100,
-                id: userInfo?.id,
-              },
-            ]));
-          });
-        }
+        console.log('getTopPlayersFriends: ', response);
+        setGamersListInFriends((prev) => ([
+          ...prev,
+          ...response
+            .filter((player) => +player.id !== +fetchedUser.id)
+            .map((player) => ({
+              name: `${player?.firstName} ${player?.secondName}`,
+              score: player.coins,
+              avatarSrc: player?.photo,
+              id: player.id,
+            })),
+        ]));
         setRequestCache((prev) => ({ ...prev, [newCacheKey]: newCacheKey }));
-        // setTopPlayersFriends((prev) => [...response]);
       });
   }, [
     requestCache,
@@ -284,7 +190,6 @@ const GamersList = ({
 
   useEffect(() => {
     console.log('currentGamersList: ', currentGamersList);
-    console.log('currentGamersList.length: ', currentGamersList.length);
     console.log('gamersOnRating: ', gamersOnRating);
   }, [currentGamersList, gamersOnRating]);
 
@@ -323,95 +228,62 @@ const GamersList = ({
           </div>
         </div>
         )}
-        {/* <div className={cn(style.List)}>
-          {
-            currentGamersList
-            && gamersOnRating
-            && currentGamersList.length === gamersOnRating - 1 ? (
-              <>
-                {currentGamersList.map((item, index) => (
-                  <div key={index + item.id} className={cn(style['gamers-list-item-wrapper'])}>
-                    <div className={cn(style['gamers-list-item'])}>
-                      <div className={cn(style['gamers-list-item-user-info'])}>
-                        <Avatar
-                          src={item.avatarSrc}
-                          className={cn(style['gamers-list-item-avatar'])}
-                          size={54}
-                        />
-                        <div className={cn(style['gamers-list-item-name-wrapper'])}>
-                          <Text className={cn(style['gamers-list-item-name'])}>
-                            {item.name}
-                          </Text>
-                        </div>
-                      </div>
-                      <div className={cn(style['gamers-list-item-score-wrapper'])}>
-                        <Text className={cn(style['gamers-list-item-score'])}>
-                          {item.score}
-                        </Text>
-                        <MoreCoins />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </>
-              )
-              : (<ScreenSpinner size="large" />)
-            }
-        </div> */}
-        {/* <InfiniteLoader
+        <InfiniteLoader
           isItemLoaded={isItemLoaded}
-          itemCount={100}
+          itemCount={itemCount}
           loadMoreItems={isAllRating ? loadMorePlayers : loadMorePlayersFriends}
         >
-          {({ onItemsRendered, ref }) => ( */}
-        {
-              currentGamersList && (
-              <List
-                className={cn(style.List)}
-                height={320}
-                itemCount={gamersOnRating - 1}
-                itemSize={62}
-              // onItemsRendered={onItemsRendered}
-              // ref={ref}
-                width="100%"
-              >
-                {({ index, style: defaultStyle }) => {
-                  const item = currentGamersList?.[index];
+          {
+              ({ onItemsRendered, ref }) => (
+                <List
+                  className={cn(style.List)}
+                  height={320}
+                  itemCount={itemCount}
+                  itemSize={62}
+                  onItemsRendered={onItemsRendered}
+                  ref={ref}
+                  width="100%"
+                >
+                  { currentGamersList.length > 0
+                    ? (
+                      ({ index, style: defaultStyle }) => {
+                        const item = currentGamersList?.[index];
 
-                  return item ? (
-                    <div
-                      style={defaultStyle}
-                      key={index + item.id}
-                      className={cn(style['gamers-list-item-wrapper'])}
-                    >
-                      <div className={cn(style['gamers-list-item'])}>
-                        <div className={cn(style['gamers-list-item-user-info'])}>
-                          <Avatar
-                            src={item.avatarSrc}
-                            className={cn(style['gamers-list-item-avatar'])}
-                            size={54}
-                          />
-                          <div className={cn(style['gamers-list-item-name-wrapper'])}>
-                            <Text className={cn(style['gamers-list-item-name'])}>
-                              {item.name}
-                            </Text>
+                        return item ? (
+                          <div
+                            style={defaultStyle}
+                            key={index + item.id}
+                            className={cn(style['gamers-list-item-wrapper'])}
+                          >
+                            <div className={cn(style['gamers-list-item'])}>
+                              <div className={cn(style['gamers-list-item-user-info'])}>
+                                <Avatar
+                                  src={item.avatarSrc}
+                                  className={cn(style['gamers-list-item-avatar'])}
+                                  size={54}
+                                />
+                                <div className={cn(style['gamers-list-item-name-wrapper'])}>
+                                  <Text className={cn(style['gamers-list-item-name'])}>
+                                    {item.name}
+                                  </Text>
+                                </div>
+                              </div>
+                              <div className={cn(style['gamers-list-item-score-wrapper'])}>
+                                <Text className={cn(style['gamers-list-item-score'])}>
+                                  {item.score}
+                                </Text>
+                                <MoreCoins />
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                        <div className={cn(style['gamers-list-item-score-wrapper'])}>
-                          <Text className={cn(style['gamers-list-item-score'])}>
-                            {item.score}
-                          </Text>
-                          <MoreCoins />
-                        </div>
-                      </div>
-                    </div>
-                  ) : null;
-                }}
-              </List>
+                        ) : null;
+                      }
+                    )
+                    : () => (<ScreenSpinner size="large" />)}
+                </List>
               )
             }
-        {/* //   )} */}
-        {/* // </InfiniteLoader> */}
+        </InfiniteLoader>
       </div>
     </div>
   );

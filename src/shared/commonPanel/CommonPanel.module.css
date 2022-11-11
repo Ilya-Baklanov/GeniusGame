@@ -1,3 +1,8 @@
+/* .common-panel-wrapper {
+  width: 100%;
+  height: calc(100vh - 75px);
+} */
+
 .common-panel-earned {
   position: absolute;
   top: 4%;
@@ -70,8 +75,10 @@
 }
 
 .navbar-container {
-  position: absolute;
-  bottom: 22px;
+  /* position: absolute; */
+  /* bottom: 22px; */
   width: 100%;
+  height: 75px;
   padding: 0 17px;
+  background: #F6EBFF;
 }
