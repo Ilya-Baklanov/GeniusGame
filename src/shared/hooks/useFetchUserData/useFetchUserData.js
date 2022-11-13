@@ -154,7 +154,7 @@ const useFetchUserData = () => {
 
     const fetchToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51435607,
+            app_id: 51435598,
             scope: 'friends,groups,wall',
         });
         setAccessToken(value.access_token);

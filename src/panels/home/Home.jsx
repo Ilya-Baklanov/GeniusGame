@@ -8,8 +8,6 @@ import {
   Avatar,
   Text,
   ScreenSpinner,
-  useAdaptivity,
-  ViewWidth,
 } from '@vkontakte/vkui';
 
 import { MoreCoins } from '../../assets/image';
@@ -29,18 +27,13 @@ const Home = ({
   isLoading,
   timeUntilNextGame,
   onEndedTimerUntilNextGame,
-}) => {
-  const { viewWidth } = useAdaptivity();
-
-  console.log('viewWidth: ', viewWidth);
-  console.log('ViewWidth: ', ViewWidth);
-
-  return (
-    <Panel id={id}>
-      {viewWidth >= ViewWidth.TABLET && (
+  isMobile,
+}) => (
+  <Panel id={id}>
+    {!isMobile && (
       <PanelHeader>{APP_NAME}</PanelHeader>
-      )}
-      {
+    )}
+    {
         isLoading
           ? (<ScreenSpinner size="large" />)
           : (
@@ -91,9 +84,8 @@ const Home = ({
             </div>
           )
         }
-    </Panel>
-  );
-};
+  </Panel>
+);
 
 Home.propTypes = {
   id: PropTypes.string.isRequired,
@@ -111,6 +103,7 @@ Home.propTypes = {
   isLoading: PropTypes.bool,
   timeUntilNextGame: PropTypes.number,
   onEndedTimerUntilNextGame: PropTypes.func,
+  isMobile: PropTypes.bool,
 };
 
 export default Home;

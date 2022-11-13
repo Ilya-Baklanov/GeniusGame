@@ -19,6 +19,7 @@ const MoreCoins = ({
   fetchedUser,
   isLoading,
   onUpdateNotificationStatus,
+  isMobile,
 }) => {
   const [switcherState, setSwitcherState] = useState(notificationStatus ? +notificationStatus : 0);
   const pushSwitcherHandler = useCallback((e) => {
@@ -40,6 +41,7 @@ const MoreCoins = ({
       title="Ещё монеты"
       description={'Выполняй задания –\nзарабатывай ещё больше монет!'}
       isLoading={isLoading}
+      isMobile={isMobile}
     >
       <MoreCoinsCards circumstances={circumstances} onClickToCard={onClickToCard} />
       <div className={cn(style['more-coins-push-wrapper'])}>
@@ -64,6 +66,7 @@ MoreCoins.propTypes = {
   fetchedUser: PropTypes.shape(),
   isLoading: PropTypes.bool,
   onUpdateNotificationStatus: PropTypes.func,
+  isMobile: PropTypes.bool,
 };
 
 export default MoreCoins;

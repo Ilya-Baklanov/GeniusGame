@@ -44,8 +44,7 @@ import ModalGetPromoCode from './panels/promoCode/components/ModalGetPromoCode';
 import { timeHandler } from './shared/timer/Timer';
 
 const { body } = document;
-console.log('body.clientWidth: ', body.clientWidth);
-console.log('body.offsetWidth: ', body.offsetWidth);
+const isMobile = body.offsetWidth <= 480;
 
 const App = () => {
   const [activePanel, setActivePanel] = useState('home');
@@ -334,15 +333,17 @@ const App = () => {
                     go={go}
                     amountCoins={userStat.coins || '0'}
                     isLoading={!isFetchUserStatLoaded}
-                    gamesAvailable={+userStat.gameCount}
+                    gamesAvailable={1}
                     timeUntilNextGame={timeUntilNextGameInSeconds}
                     onEndedTimerUntilNextGame={endedTimerUntilNextGame}
+                    isMobile={isMobile}
                   />
                   <Game
                     id="gameBoard"
                     go={go}
                     onEndGame={endGameHandler}
                     onCloseGame={closeGameHandler}
+                    isMobile={isMobile}
                   />
                   <PromoCode
                     id="promoCode"
@@ -350,6 +351,7 @@ const App = () => {
                     amountCoins={userStat.coins || '0'}
                     onActivateModal={activateModalPromoCodeHandler}
                     isLoading={!isFetchUserStatLoaded}
+                    isMobile={isMobile}
                   />
                   <MoreCoins
                     id="moreCoins"
@@ -361,6 +363,7 @@ const App = () => {
                     fetchedUser={fetchedUser}
                     isLoading={!isFetchUserStatLoaded}
                     onUpdateNotificationStatus={updateNotificationStatus}
+                    isMobile={isMobile}
                   />
                   <Rating
                     id="rating"
@@ -375,12 +378,14 @@ const App = () => {
                     getUserInfo={getUserInfo}
                     getTopPlayers={getTopPlayers}
                     getTopPlayersFriends={getTopPlayersFriends}
+                    isMobile={isMobile}
                   />
                   <LossPanel
                     id="lossGame"
                     go={go}
                     isMoreGamesAvailable={userStat.gameCount > 0}
                     timeUntilNextGame={timeUntilNextGameInSeconds}
+                    isMobile={isMobile}
                   />
                   <WinPanel
                     id="winGame"
@@ -389,8 +394,14 @@ const App = () => {
                     isLoading={!isEarnedCoinsPosted}
                     isMoreGamesAvailable={userStat.gameCount > 0}
                     timeUntilNextGame={timeUntilNextGameInSeconds}
+                    isMobile={isMobile}
                   />
-                  <Poster id="poster" go={go} onRepost={repostHandler} />
+                  <Poster
+                    id="poster"
+                    go={go}
+                    onRepost={repostHandler}
+                    isMobile={isMobile}
+                  />
                 </View>
               ) : (
                 <ScreenSpinner size="large" />

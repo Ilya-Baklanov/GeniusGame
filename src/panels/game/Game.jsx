@@ -14,7 +14,7 @@ import { APP_NAME } from '../../assets/constants/constants';
 import MainLayout from '../../shared/mainLayout/MainLayout';
 
 const Game = ({
-  id, go, onEndGame, onCloseGame,
+  id, go, onEndGame, onCloseGame, isMobile,
 }) => {
   const [isDisableGameboard, setIsDisableGameboard] = useState(true);
   const [guessedCards, setGuessedCards] = useState(0);
@@ -55,51 +55,53 @@ const Game = ({
 
   return (
     <Panel id={id}>
-      <PanelHeader
-        left={<PanelHeaderBack onClick={closeGameHandler} />}
-      >
-        {APP_NAME}
-      </PanelHeader>
-
+      {!isMobile && (
+        <PanelHeader
+          left={<PanelHeaderBack onClick={closeGameHandler} />}
+        >
+          {APP_NAME}
+        </PanelHeader>
+      )}
       <MainLayout>
-        <div className={cn(style.header)}>
-          <div className={cn(style['earned-wrapper'])}>
-            <Text className={cn(style['earned-title'])}>
-              Заработано:
-            </Text>
-            <div className={cn(style.earned)}>
-              <Text className={cn(style['earned-count'])}>
-                {guessedCards}
+        <div className={cn(style['game-wrapper'])}>
+          <div className={cn(style.header)}>
+            <div className={cn(style['earned-wrapper'])}>
+              <Text className={cn(style['earned-title'])}>
+                Заработано:
               </Text>
-              <MoreCoins />
+              <div className={cn(style.earned)}>
+                <Text className={cn(style['earned-count'])}>
+                  {guessedCards}
+                </Text>
+                <MoreCoins />
+              </div>
+            </div>
+            <div className={cn(style.timer)}>
+              <Text className={cn(style.time)}>
+                <Timer
+                  time={60}
+                  advanceСountdownTime={3}
+                  onEndedAdvanceСountdownTime={endingAdvanceTimeHandler}
+                  onEndedTime={endingTimeHandler}
+                />
+              </Text>
+            </div>
+            <div className={cn(style['close-button-wrapper'])}>
+              <IconButton
+                onClick={closeGameHandler}
+                className={cn(style['close-button'])}
+                hasActive={false}
+                hasHover={false}
+                hoverMode=""
+                focusVisibleMode=""
+              >
+                <Close />
+              </IconButton>
             </div>
           </div>
-          <div className={cn(style.timer)}>
-            <Text className={cn(style.time)}>
-              <Timer
-                time={60}
-                advanceСountdownTime={3}
-                onEndedAdvanceСountdownTime={endingAdvanceTimeHandler}
-                onEndedTime={endingTimeHandler}
-              />
-            </Text>
+          <div className={cn(style['game-board'])}>
+            <Cards disable={isDisableGameboard} onGuessed={guessingHandler} previewDelay={3} />
           </div>
-          <div className={cn(style['close-button-wrapper'])}>
-            <IconButton
-              onClick={closeGameHandler}
-              className={cn(style['close-button'])}
-              hasActive={false}
-              hasHover={false}
-              hoverMode=""
-              focusVisibleMode=""
-            >
-              <Close />
-            </IconButton>
-          </div>
-        </div>
-
-        <div className={cn(style['game-board'])}>
-          <Cards disable={isDisableGameboard} onGuessed={guessingHandler} previewDelay={3} />
         </div>
       </MainLayout>
     </Panel>
@@ -111,6 +113,7 @@ Game.propTypes = {
   go: PropTypes.func.isRequired,
   onEndGame: PropTypes.func,
   onCloseGame: PropTypes.func,
+  isMobile: PropTypes.bool,
 };
 
 export default Game;

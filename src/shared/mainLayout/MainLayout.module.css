@@ -14,9 +14,7 @@
   justify-content: space-between;
 
   width: 349px;
-  height: calc(684px - 75px);
-  padding: 31px 17px 39px 17px;
-  overflow: auto;
+  height: calc(100vh - 61px);
 
   background: #F6EBFF;
 }
@@ -24,6 +22,6 @@
 @media (max-device-width: 480px) {
   .layout {
     width: 100vw;
-    height: calc(100vh - 75px);
+    height: 100vh;
   }
 }

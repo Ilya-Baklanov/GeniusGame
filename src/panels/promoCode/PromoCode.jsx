@@ -5,7 +5,7 @@ import CommonPanel from '../../shared/commonPanel/CommonPanel';
 import PromoCodeCards from './components/PromoCodeCards';
 
 const PromoCode = ({
-  id, go, amountCoins, onActivateModal, isLoading,
+  id, go, amountCoins, onActivateModal, isLoading, isMobile,
 }) => (
   <CommonPanel
     id={id}
@@ -14,6 +14,7 @@ const PromoCode = ({
     title="Промокоды"
     description={'Обменивай монеты на промокоды\nи делай покупки в СберМегаМаркете!'}
     isLoading={isLoading}
+    isMobile={isMobile}
   >
     <PromoCodeCards amountCoins={amountCoins} onActivateModal={onActivateModal} />
   </CommonPanel>
@@ -25,6 +26,7 @@ PromoCode.propTypes = {
   amountCoins: PropTypes.string.isRequired,
   onActivateModal: PropTypes.func,
   isLoading: PropTypes.bool,
+  isMobile: PropTypes.bool,
 };
 
 export default PromoCode;

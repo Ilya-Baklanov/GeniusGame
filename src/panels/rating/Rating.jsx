@@ -20,6 +20,7 @@ const Rating = ({
   getUserInfo,
   getTopPlayers,
   getTopPlayersFriends,
+  isMobile,
 }) => {
   const [isAllRating, setIsAllRating] = useState(false);
 
@@ -37,6 +38,7 @@ const Rating = ({
         <Switcher onToggle={ratingSwitcherHandler} isAllRating={isAllRating} />
         )}
       isLoading={isLoading}
+      isMobile={isMobile}
     >
       <GamersList
         amountCoins={amountCoins}
@@ -65,6 +67,7 @@ Rating.propTypes = {
   getUserInfo: PropTypes.func,
   getTopPlayers: PropTypes.func,
   getTopPlayersFriends: PropTypes.func,
+  isMobile: PropTypes.bool,
 };
 
 export default Rating;

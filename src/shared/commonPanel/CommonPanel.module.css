@@ -1,7 +1,20 @@
-/* .common-panel-wrapper {
+.common-panel-main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow: auto;
+
   width: 100%;
-  height: calc(100vh - 75px);
-} */
+  height: 100%;
+}
+
+@media (max-device-width: 480px) {
+  .common-panel-main {
+    height: calc(100vh - 75px);
+  }
+}
 
 .common-panel-earned {
   position: absolute;
@@ -75,10 +88,14 @@
 }
 
 .navbar-container {
-  /* position: absolute; */
-  /* bottom: 22px; */
   width: 100%;
   height: 75px;
   padding: 0 17px;
   background: #F6EBFF;
 }
+
+/* @media (max-device-width: 480px) {
+  .navbar-container {
+    width: 100%;
+  }
+} */

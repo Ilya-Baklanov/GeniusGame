@@ -14,8 +14,6 @@ const Cards = ({ disable, onGuessed, previewDelay }) => {
 
   const { items, setItems } = useGetRandomGameCards();
 
-  useEffect(() => { console.log('items: ', items); }, [items]);
-
   useLayoutEffect(() => {
     let editedCardsList = items?.map((item) => ({ ...item, stat: 'preview' }));
     setItems([...editedCardsList]);
