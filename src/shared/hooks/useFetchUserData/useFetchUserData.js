@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import { POST_MESSAGE, POST_PHOTO_ID } from '../../../assets/constants/constants';
-import { topPlayersResponse } from './topPlayersResponse';
 
 const useFetchUserData = () => {
     const [isFetchUserLoaded, setIsFetchUserLoaded] = useState(false);
@@ -105,7 +104,6 @@ const useFetchUserData = () => {
         const response = await fetch('https://sbermemorygame.ru/v1/api/getTopPlayers', requestOptions);
         const json = await response.json();
         return json.users;
-        // return topPlayersResponse.users.slice(start, end);
     }, []);
 
     async function getPlaceInFriendsLeaderBoard(user, friendsList) {
@@ -149,7 +147,6 @@ const useFetchUserData = () => {
         const responseFriends = await fetch('https://sbermemorygame.ru/v1/api/getTopPlayersFriends', requestOptionsFriends);
         const json = await responseFriends.json();
         return json.users;
-        // return topPlayersResponse.users.slice(start, end);
     }, []);
 
     const fetchToken = useCallback(async (user) => {
