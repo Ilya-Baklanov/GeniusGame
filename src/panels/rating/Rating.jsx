@@ -17,7 +17,6 @@ const Rating = ({
   fetchedUser,
   placeInLeaderBoard,
   placeInFriendsLeaderBoard,
-  getUserInfo,
   getTopPlayers,
   getTopPlayersFriends,
   isMobile,
@@ -47,7 +46,6 @@ const Rating = ({
         fetchedUser={fetchedUser}
         placeInLeaderBoard={placeInLeaderBoard}
         placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
-        getUserInfo={getUserInfo}
         getTopPlayers={getTopPlayers}
         getTopPlayersFriends={getTopPlayersFriends}
       />
@@ -64,7 +62,6 @@ Rating.propTypes = {
   fetchedUser: PropTypes.any,
   placeInLeaderBoard: PropTypes.any,
   placeInFriendsLeaderBoard: PropTypes.any,
-  getUserInfo: PropTypes.func,
   getTopPlayers: PropTypes.func,
   getTopPlayersFriends: PropTypes.func,
   isMobile: PropTypes.bool,

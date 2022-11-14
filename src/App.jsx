@@ -30,7 +30,8 @@ import {
   MODAL_PROMO_CODE,
   MODAL_GET_PROMO_CODE,
   MOTIVATOR,
-  MODAL_MORE_COINS,
+  MODAL_MORE_COINS_STATUS,
+  MODAL_MORE_COINS_INVITE_FRIENDS,
   STATUS_LIST,
   POSTER_PICTURES,
 } from './assets/constants/constants';
@@ -38,10 +39,11 @@ import LossPanel from './panels/lossPanel/LossPanel';
 import WinPanel from './panels/winPanel/WinPanel';
 import ModalPromoCode from './panels/promoCode/components/ModalPromoCode';
 import useFetchUserData from './shared/hooks/useFetchUserData/useFetchUserData';
-import ModalMoreCoins from './panels/moreCoins/components/ModalMoreCoins';
+import ModalMoreCoinsStatus from './panels/moreCoins/components/ModalMoreCoinsStatus';
 import Poster from './panels/poster/Poster';
 import ModalGetPromoCode from './panels/promoCode/components/ModalGetPromoCode';
 import { timeHandler } from './shared/timer/Timer';
+import ModalMoreCoinsInviteFriends from './panels/moreCoins/components/ModalMoreCoinsInviteFriends';
 
 const { body } = document;
 const isMobile = body.offsetWidth <= 480;
@@ -71,7 +73,6 @@ const App = () => {
   ]);
 
   const {
-    getUserInfo,
     isFetchUserLoaded,
     fetchedUser,
     fetchedScheme,
@@ -87,16 +88,13 @@ const App = () => {
     serverTime,
     getPromoCode,
     updateNotificationStatus,
-    getFriendList,
     friendList,
     getPlaceInLeaderBoard,
     placeInLeaderBoard,
     getTopPlayers,
-    topPlayers,
     getPlaceInFriendsLeaderBoard,
     placeInFriendsLeaderBoard,
     getTopPlayersFriends,
-    topPlayersFriends,
   } = useFetchUserData();
 
   const serverTimeProcessed = useMemo(() => timeHandler(serverTime), [serverTime]);
@@ -186,9 +184,15 @@ const App = () => {
     });
   }, [userStat, refetchUserStat]);
 
-  const activateModalMoreCoinsHandler = useCallback(() => {
+  const activateModalMoreCoinsStatusHandler = useCallback(() => {
     setActiveModal({
-      id: MODAL_MORE_COINS,
+      id: MODAL_MORE_COINS_STATUS,
+    });
+  }, [userStat]);
+
+  const activateModalMoreCoinsInviteFriendsHandler = useCallback(() => {
+    setActiveModal({
+      id: MODAL_MORE_COINS_INVITE_FRIENDS,
     });
   }, [userStat]);
 
@@ -212,8 +216,13 @@ const App = () => {
         onClose={closeModal}
         user={userStat}
       />
-      <ModalMoreCoins
-        id={MODAL_MORE_COINS}
+      <ModalMoreCoinsStatus
+        id={MODAL_MORE_COINS_STATUS}
+        activePanelId={activePanel}
+        onClose={closeModal}
+      />
+      <ModalMoreCoinsInviteFriends
+        id={MODAL_MORE_COINS_INVITE_FRIENDS}
         activePanelId={activePanel}
         onClose={closeModal}
       />
@@ -273,28 +282,11 @@ const App = () => {
   }, []);
 
   const setStatusHandler = useCallback(() => {
-    activateModalMoreCoinsHandler();
+    activateModalMoreCoinsStatusHandler();
   }, []);
 
-  async function sendInvites(token, userId) {
-    const groupSubscribed = await bridge.send('VKWebAppCallAPIMethod', {
-      method: 'apps.sendRequest',
-      params: {
-        user_id: userId,
-        text: 'GO V DOTY YA SOZDAL',
-        type: 'invite',
-        v: '5.131',
-        access_token: token,
-      },
-    });
-    return groupSubscribed.response;
-  }
-
   const inviteFriendsHandler = useCallback(async () => {
-    console.log('VKWebAppShowInviteBox');
-    await bridge.send('VKWebAppShowInviteBox', {})
-      .then((data) => console.log(data.success))
-      .catch((error) => console.log(error));
+    activateModalMoreCoinsInviteFriendsHandler();
   }, []);
 
   const subscribeToBotHandler = useCallback(() => {
@@ -333,7 +325,7 @@ const App = () => {
                     go={go}
                     amountCoins={userStat.coins || '0'}
                     isLoading={!isFetchUserStatLoaded}
-                    gamesAvailable={1}
+                    gamesAvailable={+userStat.gameCount}
                     timeUntilNextGame={timeUntilNextGameInSeconds}
                     onEndedTimerUntilNextGame={endedTimerUntilNextGame}
                     isMobile={isMobile}
@@ -375,7 +367,6 @@ const App = () => {
                     fetchedUser={fetchedUser}
                     placeInLeaderBoard={placeInLeaderBoard}
                     placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
-                    getUserInfo={getUserInfo}
                     getTopPlayers={getTopPlayers}
                     getTopPlayersFriends={getTopPlayersFriends}
                     isMobile={isMobile}
@@ -383,7 +374,7 @@ const App = () => {
                   <LossPanel
                     id="lossGame"
                     go={go}
-                    isMoreGamesAvailable={userStat.gameCount > 0}
+                    isMoreGamesAvailable={+userStat.gameCount > 0}
                     timeUntilNextGame={timeUntilNextGameInSeconds}
                     isMobile={isMobile}
                   />
@@ -392,7 +383,7 @@ const App = () => {
                     go={go}
                     earnedCoin={earnedCoinOnCurrentGame}
                     isLoading={!isEarnedCoinsPosted}
-                    isMoreGamesAvailable={userStat.gameCount > 0}
+                    isMoreGamesAvailable={+userStat.gameCount > 0}
                     timeUntilNextGame={timeUntilNextGameInSeconds}
                     isMobile={isMobile}
                   />

@@ -23,7 +23,6 @@
 
 .promocode-card-description {
     
-    font-style: normal;
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
@@ -34,7 +33,6 @@
 
 .promocode-card-text {
     
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 30px;
@@ -51,7 +49,6 @@
 
 .description-text {
     
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 150%;
@@ -70,7 +67,6 @@
 
 .rules-question {
     
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
@@ -80,7 +76,6 @@
 
 .rules-link {
     
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;

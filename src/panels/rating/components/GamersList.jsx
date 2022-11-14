@@ -19,57 +19,17 @@ const GamersList = ({
   fetchedUser,
   placeInLeaderBoard,
   placeInFriendsLeaderBoard,
-  getUserInfo,
   getTopPlayers,
   getTopPlayersFriends,
 }) => {
   const [requestCache, setRequestCache] = useState({});
   const [positionOnRating, setPositionOnRating] = useState('');
   const [gamersOnRating, setGamersOnRating] = useState('');
-  const [topPlayers, setTopPlayers] = useState([]);
-  const [topPlayersFriends, setTopPlayersFriends] = useState([]);
   const [gamersListCommon, setGamersListCommon] = useState([]);
   const [gamersListInFriends, setGamersListInFriends] = useState([]);
   const [currentGamersList, setCurrentGamersList] = useState([]);
 
   useEffect(() => setRequestCache({}), [amountCoins]);
-
-  // useEffect(() => {
-  //   if (
-  //     placeInLeaderBoard
-  //   ) {
-  //     getTopPlayers(0, placeInLeaderBoard.totalUsersCount)
-  //       .then((response) => {
-  //         setGamersListCommon(response.map((player) => ({
-  //           name: `${player?.firstName} ${player?.secondName}`,
-  //           score: player.coins,
-  //           avatarSrc: player?.photo,
-  //           id: player.id,
-  //         })));
-  //       });
-  //   }
-  // }, [placeInLeaderBoard]);
-
-  // useEffect(() => {
-  //   if (
-  //     friendList
-  //     && placeInFriendsLeaderBoard
-  //     && fetchedUser
-  //     && gamersListInFriends.length === 0
-  //   ) {
-  //     getTopPlayersFriends(friendList, 0, placeInFriendsLeaderBoard.totalUsersCount)
-  //       .then((response) => {
-  //         setGamersListInFriends(response
-  //           .filter((player) => +player.id !== +fetchedUser.id)
-  //           .map((player) => ({
-  //             name: `${player?.firstName} ${player?.secondName}`,
-  //             score: player.coins,
-  //             avatarSrc: player?.photo,
-  //             id: player.id,
-  //           })));
-  //       });
-  //   }
-  // }, [friendList, placeInFriendsLeaderBoard, fetchedUser, gamersListInFriends]);
 
   const itemCount = useMemo(() => gamersOnRating, [gamersOnRating]);
 
@@ -124,7 +84,6 @@ const GamersList = ({
     // eslint-disable-next-line consistent-return
     return getTopPlayers(visibleStartIndex, visibleStopIndex)
       .then((response) => {
-        console.log('getTopPlayers: ', response);
         setGamersListCommon((prev) => ([
           ...prev,
           ...response.map((player) => ({
@@ -160,7 +119,6 @@ const GamersList = ({
     // eslint-disable-next-line consistent-return
     return getTopPlayersFriends(friendList, visibleStartIndex, visibleStopIndex)
       .then((response) => {
-        console.log('getTopPlayersFriends: ', response);
         setGamersListInFriends((prev) => ([
           ...prev,
           ...response
@@ -187,11 +145,6 @@ const GamersList = ({
       : !!gamersListInFriends?.[index]),
     [gamersListCommon, gamersListInFriends, isAllRating],
   );
-
-  useEffect(() => {
-    console.log('currentGamersList: ', currentGamersList);
-    console.log('gamersOnRating: ', gamersOnRating);
-  }, [currentGamersList, gamersOnRating]);
 
   return (
     <div className={cn(style['gamers-list-wrapper'])}>
@@ -296,7 +249,6 @@ GamersList.propTypes = {
   fetchedUser: PropTypes.any,
   placeInLeaderBoard: PropTypes.any,
   placeInFriendsLeaderBoard: PropTypes.any,
-  getUserInfo: PropTypes.func,
   getTopPlayers: PropTypes.func,
   getTopPlayersFriends: PropTypes.func,
 };

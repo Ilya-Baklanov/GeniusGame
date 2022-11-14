@@ -50,7 +50,6 @@
 
 .title {
   
-  font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 25px;
@@ -66,7 +65,6 @@
 
 .description {
   
-  font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
@@ -89,18 +87,12 @@
   width: 315px;
   height: 317px;
   background: white;
-  /* opacity: 0; */
   border-radius: 15px;
-  /* transition: opacity 3s ease-in-out; */
   overflow: hidden;
-  /* z-index: 0; */
 }
 
 .background-colorized {
   background: linear-gradient(45deg, #24B571, 25%, #7E03B1, 85%, #FFB222);
-  /* background-image: url('../../../src//assets/image/BG_1.png'); */
-  /* transition: background-image 0.5s ease-in-out; */
-  /* opacity: 1; */
 }
 
 .img {

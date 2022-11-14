@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -7,9 +7,8 @@ import {
   Panel, PanelHeader, PanelHeaderBack, Text, IconButton,
 } from '@vkontakte/vkui';
 
-import { MoreCoins, Close } from '../../assets/image';
+import { Close } from '../../assets/image';
 import style from './Poster.module.css';
-import Timer from '../../shared/timer/Timer';
 import { APP_NAME, POSTER_PICTURES } from '../../assets/constants/constants';
 import MainLayout from '../../shared/mainLayout/MainLayout';
 import Navbar from '../../shared/navbar/Navbar';

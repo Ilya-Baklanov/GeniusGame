@@ -29,11 +29,8 @@
   margin-bottom: 29px;
 }
 
-.earned-wrapper {}
-
 .earned-title {
   
-  font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 20px;
@@ -49,7 +46,6 @@
 
 .earned-count {
   
-  font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 25px;
@@ -78,7 +74,6 @@
 
 .time {
   
-  font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
