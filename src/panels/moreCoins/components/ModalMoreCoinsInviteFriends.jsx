@@ -38,7 +38,7 @@ const ModalMoreCoinsInviteFriends = ({
       <div className={cn(style['more-coins-modal-wrapper'])}>
         <div className={cn(style['more-coins-invite-friends-wrapper'])}>
           <Text className={cn(style['more-coins-invite-friends-text'])}>
-            {'Пригласить к участию друзей можно через три точки (⋮) в верхнем правом углу, если ты играешь с телефона.\nЛибо нажать на «Действия» в верхнем правом углу, если играешь с ПК.'}
+            {'Пригласить к участию друзей можно через три точки (⋮) в верхнем правом углу, если ты играешь с телефона.\n\nЛибо нажать на «Действия» в нижнем правом углу, если играешь с ПК.'}
           </Text>
         </div>
         <div className={cn(style['more-coins-navbar-container'])}>
