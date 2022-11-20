@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import { POST_MESSAGE, POST_PHOTO_ID } from '../../../assets/constants/constants';
+// import { topPlayersResponse } from './topPlayersResponse';
 
 const useFetchUserData = () => {
     const [isFetchUserLoaded, setIsFetchUserLoaded] = useState(false);
@@ -17,6 +18,7 @@ const useFetchUserData = () => {
     const [topPlayers, setTopPlayers] = useState(null);
     const [placeInFriendsLeaderBoard, setPlaceInFriendsLeaderBoard] = useState(null);
     const [topPlayersFriends, setTopPlayersFriends] = useState(null);
+    const [launchParams, setLaunchParams] = useState(null);
 
     const getUserInfo = useCallback(async (userId) => {
         const userInfo = await bridge.send('VKWebAppGetUserInfo', {
@@ -80,6 +82,7 @@ const useFetchUserData = () => {
             dataType: 'json',
             body: JSON.stringify({
                 userId: user.id,
+                vkToken: window.location.href.split('?')[1],
             }),
         };
         const response = await fetch('https://sbermemorygame.ru/v1/api/getPlaceInTop', requestOptions);
@@ -99,11 +102,13 @@ const useFetchUserData = () => {
             body: JSON.stringify({
                 left: start,
                 right: end,
+                vkToken: window.location.href.split('?')[1],
             }),
         };
         const response = await fetch('https://sbermemorygame.ru/v1/api/getTopPlayers', requestOptions);
         const json = await response.json();
         return json.users;
+        // return topPlayersResponse.users.slice(start, end);
     }, []);
 
     async function getPlaceInFriendsLeaderBoard(user, friendsList) {
@@ -120,6 +125,7 @@ const useFetchUserData = () => {
             body: JSON.stringify({
                 userId: user.id,
                 friendsList: [...friendsIdList, user.id],
+                vkToken: window.location.href.split('?')[1],
             }),
         };
         const response = await fetch('https://sbermemorygame.ru/v1/api/getPlaceInTopFriends', requestOptions);
@@ -142,11 +148,13 @@ const useFetchUserData = () => {
                 left: start,
                 right: end,
                 friendsList: [...friendsIdList],
+                vkToken: window.location.href.split('?')[1],
             }),
         };
         const responseFriends = await fetch('https://sbermemorygame.ru/v1/api/getTopPlayersFriends', requestOptionsFriends);
         const json = await responseFriends.json();
         return json.users;
+        // return topPlayersResponse.users.slice(start, end);
     }, []);
 
     const fetchToken = useCallback(async (user) => {
@@ -162,7 +170,7 @@ const useFetchUserData = () => {
                 value: value.access_token,
             },
         );
-
+        console.log(window.location.href.split('?')[1]);
         return value.access_token;
     }, []);
 
@@ -179,6 +187,7 @@ const useFetchUserData = () => {
                 userId: user.id,
                 coins: allEarnedCoins,
                 gameCount: gameCountChange,
+                vkToken: window.location.href.split('?')[1],
             }),
         };
         const response = await fetch('https://sbermemorygame.ru/v1/api/up', requestOptions);
@@ -199,6 +208,7 @@ const useFetchUserData = () => {
             body: JSON.stringify({
                 userId: user.id,
                 circumstance: circumstanceIndex,
+                vkToken: window.location.href.split('?')[1],
             }),
         };
         const response = await fetch('https://sbermemorygame.ru/v1/api/updateCirc', requestOptions);
@@ -207,13 +217,25 @@ const useFetchUserData = () => {
     }, []);
 
     const postWallPhoto = useCallback(async (user, token) => {
-        const wallPostResult = await bridge.send('VKWebAppShowWallPostBox', {
-            owner_id: user.id,
-            message: POST_MESSAGE,
-            attachments: `photo${POST_PHOTO_ID}`,
-            v: '5.131',
-            access_token: token,
-        });
+        bridge.send('VKWebAppShowStoryBox', {
+            background_type: 'image',
+            url: 'https://sun9-8.userapi.com/impg/MIzRsgznJZPCXjMYHp-u8fvXKvGfoLPQge52yg/gECD7hxKOZI.jpg?size=607x1080&quality=95&sign=23d8f94f47955a6dbeef68984af4194b&type=album',
+            attachment: {
+                text: 'book',
+                type: 'photo',
+                owner_id: user.id,
+                id: 12345678,
+            },
+        })
+            .then((data) => {
+                if (data.code_data) {
+                    // Редактор истории открыт
+                }
+            })
+            .catch((error) => {
+                // Ошибка
+                console.log(error);
+            });
     }, []);
 
     const getPromoCode = useCallback(async (userId, coins) => {
@@ -228,6 +250,7 @@ const useFetchUserData = () => {
             body: JSON.stringify({
                 userId,
                 coins,
+                vkToken: window.location.href.split('?')[1],
             }),
         };
         const response = await fetch('https://sbermemorygame.ru/v1/api/getPromo/', requestOptions);
@@ -247,6 +270,7 @@ const useFetchUserData = () => {
             body: JSON.stringify({
                 userId: user,
                 notifications: notificationStatus,
+                vkToken: window.location.href.split('?')[1],
             }),
         };
         const response = await fetch('https://sbermemorygame.ru/v1/api/updateNotificationStatus', requestOptions);

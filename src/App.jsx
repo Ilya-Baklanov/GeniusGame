@@ -282,6 +282,23 @@ const App = () => {
   }, []);
 
   const setStatusHandler = useCallback(() => {
+    bridge.send('VKWebAppCallAPIMethod', {
+      method: 'status.setImage',
+      params: {
+        status_id: 123, // status id КАКОЙ-ТО?))))))
+        access_token: accessToken,
+      },
+    })
+      .then((data) => {
+        if (data.response) {
+          // Метод API выполнен
+        }
+      })
+      .catch((error) => {
+        // Ошибка
+        console.log(error);
+      });
+
     activateModalMoreCoinsStatusHandler();
   }, []);
 
