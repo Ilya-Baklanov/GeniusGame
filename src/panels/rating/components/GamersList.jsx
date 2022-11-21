@@ -25,7 +25,6 @@ const GamersList = ({
   const [requestCache, setRequestCache] = useState({});
   const [positionOnRating, setPositionOnRating] = useState('');
   const [gamersOnRating, setGamersOnRating] = useState('');
-  // const [personalStat, setPersonalStat] = useState({});
   const [gamersListCommon, setGamersListCommon] = useState([]);
   const [gamersListInFriends, setGamersListInFriends] = useState([]);
   const [currentGamersList, setCurrentGamersList] = useState([]);
@@ -39,11 +38,10 @@ const GamersList = ({
       const allUserCoins = isAllRating
         ? gamersListCommon.find((player) => +player.id === fetchedUser.id)
         : gamersListInFriends.find((player) => +player.id === fetchedUser.id);
-      console.log('allUserCoins: ', allUserCoins);
 
       return {
         name: `${fetchedUser.first_name} ${fetchedUser.last_name}`,
-        score: 0,
+        score: allUserCoins ? allUserCoins.score : 0,
         avatarSrc: fetchedUser.photo_100,
         id: fetchedUser.id,
       };
