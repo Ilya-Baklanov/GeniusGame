@@ -44,13 +44,33 @@ const MoreCoins = ({
       isMobile={isMobile}
     >
       <MoreCoinsCards circumstances={circumstances} onClickToCard={onClickToCard} />
-      <div className={cn(style['more-coins-push-wrapper'])}>
-        <div className={cn(style['more-coins-push-description-wrapper'])}>
-          <Text className={cn(style['more-coins-push-description'])}>
-            {'Подпишись на push,\nчтобы не пропустить новые игры'}
-          </Text>
+      <div className={cn(style['additional-actions-wrapper'])}>
+        <div className={cn(style['additional-actions'])}>
+          <div className={cn(style['additional-action'])}>
+            <div className={cn(style['additional-action-description-wrapper'])}>
+              <Text className={cn(style['additional-action-description'])}>
+                Пригласи к участию друзей
+              </Text>
+            </div>
+            <button
+              onClick={() => onClickToCard('INVITE_FRIENDS')}
+              className={cn(style['additional-action-invite-friends-button'])}
+              type="button"
+            >
+              <Text className={cn(style['additional-action-invite-friends-text'])}>
+                Кликни
+              </Text>
+            </button>
+          </div>
+          <div className={cn(style['additional-action'])}>
+            <div className={cn(style['additional-action-description-wrapper'])}>
+              <Text className={cn(style['additional-action-description'])}>
+                {'Подпишись на push,\nчтобы не пропустить новые игры'}
+              </Text>
+            </div>
+            <Switcher onToggle={pushSwitcherHandler} state={switcherState} />
+          </div>
         </div>
-        <Switcher onToggle={pushSwitcherHandler} state={switcherState} />
       </div>
     </CommonPanel>
   );

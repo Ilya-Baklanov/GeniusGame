@@ -73,6 +73,7 @@ const App = () => {
   ]);
 
   const {
+    getUserInfo,
     isFetchUserLoaded,
     fetchedUser,
     fetchedScheme,
@@ -88,13 +89,17 @@ const App = () => {
     serverTime,
     getPromoCode,
     updateNotificationStatus,
+    getFriendList,
     friendList,
     getPlaceInLeaderBoard,
     placeInLeaderBoard,
     getTopPlayers,
+    topPlayers,
     getPlaceInFriendsLeaderBoard,
     placeInFriendsLeaderBoard,
     getTopPlayersFriends,
+    topPlayersFriends,
+    fetchFriendsToken,
   } = useFetchUserData();
 
   const serverTimeProcessed = useMemo(() => timeHandler(serverTime), [serverTime]);
@@ -134,7 +139,7 @@ const App = () => {
   }, []);
 
   const endGameHandler = useCallback((earnedCoin) => {
-    if (earnedCoin > 0) {
+    if (earnedCoin > 0 && userStat && fetchedUser && friendList) {
       const allEarnedCoins = +earnedCoin + +userStat.coins;
       postEarnedCoins(allEarnedCoins, fetchedUser, '-1').then(() => {
         setEarnedCoinOnCurrentGame(earnedCoin);
@@ -146,7 +151,9 @@ const App = () => {
 
   const closeGameHandler = useCallback(
     () => {
-      postEarnedCoins(+userStat.coins, fetchedUser, '-1');
+      if (userStat && fetchedUser) {
+        postEarnedCoins(+userStat.coins, fetchedUser, '-1');
+      }
     },
     [postEarnedCoins, fetchedUser, userStat],
   );
@@ -172,29 +179,31 @@ const App = () => {
         promoCodeDescription,
       },
     });
-  }, [userStat]);
+  }, []);
 
   const activateModalGetPromoCodeHandler = useCallback((promocode) => {
-    refetchUserStat(fetchedUser);
-    setActiveModal({
-      id: MODAL_GET_PROMO_CODE,
-      content: {
-        promocode,
-      },
-    });
-  }, [userStat, refetchUserStat]);
+    if (fetchedUser) {
+      refetchUserStat(fetchedUser);
+      setActiveModal({
+        id: MODAL_GET_PROMO_CODE,
+        content: {
+          promocode,
+        },
+      });
+    }
+  }, [refetchUserStat, fetchedUser]);
 
   const activateModalMoreCoinsStatusHandler = useCallback(() => {
     setActiveModal({
       id: MODAL_MORE_COINS_STATUS,
     });
-  }, [userStat]);
+  }, []);
 
   const activateModalMoreCoinsInviteFriendsHandler = useCallback(() => {
     setActiveModal({
       id: MODAL_MORE_COINS_INVITE_FRIENDS,
     });
-  }, [userStat]);
+  }, []);
 
   const modal = useMemo(() => (
     <ModalRoot
@@ -204,7 +213,7 @@ const App = () => {
       <ModalPromoCode
         id={MODAL_PROMO_CODE}
         content={activeModal ? activeModal.content : null}
-        amountCoins={userStat ? userStat.coins || '0' : '0'}
+        amountCoins={userStat ? (userStat.coins || '0') : '0'}
         userId={fetchedUser ? fetchedUser.id : 0}
         onClose={closeModal}
         onActiveModalGetPromocode={activateModalGetPromoCodeHandler}
@@ -230,10 +239,12 @@ const App = () => {
   ), [activeModal, userStat]);
 
   const repostHandler = useCallback(() => {
-    postWallPhoto(fetchedUser, accessToken).then(() => {
-      postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
-      updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
-    });
+    if (userStat && accessToken && fetchedUser) {
+      postWallPhoto(fetchedUser, accessToken).then(() => {
+        postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
+        updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
+      });
+    }
   }, [userStat, accessToken, fetchedUser]);
 
   async function checkIsUserSubscribed(userId) {
@@ -251,31 +262,34 @@ const App = () => {
   }
 
   const joinGroupHandler = useCallback(async () => {
-    async function joinGroup() {
-      bridge.send('VKWebAppJoinGroup', {
-        group_id: 131445697,
-      })
-        .then((data) => {
-          if (data.result) {
-            postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
-            updateCircumstancesStatus(fetchedUser, 0);
-          }
+    if (userStat && fetchedUser) {
+      // eslint-disable-next-line no-inner-declarations
+      async function joinGroup() {
+        bridge.send('VKWebAppJoinGroup', {
+          group_id: 131445697,
         })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+          .then((data) => {
+            if (data.result) {
+              postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
+              updateCircumstancesStatus(fetchedUser, 0);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
 
-    const isSub = await checkIsUserSubscribed(fetchedUser.id);
-    if (isSub) {
-      // eslint-disable-next-line no-alert
-      alert('Вы уже подписаны');
-      postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
-      updateCircumstancesStatus(fetchedUser, 0);
-    } else {
-      joinGroup();
+      const isSub = await checkIsUserSubscribed(fetchedUser.id);
+      if (isSub) {
+        // eslint-disable-next-line no-alert
+        alert('Вы уже подписаны');
+        postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
+        updateCircumstancesStatus(fetchedUser, 0);
+      } else {
+        joinGroup();
+      }
     }
-  }, [userStat, accessToken]);
+  }, [userStat, fetchedUser]);
 
   const goToPosterPage = useCallback(() => {
     go(null, 'poster');
@@ -342,7 +356,7 @@ const App = () => {
                     go={go}
                     amountCoins={userStat.coins || '0'}
                     isLoading={!isFetchUserStatLoaded}
-                    gamesAvailable={+userStat.gameCount}
+                    gamesAvailable={+userStat.gameCount || 0}
                     timeUntilNextGame={timeUntilNextGameInSeconds}
                     onEndedTimerUntilNextGame={endedTimerUntilNextGame}
                     isMobile={isMobile}
@@ -366,8 +380,8 @@ const App = () => {
                     id="moreCoins"
                     go={go}
                     amountCoins={userStat.coins || '0'}
-                    circumstances={userStat.circumstances}
-                    notificationStatus={userStat.notifications}
+                    circumstances={userStat.circumstances || ''}
+                    notificationStatus={userStat.notifications || ''}
                     onClickToCard={moreCoinsCardClickHandler}
                     fetchedUser={fetchedUser}
                     isLoading={!isFetchUserStatLoaded}
@@ -382,11 +396,15 @@ const App = () => {
                     isLoading={!isFetchUserStatLoaded}
                     friendList={friendList}
                     fetchedUser={fetchedUser}
+                    getPlaceInLeaderBoard={getPlaceInLeaderBoard}
+                    getPlaceInFriendsLeaderBoard={getPlaceInFriendsLeaderBoard}
                     placeInLeaderBoard={placeInLeaderBoard}
                     placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
                     getTopPlayers={getTopPlayers}
                     getTopPlayersFriends={getTopPlayersFriends}
                     isMobile={isMobile}
+                    getFriendList={getFriendList}
+                    fetchFriendsToken={fetchFriendsToken}
                   />
                   <LossPanel
                     id="lossGame"

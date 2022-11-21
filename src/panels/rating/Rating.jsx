@@ -1,6 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 import React, {
-  useCallback, useState,
+  useCallback, useEffect, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -15,17 +15,36 @@ const Rating = ({
   isLoading,
   friendList,
   fetchedUser,
+  getPlaceInLeaderBoard,
+  getPlaceInFriendsLeaderBoard,
   placeInLeaderBoard,
   placeInFriendsLeaderBoard,
   getTopPlayers,
   getTopPlayersFriends,
   isMobile,
+  getFriendList,
+  fetchFriendsToken,
 }) => {
   const [isAllRating, setIsAllRating] = useState(false);
 
   const ratingSwitcherHandler = useCallback((e) => {
     setIsAllRating(e.target.checked);
   }, []);
+
+  const fetchFriendsList = useCallback(async (user) => {
+    const friendsToken = await fetchFriendsToken(user);
+    getFriendList(friendsToken);
+  }, []);
+
+  useEffect(() => {
+    if (fetchedUser && !friendList) {
+      fetchFriendsList(fetchedUser);
+    }
+    if (fetchedUser && friendList) {
+      getPlaceInLeaderBoard(fetchedUser);
+      getPlaceInFriendsLeaderBoard(fetchedUser, friendList);
+    }
+  }, [fetchedUser, friendList]);
 
   return (
     <CommonPanel
@@ -39,6 +58,9 @@ const Rating = ({
       isLoading={isLoading}
       isMobile={isMobile}
     >
+      {friendList
+      && placeInLeaderBoard
+      && placeInFriendsLeaderBoard && (
       <GamersList
         amountCoins={amountCoins}
         isAllRating={isAllRating}
@@ -49,6 +71,7 @@ const Rating = ({
         getTopPlayers={getTopPlayers}
         getTopPlayersFriends={getTopPlayersFriends}
       />
+      )}
     </CommonPanel>
   );
 };
@@ -60,11 +83,15 @@ Rating.propTypes = {
   isLoading: PropTypes.bool,
   friendList: PropTypes.any,
   fetchedUser: PropTypes.any,
+  getPlaceInLeaderBoard: PropTypes.func,
+  getPlaceInFriendsLeaderBoard: PropTypes.func,
   placeInLeaderBoard: PropTypes.any,
   placeInFriendsLeaderBoard: PropTypes.any,
   getTopPlayers: PropTypes.func,
   getTopPlayersFriends: PropTypes.func,
   isMobile: PropTypes.bool,
+  getFriendList: PropTypes.func,
+  fetchFriendsToken: PropTypes.func,
 };
 
 export default Rating;

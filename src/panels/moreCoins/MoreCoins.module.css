@@ -1,21 +1,59 @@
-.more-coins-push-wrapper {
+.additional-actions-wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
     padding: 0 17px;
 }
 
-.more-coins-push-description-wrapper {
-    width: 200px;
-    height: 30px;
+.additional-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
 }
 
-.more-coins-push-description {
-    
+.additional-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 74px;
+    padding: 0 15px;
+}
+
+.additional-action:first-child {
+    border-bottom: 1px solid #F0E4F9;
+}
+
+.additional-action-description-wrapper {
+    width: 200px;
+}
+
+.additional-action-description {
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
     white-space: break-spaces;
     color: #5E5E5E;
+}
+
+.additional-action-invite-friends-button {
+    width: 95px;
+    height: 32px;
+    background: #8C15A2;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.additional-action-invite-friends-text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FFFFFF;
 }

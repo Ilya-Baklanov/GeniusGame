@@ -39,6 +39,7 @@ const useFetchUserData = () => {
             },
         });
         const data = await response.json();
+        console.log('RESPONSE_fetchUserStat: ', data);
         setUserStat(data);
         setIsFetchUserStatLoaded(true);
     }, [userStat]);
@@ -157,10 +158,44 @@ const useFetchUserData = () => {
         // return topPlayersResponse.users.slice(start, end);
     }, []);
 
-    const fetchToken = useCallback(async (user) => {
+    const fetchFriendsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
             app_id: 51435598,
-            scope: 'friends,groups,wall',
+            scope: 'friends',
+        });
+        setAccessToken(value.access_token);
+        bridge.send(
+            'VKWebAppStorageSet',
+            {
+                key: `${user.id}_token`,
+                value: value.access_token,
+            },
+        );
+        console.log(window.location.href.split('?')[1]);
+        return value.access_token;
+    }, []);
+
+    const fetchGroupsToken = useCallback(async (user) => {
+        const value = await bridge.send('VKWebAppGetAuthToken', {
+            app_id: 51435598,
+            scope: 'groups',
+        });
+        setAccessToken(value.access_token);
+        bridge.send(
+            'VKWebAppStorageSet',
+            {
+                key: `${user.id}_token`,
+                value: value.access_token,
+            },
+        );
+        console.log(window.location.href.split('?')[1]);
+        return value.access_token;
+    }, []);
+
+    const fetchWallToken = useCallback(async (user) => {
+        const value = await bridge.send('VKWebAppGetAuthToken', {
+            app_id: 51435598,
+            scope: 'wall',
         });
         setAccessToken(value.access_token);
         bridge.send(
@@ -217,7 +252,7 @@ const useFetchUserData = () => {
     }, []);
 
     const postWallPhoto = useCallback(async (user, token) => {
-        bridge.send('VKWebAppShowStoryBox', {
+        const response = await bridge.send('VKWebAppShowStoryBox', {
             background_type: 'image',
             url: 'https://sun9-8.userapi.com/impg/MIzRsgznJZPCXjMYHp-u8fvXKvGfoLPQge52yg/gECD7hxKOZI.jpg?size=607x1080&quality=95&sign=23d8f94f47955a6dbeef68984af4194b&type=album',
             attachment: {
@@ -226,16 +261,17 @@ const useFetchUserData = () => {
                 owner_id: user.id,
                 id: 12345678,
             },
-        })
-            .then((data) => {
-                if (data.code_data) {
-                    // Редактор истории открыт
-                }
-            })
-            .catch((error) => {
-                // Ошибка
-                console.log(error);
-            });
+        });
+            // .then((data) => {
+            //     if (data.code_data) {
+            //         // Редактор истории открыт
+            //     }
+            // })
+            // .catch((error) => {
+            //     // Ошибка
+            //     console.log(error);
+            // });
+        return response;
     }, []);
 
     const getPromoCode = useCallback(async (userId, coins) => {
@@ -286,10 +322,10 @@ const useFetchUserData = () => {
         const user = await bridge.send('VKWebAppGetUserInfo');
         setUser(user);
         await fetchUserStat(user);
-        const token = await fetchToken(user);
-        const friendsList = await getFriendList(token);
-        await getPlaceInLeaderBoard(user);
-        await getPlaceInFriendsLeaderBoard(user, friendsList);
+        // const friendsToken = await fetchFriendsToken(user);
+        // const friendsList = await getFriendList(friendsToken);
+        // await getPlaceInLeaderBoard(user);
+        // await getPlaceInFriendsLeaderBoard(user, friendsList);
         await getServerTime();
         setIsFetchUserLoaded(true);
     }, []);
@@ -330,6 +366,7 @@ const useFetchUserData = () => {
         placeInFriendsLeaderBoard,
         getTopPlayersFriends,
         topPlayersFriends,
+        fetchFriendsToken,
     };
 };
 
