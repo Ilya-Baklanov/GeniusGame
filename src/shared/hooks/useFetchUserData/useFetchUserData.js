@@ -8,7 +8,6 @@ const useFetchUserData = () => {
     const [isFetchUserLoaded, setIsFetchUserLoaded] = useState(false);
     const [fetchedUser, setUser] = useState(null);
     const [fetchedScheme, setScheme] = useState('bright_light');
-    const [accessToken, setAccessToken] = useState(null);
     const [isFetchUserStatLoaded, setIsFetchUserStatLoaded] = useState(false);
     const [userStat, setUserStat] = useState(null);
     const [isEarnedCoinsPosted, setIsEarnedCoinsPosted] = useState(false);
@@ -19,6 +18,14 @@ const useFetchUserData = () => {
     const [placeInFriendsLeaderBoard, setPlaceInFriendsLeaderBoard] = useState(null);
     const [topPlayersFriends, setTopPlayersFriends] = useState(null);
     const [launchParams, setLaunchParams] = useState(null);
+
+    const getAllowed = useCallback(async (type) => {
+        const { result } = await bridge.send('VKWebAppCheckAllowedScopes', {
+            scopes: type,
+        });
+        console.log(`getAllowed_${type}: `, result);
+        return result;
+    }, []);
 
     const getUserInfo = useCallback(async (userId) => {
         const userInfo = await bridge.send('VKWebAppGetUserInfo', {
@@ -149,7 +156,7 @@ const useFetchUserData = () => {
             body: JSON.stringify({
                 left: start,
                 right: end,
-                friendsList: [...friendsIdList],
+                friendsList: [...friendsIdList, fetchedUser.id],
                 vkToken: window.location.href.split('?')[1],
             }),
         };
@@ -157,14 +164,13 @@ const useFetchUserData = () => {
         const json = await responseFriends.json();
         return json.users;
         // return topPlayersResponse.users.slice(start, end);
-    }, []);
+    }, [fetchedUser]);
 
     const fetchFriendsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51476270,
+            app_id: 51435598,
             scope: 'friends',
         });
-        setAccessToken(value.access_token);
         bridge.send(
             'VKWebAppStorageSet',
             {
@@ -178,10 +184,9 @@ const useFetchUserData = () => {
 
     const fetchGroupsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51476270,
+            app_id: 51435598,
             scope: 'groups',
         });
-        setAccessToken(value.access_token);
         bridge.send(
             'VKWebAppStorageSet',
             {
@@ -193,12 +198,27 @@ const useFetchUserData = () => {
         return value.access_token;
     }, []);
 
-    const fetchWallToken = useCallback(async (user) => {
+    const fetchStoriesToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51476270,
-            scope: 'wall',
+            app_id: 51435598,
+            scope: 'stories',
         });
-        setAccessToken(value.access_token);
+        bridge.send(
+            'VKWebAppStorageSet',
+            {
+                key: `${user.id}_token`,
+                value: value.access_token,
+            },
+        );
+        console.log(window.location.href.split('?')[1]);
+        return value.access_token;
+    }, []);
+
+    const fetchStatusToken = useCallback(async (user) => {
+        const value = await bridge.send('VKWebAppGetAuthToken', {
+            app_id: 51435598,
+            scope: 'status',
+        });
         bridge.send(
             'VKWebAppStorageSet',
             {
@@ -252,7 +272,7 @@ const useFetchUserData = () => {
         setUserStat(data);
     }, []);
 
-    const postWallPhoto = useCallback(async (user, token) => {
+    const postStoriesPhoto = useCallback(async (user, token) => {
         const response = await bridge.send('VKWebAppShowStoryBox', {
             background_type: 'image',
             url: 'https://sun9-8.userapi.com/impg/MIzRsgznJZPCXjMYHp-u8fvXKvGfoLPQge52yg/gECD7hxKOZI.jpg?size=607x1080&quality=95&sign=23d8f94f47955a6dbeef68984af4194b&type=album',
@@ -345,14 +365,13 @@ const useFetchUserData = () => {
         isFetchUserLoaded,
         fetchedUser,
         fetchedScheme,
-        accessToken,
         userStat,
         refetchUserStat: fetchUserStat,
         isFetchUserStatLoaded,
         postEarnedCoins,
         isEarnedCoinsPosted,
         updateCircumstancesStatus,
-        postWallPhoto,
+        postStoriesPhoto,
         getServerTime,
         serverTime,
         getPromoCode,
@@ -368,6 +387,10 @@ const useFetchUserData = () => {
         getTopPlayersFriends,
         topPlayersFriends,
         fetchFriendsToken,
+        fetchStoriesToken,
+        fetchGroupsToken,
+        getAllowed,
+        fetchStatusToken,
     };
 };
 

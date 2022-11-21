@@ -25,6 +25,7 @@ const GamersList = ({
   const [requestCache, setRequestCache] = useState({});
   const [positionOnRating, setPositionOnRating] = useState('');
   const [gamersOnRating, setGamersOnRating] = useState('');
+  // const [personalStat, setPersonalStat] = useState({});
   const [gamersListCommon, setGamersListCommon] = useState([]);
   const [gamersListInFriends, setGamersListInFriends] = useState([]);
   const [currentGamersList, setCurrentGamersList] = useState([]);
@@ -33,12 +34,22 @@ const GamersList = ({
 
   const itemCount = useMemo(() => gamersOnRating, [gamersOnRating]);
 
-  const personalStat = useMemo(() => ({
-    name: `${fetchedUser.first_name} ${fetchedUser.last_name}`,
-    score: amountCoins,
-    avatarSrc: fetchedUser.photo_100,
-    id: fetchedUser.id,
-  }), [fetchedUser, amountCoins]);
+  const personalStat = useMemo(() => {
+    if (fetchedUser && (gamersListCommon || gamersListInFriends)) {
+      const allUserCoins = isAllRating
+        ? gamersListCommon.find((player) => +player.id === fetchedUser.id)
+        : gamersListInFriends.find((player) => +player.id === fetchedUser.id);
+      console.log('allUserCoins: ', allUserCoins);
+
+      return {
+        name: `${fetchedUser.first_name} ${fetchedUser.last_name}`,
+        score: 0,
+        avatarSrc: fetchedUser.photo_100,
+        id: fetchedUser.id,
+      };
+    }
+    return null;
+  }, [fetchedUser, gamersListCommon, gamersListInFriends, isAllRating]);
 
   useEffect(() => {
     if (
@@ -72,10 +83,6 @@ const GamersList = ({
     const startNumber = +visibleStartIndex;
     const endNumber = +visibleStopIndex + 1 < +gamersOnRating ? visibleStopIndex : gamersOnRating;
     const newCacheKey = `${startNumber}:${endNumber}:all`;
-    console.log('requestCache: ', requestCache);
-    console.log('visibleStartIndex: ', visibleStartIndex);
-    console.log('visibleStopIndex: ', visibleStopIndex);
-    console.log('gamersOnRating: ', gamersOnRating);
     if (requestCache[newCacheKey] || visibleStartIndex >= endNumber) {
       return;
     }
@@ -83,10 +90,6 @@ const GamersList = ({
     const length = endNumber - startNumber;
     const visibleRange = [...Array(length >= 0 ? length : 0).keys()].map((x) => x + startNumber);
     const itemsRetrieved = visibleRange.every((index) => !!gamersListCommon?.[index]);
-
-    console.log('length: ', length);
-    console.log('visibleRange: ', visibleRange);
-    console.log('itemsRetrieved: ', itemsRetrieved);
 
     if (itemsRetrieved) {
       setRequestCache((prev) => ({ ...prev, [newCacheKey]: newCacheKey }));
@@ -119,14 +122,16 @@ const GamersList = ({
   ]);
 
   const loadMorePlayersFriends = useCallback((visibleStartIndex, visibleStopIndex) => {
-    const newCacheKey = `${visibleStartIndex}:${visibleStopIndex}:friends`;
-    if (requestCache[newCacheKey]) {
+    const startNumber = +visibleStartIndex;
+    const endNumber = +visibleStopIndex + 1 < +gamersOnRating ? visibleStopIndex : gamersOnRating;
+    const newCacheKey = `${startNumber}:${endNumber}:friends`;
+    if (requestCache[newCacheKey] || visibleStartIndex >= endNumber) {
       return;
     }
 
-    const length = visibleStopIndex - visibleStartIndex;
-    const visibleRange = [...Array(length).keys()].map((x) => x + visibleStartIndex);
-    const itemsRetrieved = visibleRange.every((index) => !!gamersListInFriends?.[index]);
+    const length = endNumber - startNumber;
+    const visibleRange = [...Array(length >= 0 ? length : 0).keys()].map((x) => x + startNumber);
+    const itemsRetrieved = visibleRange.every((index) => !!gamersListCommon?.[index]);
 
     if (itemsRetrieved) {
       setRequestCache((prev) => ({ ...prev, [newCacheKey]: newCacheKey }));
@@ -134,8 +139,13 @@ const GamersList = ({
     }
 
     // eslint-disable-next-line consistent-return
-    return getTopPlayersFriends(friendList, visibleStartIndex, visibleStopIndex)
+    return getTopPlayersFriends(
+      friendList,
+      startNumber,
+      endNumber + 1,
+    )
       .then((response) => {
+        console.log('FRIENDS_TOP: ', response);
         setGamersListInFriends((prev) => ([
           ...prev,
           ...response
