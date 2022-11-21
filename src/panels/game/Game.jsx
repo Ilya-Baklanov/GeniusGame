@@ -65,27 +65,6 @@ const Game = ({
       <MainLayout>
         <div className={cn(style['game-wrapper'])}>
           <div className={cn(style.header)}>
-            <div className={cn(style['earned-wrapper'])}>
-              <Text className={cn(style['earned-title'])}>
-                Заработано:
-              </Text>
-              <div className={cn(style.earned)}>
-                <Text className={cn(style['earned-count'])}>
-                  {guessedCards}
-                </Text>
-                <MoreCoins />
-              </div>
-            </div>
-            <div className={cn(style.timer)}>
-              <Text className={cn(style.time)}>
-                <Timer
-                  time={60}
-                  advanceСountdownTime={3}
-                  onEndedAdvanceСountdownTime={endingAdvanceTimeHandler}
-                  onEndedTime={endingTimeHandler}
-                />
-              </Text>
-            </div>
             <div className={cn(style['close-button-wrapper'])}>
               <IconButton
                 onClick={closeGameHandler}
@@ -97,6 +76,27 @@ const Game = ({
               >
                 <Close />
               </IconButton>
+            </div>
+            <div className={cn(style.timer)}>
+              <Text className={cn(style.time)}>
+                <Timer
+                  time={60}
+                  advanceСountdownTime={3}
+                  onEndedAdvanceСountdownTime={endingAdvanceTimeHandler}
+                  onEndedTime={endingTimeHandler}
+                />
+              </Text>
+            </div>
+            <div className={cn(style['earned-wrapper'])}>
+              <Text className={cn(style['earned-title'])}>
+                Заработано:
+              </Text>
+              <div className={cn(style.earned)}>
+                <Text className={cn(style['earned-count'])}>
+                  {guessedCards}
+                </Text>
+                <MoreCoins />
+              </div>
             </div>
           </div>
           <div className={cn(style['game-board'])}>

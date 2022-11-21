@@ -96,7 +96,7 @@ const GamersList = ({
     // eslint-disable-next-line consistent-return
     return getTopPlayers(
       startNumber,
-      endNumber,
+      endNumber + 1,
     )
       .then((response) => {
         setGamersListCommon((prev) => ([
