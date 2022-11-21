@@ -42,6 +42,7 @@ const useFetchUserData = () => {
         console.log('RESPONSE_fetchUserStat: ', data);
         setUserStat(data);
         setIsFetchUserStatLoaded(true);
+        return data;
     }, [userStat]);
 
     const getServerTime = useCallback(async () => {
@@ -262,15 +263,15 @@ const useFetchUserData = () => {
                 id: 12345678,
             },
         });
-            // .then((data) => {
-            //     if (data.code_data) {
-            //         // Редактор истории открыт
-            //     }
-            // })
-            // .catch((error) => {
-            //     // Ошибка
-            //     console.log(error);
-            // });
+        // .then((data) => {
+        //     if (data.code_data) {
+        //         // Редактор истории открыт
+        //     }
+        // })
+        // .catch((error) => {
+        //     // Ошибка
+        //     console.log(error);
+        // });
         return response;
     }, []);
 

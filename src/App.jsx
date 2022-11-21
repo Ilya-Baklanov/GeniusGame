@@ -138,6 +138,15 @@ const App = () => {
     setActivePanel(e ? e.currentTarget.dataset.to : goTo);
   }, []);
 
+  const startGameHandler = useCallback(() => {
+    refetchUserStat(fetchedUser)
+      .then((response) => {
+        if (+response.gameCount > 0) {
+          go(null, 'gameBoard');
+        }
+      });
+  }, [refetchUserStat, fetchedUser]);
+
   const endGameHandler = useCallback((earnedCoin) => {
     if (earnedCoin > 0 && userStat && fetchedUser && friendList) {
       const allEarnedCoins = +earnedCoin + +userStat.coins;
@@ -354,6 +363,7 @@ const App = () => {
                     id="home"
                     fetchedUser={fetchedUser}
                     go={go}
+                    onStartGame={startGameHandler}
                     amountCoins={userStat.coins || '0'}
                     isLoading={!isFetchUserStatLoaded}
                     gamesAvailable={+userStat.gameCount || 0}

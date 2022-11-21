@@ -21,6 +21,7 @@ import Timer from '../../shared/timer/Timer';
 const Home = ({
   id,
   go,
+  onStartGame,
   fetchedUser,
   amountCoins,
   gamesAvailable,
@@ -66,7 +67,7 @@ const Home = ({
                 <div className={cn(style['start-game-button-wrapper'])}>
                   {
                   gamesAvailable > 0
-                    ? <MainButton text="Начать игру" onClick={go} goTo="gameBoard" isAnimated />
+                    ? <MainButton text="Начать игру" onClick={onStartGame} isAnimated />
                     : (
                       <div className={cn(style['timer-until-next-game-wrapper'])}>
                         <Text className={cn(style['timer-until-next-game-text'])}>До следующей игры осталось </Text>
@@ -90,6 +91,7 @@ const Home = ({
 Home.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
+  onStartGame: PropTypes.func,
   fetchedUser: PropTypes.shape({
     photo_200: PropTypes.string,
     first_name: PropTypes.string,

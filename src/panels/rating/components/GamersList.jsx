@@ -248,7 +248,9 @@ const GamersList = ({
                         ) : null;
                       }
                     )
-                    : () => (<ScreenSpinner size="large" />)}
+                    : () => (gamersOnRating <= 1
+                      ? null
+                      : (<ScreenSpinner size="large" />))}
                 </List>
               )
             }
