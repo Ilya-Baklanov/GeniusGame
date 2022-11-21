@@ -58,7 +58,9 @@ const Poster = ({
               className={cn(style['picture-background'], { [style['background-colorized']]: colorizedItems.includes('background') })}
               onClick={(e) => {
                 e.stopPropagation();
-                setColorizedItems((prevList) => [...prevList, 'background']);
+                setColorizedItems((prevList) => (prevList.includes('background')
+                  ? prevList
+                  : [...prevList, 'background']));
               }}
             >
               {POSTER_PICTURES.map(({
@@ -88,7 +90,9 @@ const Poster = ({
                         className={cn(style[`${name}-wrapper`])}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setColorizedItems((prevList) => [...prevList, name]);
+                          setColorizedItems((prevList) => (prevList.includes(name)
+                            ? prevList
+                            : [...prevList, name]));
                         }}
                       >
                         <img

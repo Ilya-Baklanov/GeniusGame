@@ -23,7 +23,6 @@ const useFetchUserData = () => {
         const { result } = await bridge.send('VKWebAppCheckAllowedScopes', {
             scopes: type,
         });
-        console.log(`getAllowed_${type}: `, result);
         return result;
     }, []);
 
@@ -46,7 +45,6 @@ const useFetchUserData = () => {
             },
         });
         const data = await response.json();
-        console.log('RESPONSE_fetchUserStat: ', data);
         setUserStat(data);
         setIsFetchUserStatLoaded(true);
         return data;
@@ -168,7 +166,7 @@ const useFetchUserData = () => {
 
     const fetchFriendsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51435598,
+            app_id: 51476270,
             scope: 'friends',
         });
         bridge.send(
@@ -178,13 +176,12 @@ const useFetchUserData = () => {
                 value: value.access_token,
             },
         );
-        console.log(window.location.href.split('?')[1]);
         return value.access_token;
     }, []);
 
     const fetchGroupsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51435598,
+            app_id: 51476270,
             scope: 'groups',
         });
         bridge.send(
@@ -194,13 +191,12 @@ const useFetchUserData = () => {
                 value: value.access_token,
             },
         );
-        console.log(window.location.href.split('?')[1]);
         return value.access_token;
     }, []);
 
     const fetchStoriesToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51435598,
+            app_id: 51476270,
             scope: 'stories',
         });
         bridge.send(
@@ -210,13 +206,12 @@ const useFetchUserData = () => {
                 value: value.access_token,
             },
         );
-        console.log(window.location.href.split('?')[1]);
         return value.access_token;
     }, []);
 
     const fetchStatusToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51435598,
+            app_id: 51476270,
             scope: 'status',
         });
         bridge.send(
@@ -226,7 +221,6 @@ const useFetchUserData = () => {
                 value: value.access_token,
             },
         );
-        console.log(window.location.href.split('?')[1]);
         return value.access_token;
     }, []);
 
@@ -283,15 +277,6 @@ const useFetchUserData = () => {
                 id: 12345678,
             },
         });
-        // .then((data) => {
-        //     if (data.code_data) {
-        //         // Редактор истории открыт
-        //     }
-        // })
-        // .catch((error) => {
-        //     // Ошибка
-        //     console.log(error);
-        // });
         return response;
     }, []);
 

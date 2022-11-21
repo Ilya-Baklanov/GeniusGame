@@ -143,7 +143,6 @@ const GamersList = ({
       endNumber + 1,
     )
       .then((response) => {
-        console.log('FRIENDS_TOP: ', response);
         setGamersListInFriends((prev) => ([
           ...prev,
           ...response
