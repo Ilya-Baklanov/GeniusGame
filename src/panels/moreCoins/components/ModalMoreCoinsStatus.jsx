@@ -39,7 +39,7 @@ const ModalMoreCoinsStatus = ({
     >
       <div className={cn(style['more-coins-modal-wrapper'])}>
         <div className={cn(style['more-coins-status-list-wrapper'])}>
-          {STATUS_LIST.map(({ img, text }, index) => (
+          {STATUS_LIST.map(({ statusId, img, text }, index) => (
             <CopyToClipboard key={index} text={text}>
               <div
                 className={cn(style['more-coins-status-list-item'])}

@@ -21,9 +21,9 @@ export const CARDS = Array(CARDS_COUNT).fill().map((_, index) => ({
 }));
 
 export const STATUS_LIST = [
-    { text: 'на спокойном', img: '/img/cat1.png' },
-    { text: 'на созвоне\nбез камеры', img: '/img/cat2.png' },
-    { text: 'дайте поспать', img: '/img/cat3.png' },
+    { statusId: 788, text: 'на спокойном', img: '/img/cat1.png' },
+    { statusId: 786, text: 'на созвоне\nбез камеры', img: '/img/cat2.png' },
+    { statusId: 787, text: 'дайте поспать', img: '/img/cat3.png' },
 ];
 
 export const POSTER_PICTURES = [

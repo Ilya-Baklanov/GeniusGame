@@ -134,13 +134,17 @@ const App = () => {
   }, []);
 
   const endGameHandler = useCallback((earnedCoin) => {
+    console.log('EndgameHandler');
     if (earnedCoin > 0) {
+      console.log('EndgameHandler 1');
       const allEarnedCoins = +earnedCoin + +userStat.coins;
       postEarnedCoins(allEarnedCoins, fetchedUser, '-1').then(() => {
         setEarnedCoinOnCurrentGame(earnedCoin);
+        console.log('EndgameHandler 2');
       });
       getPlaceInLeaderBoard(fetchedUser);
       getPlaceInFriendsLeaderBoard(fetchedUser, friendList);
+      console.log('EndgameHandler 3');
     }
   }, [userStat, fetchedUser, friendList]);
 
@@ -281,11 +285,11 @@ const App = () => {
     go(null, 'poster');
   }, []);
 
-  const setStatusHandler = useCallback(() => {
+  const setStatusHandler = useCallback((statusId) => {
     bridge.send('VKWebAppCallAPIMethod', {
       method: 'status.setImage',
       params: {
-        status_id: 123, // status id КАКОЙ-ТО?))))))
+        status_id: statusId,
         access_token: accessToken,
       },
     })
