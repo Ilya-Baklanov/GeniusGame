@@ -1,8 +1,10 @@
 /* eslint-disable react/forbid-prop-types */
 import React, {
-  useCallback, useState,
+  useCallback, useEffect, useState,
 } from 'react';
 import PropTypes from 'prop-types';
+
+import { ScreenSpinner } from '@vkontakte/vkui';
 
 import CommonPanel from '../../shared/commonPanel/CommonPanel';
 import GamersList from './components/GamersList';
@@ -15,17 +17,47 @@ const Rating = ({
   isLoading,
   friendList,
   fetchedUser,
+  getPlaceInLeaderBoard,
+  getPlaceInFriendsLeaderBoard,
   placeInLeaderBoard,
   placeInFriendsLeaderBoard,
   getTopPlayers,
   getTopPlayersFriends,
   isMobile,
+  getFriendList,
+  fetchFriendsToken,
+  getAllowed,
 }) => {
   const [isAllRating, setIsAllRating] = useState(false);
+  const [allowed, setAllowed] = useState(false);
+
+  useEffect(async () => {
+    const permissions = await getAllowed('friends');
+
+    setAllowed(permissions.find((permission) => permission.scope === 'friends').allowed);
+  }, []);
 
   const ratingSwitcherHandler = useCallback((e) => {
     setIsAllRating(e.target.checked);
   }, []);
+
+  const fetchFriendsList = useCallback(async (user) => {
+    const friendsToken = await fetchFriendsToken(user);
+    if (friendsToken) {
+      getFriendList(friendsToken);
+      setAllowed(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (fetchedUser && !friendList) {
+      fetchFriendsList(fetchedUser);
+    }
+    if (fetchedUser && friendList) {
+      getPlaceInLeaderBoard(fetchedUser);
+      getPlaceInFriendsLeaderBoard(fetchedUser, friendList);
+    }
+  }, [fetchedUser, friendList]);
 
   return (
     <CommonPanel
@@ -39,16 +71,22 @@ const Rating = ({
       isLoading={isLoading}
       isMobile={isMobile}
     >
-      <GamersList
-        amountCoins={amountCoins}
-        isAllRating={isAllRating}
-        friendList={friendList}
-        fetchedUser={fetchedUser}
-        placeInLeaderBoard={placeInLeaderBoard}
-        placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
-        getTopPlayers={getTopPlayers}
-        getTopPlayersFriends={getTopPlayersFriends}
-      />
+      {allowed
+      && friendList
+      && placeInLeaderBoard
+      && placeInFriendsLeaderBoard ? (
+        <GamersList
+          amountCoins={amountCoins}
+          isAllRating={isAllRating}
+          friendList={friendList}
+          fetchedUser={fetchedUser}
+          placeInLeaderBoard={placeInLeaderBoard}
+          placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
+          getTopPlayers={getTopPlayers}
+          getTopPlayersFriends={getTopPlayersFriends}
+        />
+        )
+        : (<ScreenSpinner size="large" />)}
     </CommonPanel>
   );
 };
@@ -60,11 +98,16 @@ Rating.propTypes = {
   isLoading: PropTypes.bool,
   friendList: PropTypes.any,
   fetchedUser: PropTypes.any,
+  getPlaceInLeaderBoard: PropTypes.func,
+  getPlaceInFriendsLeaderBoard: PropTypes.func,
   placeInLeaderBoard: PropTypes.any,
   placeInFriendsLeaderBoard: PropTypes.any,
   getTopPlayers: PropTypes.func,
   getTopPlayersFriends: PropTypes.func,
   isMobile: PropTypes.bool,
+  getFriendList: PropTypes.func,
+  fetchFriendsToken: PropTypes.func,
+  getAllowed: PropTypes.func,
 };
 
 export default Rating;

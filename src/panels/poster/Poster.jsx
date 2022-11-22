@@ -58,7 +58,9 @@ const Poster = ({
               className={cn(style['picture-background'], { [style['background-colorized']]: colorizedItems.includes('background') })}
               onClick={(e) => {
                 e.stopPropagation();
-                setColorizedItems((prevList) => [...prevList, 'background']);
+                setColorizedItems((prevList) => (prevList.includes('background')
+                  ? prevList
+                  : [...prevList, 'background']));
               }}
             >
               {POSTER_PICTURES.map(({
@@ -88,7 +90,9 @@ const Poster = ({
                         className={cn(style[`${name}-wrapper`])}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setColorizedItems((prevList) => [...prevList, name]);
+                          setColorizedItems((prevList) => (prevList.includes(name)
+                            ? prevList
+                            : [...prevList, name]));
                         }}
                       >
                         <img
@@ -115,7 +119,7 @@ const Poster = ({
             </div>
           </div>
           <div className={cn(style['repost-button-wrapper'])}>
-            <MainButton text="Репост" onClick={onRepost} disabled={colorizedItems.length < 7} />
+            <MainButton text="Репост в истории" onClick={onRepost} disabled={colorizedItems.length < 7} />
           </div>
           <div className={cn(style['navbar-container'])}>
             <Navbar id={id} go={go} />

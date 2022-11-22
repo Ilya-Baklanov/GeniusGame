@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import { Text } from '@vkontakte/vkui';
+import bridge from '@vkontakte/vk-bridge';
 
 import style from './MoreCoins.module.css';
 import CommonPanel from '../../shared/commonPanel/CommonPanel';
@@ -22,11 +23,21 @@ const MoreCoins = ({
   isMobile,
 }) => {
   const [switcherState, setSwitcherState] = useState(notificationStatus ? +notificationStatus : 0);
-  const pushSwitcherHandler = useCallback((e) => {
+  const pushSwitcherHandler = useCallback(async (e) => {
     const isActivePush = e.target.checked ? 1 : 0;
-    onUpdateNotificationStatus(fetchedUser.id, isActivePush).then((res) => {
-      setSwitcherState(+res);
-    });
+    let result = false;
+
+    if (isActivePush) {
+      result = await bridge.send('VKWebAppAllowNotifications');
+    } else {
+      result = await bridge.send('VKWebAppDenyNotifications');
+    }
+
+    if (result) {
+      onUpdateNotificationStatus(fetchedUser.id, isActivePush).then((res) => {
+        setSwitcherState(+res);
+      });
+    }
   }, [fetchedUser, onUpdateNotificationStatus]);
 
   useEffect(() => {
@@ -44,13 +55,33 @@ const MoreCoins = ({
       isMobile={isMobile}
     >
       <MoreCoinsCards circumstances={circumstances} onClickToCard={onClickToCard} />
-      <div className={cn(style['more-coins-push-wrapper'])}>
-        <div className={cn(style['more-coins-push-description-wrapper'])}>
-          <Text className={cn(style['more-coins-push-description'])}>
-            {'Подпишись на push,\nчтобы не пропустить новые игры'}
-          </Text>
+      <div className={cn(style['additional-actions-wrapper'])}>
+        <div className={cn(style['additional-actions'])}>
+          <div className={cn(style['additional-action'])}>
+            <div className={cn(style['additional-action-description-wrapper'])}>
+              <Text className={cn(style['additional-action-description'])}>
+                Пригласи к участию друзей
+              </Text>
+            </div>
+            <button
+              onClick={() => onClickToCard('INVITE_FRIENDS')}
+              className={cn(style['additional-action-invite-friends-button'])}
+              type="button"
+            >
+              <Text className={cn(style['additional-action-invite-friends-text'])}>
+                Кликни
+              </Text>
+            </button>
+          </div>
+          <div className={cn(style['additional-action'])}>
+            <div className={cn(style['additional-action-description-wrapper'])}>
+              <Text className={cn(style['additional-action-description'])}>
+                {'Подпишись на push,\nчтобы не пропустить новые игры'}
+              </Text>
+            </div>
+            <Switcher onToggle={pushSwitcherHandler} state={switcherState} />
+          </div>
         </div>
-        <Switcher onToggle={pushSwitcherHandler} state={switcherState} />
       </div>
     </CommonPanel>
   );

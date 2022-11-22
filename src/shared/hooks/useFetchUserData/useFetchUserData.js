@@ -8,7 +8,6 @@ const useFetchUserData = () => {
     const [isFetchUserLoaded, setIsFetchUserLoaded] = useState(false);
     const [fetchedUser, setUser] = useState(null);
     const [fetchedScheme, setScheme] = useState('bright_light');
-    const [accessToken, setAccessToken] = useState(null);
     const [isFetchUserStatLoaded, setIsFetchUserStatLoaded] = useState(false);
     const [userStat, setUserStat] = useState(null);
     const [isEarnedCoinsPosted, setIsEarnedCoinsPosted] = useState(false);
@@ -19,6 +18,13 @@ const useFetchUserData = () => {
     const [placeInFriendsLeaderBoard, setPlaceInFriendsLeaderBoard] = useState(null);
     const [topPlayersFriends, setTopPlayersFriends] = useState(null);
     const [launchParams, setLaunchParams] = useState(null);
+
+    const getAllowed = useCallback(async (type) => {
+        const { result } = await bridge.send('VKWebAppCheckAllowedScopes', {
+            scopes: type,
+        });
+        return result;
+    }, []);
 
     const getUserInfo = useCallback(async (userId) => {
         const userInfo = await bridge.send('VKWebAppGetUserInfo', {
@@ -41,6 +47,7 @@ const useFetchUserData = () => {
         const data = await response.json();
         setUserStat(data);
         setIsFetchUserStatLoaded(true);
+        return data;
     }, [userStat]);
 
     const getServerTime = useCallback(async () => {
@@ -147,7 +154,7 @@ const useFetchUserData = () => {
             body: JSON.stringify({
                 left: start,
                 right: end,
-                friendsList: [...friendsIdList],
+                friendsList: [...friendsIdList, fetchedUser.id],
                 vkToken: window.location.href.split('?')[1],
             }),
         };
@@ -155,14 +162,13 @@ const useFetchUserData = () => {
         const json = await responseFriends.json();
         return json.users;
         // return topPlayersResponse.users.slice(start, end);
-    }, []);
+    }, [fetchedUser]);
 
-    const fetchToken = useCallback(async (user) => {
+    const fetchFriendsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51435598,
-            scope: 'friends,groups,wall',
+            app_id: 51476270,
+            scope: 'friends',
         });
-        setAccessToken(value.access_token);
         bridge.send(
             'VKWebAppStorageSet',
             {
@@ -170,7 +176,51 @@ const useFetchUserData = () => {
                 value: value.access_token,
             },
         );
-        console.log(window.location.href.split('?')[1]);
+        return value.access_token;
+    }, []);
+
+    const fetchGroupsToken = useCallback(async (user) => {
+        const value = await bridge.send('VKWebAppGetAuthToken', {
+            app_id: 51476270,
+            scope: 'groups',
+        });
+        bridge.send(
+            'VKWebAppStorageSet',
+            {
+                key: `${user.id}_token`,
+                value: value.access_token,
+            },
+        );
+        return value.access_token;
+    }, []);
+
+    const fetchStoriesToken = useCallback(async (user) => {
+        const value = await bridge.send('VKWebAppGetAuthToken', {
+            app_id: 51476270,
+            scope: 'stories',
+        });
+        bridge.send(
+            'VKWebAppStorageSet',
+            {
+                key: `${user.id}_token`,
+                value: value.access_token,
+            },
+        );
+        return value.access_token;
+    }, []);
+
+    const fetchStatusToken = useCallback(async (user) => {
+        const value = await bridge.send('VKWebAppGetAuthToken', {
+            app_id: 51476270,
+            scope: 'status',
+        });
+        bridge.send(
+            'VKWebAppStorageSet',
+            {
+                key: `${user.id}_token`,
+                value: value.access_token,
+            },
+        );
         return value.access_token;
     }, []);
 
@@ -216,8 +266,8 @@ const useFetchUserData = () => {
         setUserStat(data);
     }, []);
 
-    const postWallPhoto = useCallback(async (user, token) => {
-        bridge.send('VKWebAppShowStoryBox', {
+    const postStoriesPhoto = useCallback(async (user, token) => {
+        const response = await bridge.send('VKWebAppShowStoryBox', {
             background_type: 'image',
             url: 'https://sun9-8.userapi.com/impg/MIzRsgznJZPCXjMYHp-u8fvXKvGfoLPQge52yg/gECD7hxKOZI.jpg?size=607x1080&quality=95&sign=23d8f94f47955a6dbeef68984af4194b&type=album',
             attachment: {
@@ -226,16 +276,8 @@ const useFetchUserData = () => {
                 owner_id: user.id,
                 id: 12345678,
             },
-        })
-            .then((data) => {
-                if (data.code_data) {
-                    // Редактор истории открыт
-                }
-            })
-            .catch((error) => {
-                // Ошибка
-                console.log(error);
-            });
+        });
+        return response;
     }, []);
 
     const getPromoCode = useCallback(async (userId, coins) => {
@@ -286,10 +328,10 @@ const useFetchUserData = () => {
         const user = await bridge.send('VKWebAppGetUserInfo');
         setUser(user);
         await fetchUserStat(user);
-        const token = await fetchToken(user);
-        const friendsList = await getFriendList(token);
-        await getPlaceInLeaderBoard(user);
-        await getPlaceInFriendsLeaderBoard(user, friendsList);
+        // const friendsToken = await fetchFriendsToken(user);
+        // const friendsList = await getFriendList(friendsToken);
+        // await getPlaceInLeaderBoard(user);
+        // await getPlaceInFriendsLeaderBoard(user, friendsList);
         await getServerTime();
         setIsFetchUserLoaded(true);
     }, []);
@@ -308,14 +350,13 @@ const useFetchUserData = () => {
         isFetchUserLoaded,
         fetchedUser,
         fetchedScheme,
-        accessToken,
         userStat,
         refetchUserStat: fetchUserStat,
         isFetchUserStatLoaded,
         postEarnedCoins,
         isEarnedCoinsPosted,
         updateCircumstancesStatus,
-        postWallPhoto,
+        postStoriesPhoto,
         getServerTime,
         serverTime,
         getPromoCode,
@@ -330,6 +371,11 @@ const useFetchUserData = () => {
         placeInFriendsLeaderBoard,
         getTopPlayersFriends,
         topPlayersFriends,
+        fetchFriendsToken,
+        fetchStoriesToken,
+        fetchGroupsToken,
+        getAllowed,
+        fetchStatusToken,
     };
 };
 

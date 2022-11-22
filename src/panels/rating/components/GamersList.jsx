@@ -33,12 +33,21 @@ const GamersList = ({
 
   const itemCount = useMemo(() => gamersOnRating, [gamersOnRating]);
 
-  const personalStat = useMemo(() => ({
-    name: `${fetchedUser.first_name} ${fetchedUser.last_name}`,
-    score: amountCoins,
-    avatarSrc: fetchedUser.photo_100,
-    id: fetchedUser.id,
-  }), [fetchedUser, amountCoins]);
+  const personalStat = useMemo(() => {
+    if (fetchedUser && (gamersListCommon || gamersListInFriends)) {
+      const allUserCoins = isAllRating
+        ? gamersListCommon.find((player) => +player.id === fetchedUser.id)
+        : gamersListInFriends.find((player) => +player.id === fetchedUser.id);
+
+      return {
+        name: `${fetchedUser.first_name} ${fetchedUser.last_name}`,
+        score: allUserCoins ? allUserCoins.score : 0,
+        avatarSrc: fetchedUser.photo_100,
+        id: fetchedUser.id,
+      };
+    }
+    return null;
+  }, [fetchedUser, gamersListCommon, gamersListInFriends, isAllRating]);
 
   useEffect(() => {
     if (
@@ -50,11 +59,13 @@ const GamersList = ({
       if (isAllRating) {
         setPositionOnRating(placeInLeaderBoard.orderNumber);
         setGamersOnRating(placeInLeaderBoard.totalUsersCount);
-        setCurrentGamersList(gamersListCommon);
+        setCurrentGamersList(gamersListCommon
+          .filter((player) => +player.id !== +fetchedUser.id));
       } else {
         setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
         setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
-        setCurrentGamersList(gamersListInFriends);
+        setCurrentGamersList(gamersListInFriends
+          .filter((player) => +player.id !== +fetchedUser.id));
       }
     }
   }, [
@@ -67,13 +78,15 @@ const GamersList = ({
   ]);
 
   const loadMorePlayers = useCallback((visibleStartIndex, visibleStopIndex) => {
-    const newCacheKey = `${visibleStartIndex}:${visibleStopIndex}:all`;
-    if (requestCache[newCacheKey]) {
+    const startNumber = +visibleStartIndex;
+    const endNumber = +visibleStopIndex + 1 < +gamersOnRating ? visibleStopIndex : gamersOnRating;
+    const newCacheKey = `${startNumber}:${endNumber}:all`;
+    if (requestCache[newCacheKey] || visibleStartIndex >= endNumber) {
       return;
     }
 
-    const length = visibleStopIndex - visibleStartIndex;
-    const visibleRange = [...Array(length).keys()].map((x) => x + visibleStartIndex);
+    const length = endNumber - startNumber;
+    const visibleRange = [...Array(length >= 0 ? length : 0).keys()].map((x) => x + startNumber);
     const itemsRetrieved = visibleRange.every((index) => !!gamersListCommon?.[index]);
 
     if (itemsRetrieved) {
@@ -82,16 +95,20 @@ const GamersList = ({
     }
 
     // eslint-disable-next-line consistent-return
-    return getTopPlayers(visibleStartIndex, visibleStopIndex)
+    return getTopPlayers(
+      startNumber,
+      endNumber + 1,
+    )
       .then((response) => {
         setGamersListCommon((prev) => ([
           ...prev,
-          ...response.map((player) => ({
-            name: `${player?.firstName} ${player?.secondName}`,
-            score: player.coins,
-            avatarSrc: player?.photo,
-            id: player.id,
-          })),
+          ...response
+            .map((player) => ({
+              name: `${player?.firstName} ${player?.secondName}`,
+              score: player.coins,
+              avatarSrc: player?.photo,
+              id: player.id,
+            })),
         ]));
         setRequestCache((prev) => ({ ...prev, [newCacheKey]: newCacheKey }));
       });
@@ -99,17 +116,20 @@ const GamersList = ({
     requestCache,
     fetchedUser,
     gamersListCommon,
+    gamersOnRating,
   ]);
 
   const loadMorePlayersFriends = useCallback((visibleStartIndex, visibleStopIndex) => {
-    const newCacheKey = `${visibleStartIndex}:${visibleStopIndex}:friends`;
-    if (requestCache[newCacheKey]) {
+    const startNumber = +visibleStartIndex;
+    const endNumber = +visibleStopIndex + 1 < +gamersOnRating ? visibleStopIndex : gamersOnRating;
+    const newCacheKey = `${startNumber}:${endNumber}:friends`;
+    if (requestCache[newCacheKey] || visibleStartIndex >= endNumber) {
       return;
     }
 
-    const length = visibleStopIndex - visibleStartIndex;
-    const visibleRange = [...Array(length).keys()].map((x) => x + visibleStartIndex);
-    const itemsRetrieved = visibleRange.every((index) => !!gamersListInFriends?.[index]);
+    const length = endNumber - startNumber;
+    const visibleRange = [...Array(length >= 0 ? length : 0).keys()].map((x) => x + startNumber);
+    const itemsRetrieved = visibleRange.every((index) => !!gamersListCommon?.[index]);
 
     if (itemsRetrieved) {
       setRequestCache((prev) => ({ ...prev, [newCacheKey]: newCacheKey }));
@@ -117,12 +137,15 @@ const GamersList = ({
     }
 
     // eslint-disable-next-line consistent-return
-    return getTopPlayersFriends(friendList, visibleStartIndex, visibleStopIndex)
+    return getTopPlayersFriends(
+      friendList,
+      startNumber,
+      endNumber + 1,
+    )
       .then((response) => {
         setGamersListInFriends((prev) => ([
           ...prev,
           ...response
-            .filter((player) => +player.id !== +fetchedUser.id)
             .map((player) => ({
               name: `${player?.firstName} ${player?.secondName}`,
               score: player.coins,
@@ -200,7 +223,7 @@ const GamersList = ({
                   { currentGamersList.length > 0
                     ? (
                       ({ index, style: defaultStyle }) => {
-                        const item = currentGamersList?.[index];
+                        const item = currentGamersList[index];
 
                         return item ? (
                           <div
@@ -232,7 +255,9 @@ const GamersList = ({
                         ) : null;
                       }
                     )
-                    : () => (<ScreenSpinner size="large" />)}
+                    : () => (gamersOnRating <= 1
+                      ? null
+                      : (<ScreenSpinner size="large" />))}
                 </List>
               )
             }
