@@ -103,6 +103,7 @@ const App = () => {
     fetchGroupsToken,
     getAllowed,
     fetchStatusToken,
+    userPromoCodes,
   } = useFetchUserData();
 
   const serverTimeProcessed = useMemo(() => timeHandler(serverTime), [serverTime]);

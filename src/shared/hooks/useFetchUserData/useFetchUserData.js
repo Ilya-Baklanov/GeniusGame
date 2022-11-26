@@ -324,6 +324,26 @@ const useFetchUserData = () => {
         return json.notifications;
     }, []);
 
+    const userPromoCodes = useCallback(async (user) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'localhost:8080',
+            },
+            dataType: 'json',
+            body: JSON.stringify({
+                userId: user.id,
+                vkToken: window.location.href.split('?')[1],
+            }),
+        };
+        const response = await fetch('http://localhost:8080/v1/api/getUserPromoCodes', requestOptions);
+        const data = await response.json();
+        console.log(data);
+        return data;
+    }, []);
+
     const fetchUserData = useCallback(async () => {
         const user = await bridge.send('VKWebAppGetUserInfo');
         setUser(user);
@@ -376,6 +396,7 @@ const useFetchUserData = () => {
         fetchGroupsToken,
         getAllowed,
         fetchStatusToken,
+        userPromoCodes,
     };
 };
 
