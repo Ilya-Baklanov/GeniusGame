@@ -22,7 +22,6 @@
 }
 
 .promocode-card-description {
-    
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
@@ -32,7 +31,6 @@
 }
 
 .promocode-card-text {
-    
     font-weight: 600;
     font-size: 24px;
     line-height: 30px;
@@ -42,44 +40,68 @@
 }
 
 .description-wrapper {
+    display: flex;
+    justify-content: center;
     width: 315px;
     height: 180px;
     margin-bottom: 25px;
 }
 
 .description-text {
-    
     font-weight: 400;
     font-size: 14px;
     line-height: 150%;
     color: #5E5E5E;
 }
 
+.sbermegamarket-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.sbermegamarket-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 315px;
+    height: 52px;
+    background: #8C15A2;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+.sbermegamarket-button-text {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
 .rules {
     display: flex;
     align-items: center;
     justify-content: space-around;
-
     width: 230px;
     padding: 0 0 9px 0;
     margin-bottom: 24px;
 }
 
 .rules-question {
-    
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
-
     color: #5E5E5E;
 }
 
 .rules-link {
-    
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-
     color: #7E03B1;
 }

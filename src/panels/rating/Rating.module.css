@@ -1,0 +1,46 @@
+.not-allowed-to-friends-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 0 17px;
+}
+
+.not-allowed-to-friends-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 140px;
+}
+
+.not-allowed-to-friends-list-description {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    white-space: break-spaces;
+    color: #000000;
+}
+
+.not-allowed-to-friends-list-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 177px;
+    height: 49px;
+    background: #8C15A2;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.not-allowed-to-friends-list-button-text {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+}

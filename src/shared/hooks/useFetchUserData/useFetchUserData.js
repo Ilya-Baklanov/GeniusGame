@@ -78,7 +78,9 @@ const useFetchUserData = () => {
         return list.response.items;
     }, []);
 
-    async function getPlaceInLeaderBoard(user) {
+    const getPlaceInLeaderBoard = useCallback(async (user) => {
+        const token = window.location.href.split('?')[1];
+
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -89,13 +91,13 @@ const useFetchUserData = () => {
             dataType: 'json',
             body: JSON.stringify({
                 userId: user.id,
-                vkToken: window.location.href.split('?')[1],
+                vkToken: token,
             }),
         };
         const response = await fetch('https://sbermemorygame.ru/v1/api/getPlaceInTop', requestOptions);
         const data = await response.json();
         setPlaceInLeaderBoard(data);
-    }
+    }, []);
 
     const getTopPlayers = useCallback(async (start, end) => {
         const requestOptions = {
@@ -118,8 +120,9 @@ const useFetchUserData = () => {
         // return topPlayersResponse.users.slice(start, end);
     }, []);
 
-    async function getPlaceInFriendsLeaderBoard(user, friendsList) {
+    const getPlaceInFriendsLeaderBoard = useCallback(async (user, friendsList) => {
         const friendsIdList = friendsList.map((friends) => friends.id);
+        const token = window.location.href.split('?')[1];
 
         const requestOptions = {
             method: 'POST',
@@ -132,13 +135,13 @@ const useFetchUserData = () => {
             body: JSON.stringify({
                 userId: user.id,
                 friendsList: [...friendsIdList, user.id],
-                vkToken: window.location.href.split('?')[1],
+                vkToken: token,
             }),
         };
         const response = await fetch('https://sbermemorygame.ru/v1/api/getPlaceInTopFriends', requestOptions);
         const data = await response.json();
         setPlaceInFriendsLeaderBoard(data);
-    }
+    }, []);
 
     const getTopPlayersFriends = useCallback(async (friendsList, start, end) => {
         const friendsIdList = friendsList.map((friends) => friends.id);
@@ -324,7 +327,7 @@ const useFetchUserData = () => {
         return json.notifications;
     }, []);
 
-    const userPromoCodes = useCallback(async (user) => {
+    const getUserPromoCodes = useCallback(async (user) => {
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -338,11 +341,47 @@ const useFetchUserData = () => {
                 vkToken: window.location.href.split('?')[1],
             }),
         };
-        const response = await fetch('http://localhost:8080/v1/api/getUserPromoCodes', requestOptions);
+        const response = await fetch('https://sbermemorygame.ru/v1/api/getUserPromoCodes', requestOptions);
         const data = await response.json();
-        console.log(data);
+        console.log('getUserPromoCodes: ', data);
         return data;
     }, []);
+
+    const setStatus = useCallback(async (statusId) => {
+        let statusToken = null;
+        if (fetchedUser) {
+            statusToken = await fetchStatusToken(fetchedUser);
+        }
+        if (statusToken) {
+            const { response } = await bridge.send('VKWebAppCallAPIMethod', {
+                method: 'status.setImage',
+                params: {
+                    status_id: statusId,
+                    access_token: statusToken,
+                    v: '5.131',
+                },
+            }).catch((error) => console.log('GET_STATUS_ERROR: ', error));
+
+            return { statusToken, response };
+        }
+        return { statusToken };
+    }, [fetchedUser]);
+
+    const getStatus = useCallback(async () => {
+        const statusToken = await fetchStatusToken(fetchedUser);
+        if (statusToken) {
+            const response = await bridge.send('VKWebAppCallAPIMethod', {
+                method: 'status.getImage',
+                params: {
+                    access_token: statusToken,
+                    v: '5.131',
+                },
+            }).catch((error) => console.log('GET_STATUS_ERROR: ', error));
+
+            return { statusToken, response };
+        }
+        return { statusToken };
+    }, [fetchedUser]);
 
     const fetchUserData = useCallback(async () => {
         const user = await bridge.send('VKWebAppGetUserInfo');
@@ -396,7 +435,9 @@ const useFetchUserData = () => {
         fetchGroupsToken,
         getAllowed,
         fetchStatusToken,
-        userPromoCodes,
+        getUserPromoCodes,
+        setStatus,
+        getStatus,
     };
 };
 

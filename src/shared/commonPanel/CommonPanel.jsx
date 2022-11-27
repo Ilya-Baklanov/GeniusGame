@@ -13,7 +13,17 @@ import { APP_NAME } from '../../assets/constants/constants';
 import { MoreCoins } from '../../assets/image';
 
 const CommonPanel = ({
-  id, go, title, description, additionalBlock, children, amountCoins, isLoading, isMobile,
+  id,
+  go,
+  title,
+  description,
+  additionalBlock,
+  children,
+  amountCoins,
+  isLoading,
+  isMobile,
+  withScrollbar,
+  activeTab,
 }) => (
   <Panel id={id}>
     {!isMobile && (
@@ -27,7 +37,7 @@ const CommonPanel = ({
       ? (<ScreenSpinner size="large" />)
       : (
         <MainLayout>
-          <div className={cn(style['common-panel-main'])}>
+          <div className={cn(style['common-panel-main'], { [style['with-scrollbar']]: withScrollbar })}>
             <div className={cn(style['common-panel-earned'])}>
               <Text className={cn(style['common-panel-earned-count'])}>
                 {amountCoins}
@@ -50,13 +60,13 @@ const CommonPanel = ({
             </div>
             )}
             {children && (
-            <div className={cn(style['common-children'])}>
+            <div className={cn(style['common-children'], { [style['without-description']]: !description && !additionalBlock })}>
               {children}
             </div>
             )}
           </div>
           <div className={cn(style['navbar-container'])}>
-            <Navbar id={id} go={go} />
+            <Navbar id={activeTab || id} go={go} />
           </div>
         </MainLayout>
       )}
@@ -73,6 +83,8 @@ CommonPanel.propTypes = {
   amountCoins: PropTypes.string,
   isLoading: PropTypes.bool,
   isMobile: PropTypes.bool,
+  withScrollbar: PropTypes.bool,
+  activeTab: PropTypes.string,
 };
 
 export default CommonPanel;

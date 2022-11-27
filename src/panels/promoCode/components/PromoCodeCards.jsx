@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Text } from '@vkontakte/vkui';
@@ -30,7 +31,12 @@ const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
         ))}
       </div>
       <div className={cn(style['promocode-rules'])}>
-        <Link className={cn(style['promocode-rules-link'])} href={PROMOTION_RULES.href}>{PROMOTION_RULES.title}</Link>
+        <Link
+          className={cn(style['promocode-rules-link'])}
+          onClick={() => window.open(PROMOTION_RULES.href, '_blank')}
+        >
+          {PROMOTION_RULES.title}
+        </Link>
         <Link className={cn(style['promocode-rules-link'])} href={GAME_RULES.href}>{GAME_RULES.title}</Link>
       </div>
     </div>

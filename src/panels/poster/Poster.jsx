@@ -121,9 +121,9 @@ const Poster = ({
           <div className={cn(style['repost-button-wrapper'])}>
             <MainButton text="Репост в истории" onClick={onRepost} disabled={colorizedItems.length < 7} />
           </div>
-          <div className={cn(style['navbar-container'])}>
-            <Navbar id={id} go={go} />
-          </div>
+        </div>
+        <div className={cn(style['navbar-container'])}>
+          <Navbar id="moreCoins" go={go} />
         </div>
       </MainLayout>
     </Panel>

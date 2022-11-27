@@ -21,9 +21,9 @@ export const CARDS = Array(CARDS_COUNT).fill().map((_, index) => ({
 }));
 
 export const STATUS_LIST = [
-    { statusId: 788, text: 'на спокойном', img: '/img/cat1.png' },
-    { statusId: 786, text: 'на созвоне\nбез камеры', img: '/img/cat2.png' },
-    { statusId: 787, text: 'дайте поспать', img: '/img/cat3.png' },
+    { statusId: '788', text: 'на спокойном', img: '/img/cat1.png' },
+    { statusId: '786', text: 'на созвоне\nбез камеры', img: '/img/cat2.png' },
+    { statusId: '787', text: 'дайте поспать', img: '/img/cat3.png' },
 ];
 
 export const POSTER_PICTURES = [
@@ -80,3 +80,5 @@ export const CONTACTS_HELP = {
     href: 'mailto:smm@sbermegamarket.ru',
     question: 'Нужна помощь?',
 };
+
+export const SBERMEGAMARKET_LINK = 'https://sbermegamarket.ru';

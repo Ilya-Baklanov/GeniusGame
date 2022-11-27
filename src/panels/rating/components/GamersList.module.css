@@ -39,20 +39,7 @@
     align-items: flex-start;
     justify-content: space-between;
     width: 100%;
-    height: 45vh;
     overflow: auto;
-}
-
-::-webkit-scrollbar {
-    width: 0px;
-}
-
-::-webkit-scrollbar-track {
-    width: 0px;
-}
-
-::-webkit-scrollbar-thumb {
-    width: 0px;
 }
 
 .gamers-list-item-wrapper {
@@ -140,8 +127,6 @@
 }
 
 .gamers-list-item-score {
-    
-    
     font-weight: 600;
     font-size: 16px;
     line-height: 20px;
@@ -152,8 +137,6 @@
 }
 
 .gamers-list-item-wrapper-first .gamers-list-item-score {
-    
-    
     font-weight: 600;
     font-size: 16px;
     line-height: 20px;
@@ -165,4 +148,20 @@
 
 .gamers-list-item-wrapper-first .gamers-list-item-score-wrapper>svg>path {
     fill: #FFFFFF;
+}
+
+.List {
+    height: 45vh !important;
+}
+
+.List::-webkit-scrollbar {
+    width: 0px;
+}
+
+.List::-webkit-scrollbar-track {
+    width: 0px;
+}
+
+.List::-webkit-scrollbar-thumb {
+    width: 0px;
 }

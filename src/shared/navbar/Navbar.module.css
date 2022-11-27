@@ -10,11 +10,10 @@
             justify-content: space-between;
 
     width: 100%;
+    padding-top: 15px;
 }
 
 .navbar-button_text {
-    
-    
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
@@ -23,8 +22,6 @@
 }
 
 .navbar-button_text.active {
-    
-    
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;

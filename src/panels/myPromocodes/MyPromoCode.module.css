@@ -1,0 +1,55 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 65vh;
+    padding: 0 17px;
+    overflow: auto;
+}
+
+.promocode-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 315px;
+    min-height: 122px;
+    margin-bottom: 20px;
+    padding: 37px 0 20px 0;
+    border-radius: 15px;
+    background: linear-gradient(45deg, #24B571, 31%, #7E03B1, 90%, #FFB222);
+    background-size: 150% 150%;
+    animation: animate_gradient 7s ease infinite;
+}
+
+@keyframes animate_gradient {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 0%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.promocode-name {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.promocode-price {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #FFFFFF;
+}

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
@@ -8,12 +9,13 @@ import {
   Avatar,
   Text,
   ScreenSpinner,
+  Link,
 } from '@vkontakte/vkui';
 
 import { MoreCoins } from '../../assets/image';
 import Navbar from '../../shared/navbar/Navbar';
 import style from './Home.module.css';
-import { APP_NAME } from '../../assets/constants/constants';
+import { APP_NAME, GAME_RULES, PROMOTION_RULES } from '../../assets/constants/constants';
 import MainButton from '../../shared/mainButton/MainButton';
 import Motivator from './components/Motivator';
 import Timer from '../../shared/timer/Timer';
@@ -40,32 +42,37 @@ const Home = ({
           : (
             <div className={cn(style['home-wrapper'])}>
               <div className={cn(style.home)}>
-                <div className={cn(style['home-earned'])}>
-                  <Text className={cn(style['home-earned-count'])}>
-                    {amountCoins}
-                  </Text>
-                  <MoreCoins />
-                </div>
-                {fetchedUser && (
-                <>
-                  <div className={cn(style['greetings-wrapper'])}>
-                    {fetchedUser.photo_200 ? (
-                      <Avatar src={fetchedUser.photo_200} className={cn(style.avatar)} size={80} />
-                    ) : null}
-                    <Text className={cn(style.greetings)}>
-                      {`Привет, ${fetchedUser.first_name}!`}
+                <div className={cn(style['content-wrapper'])}>
+                  <div className={cn(style['home-earned'])}>
+                    <Text className={cn(style['home-earned-count'])}>
+                      {amountCoins}
                     </Text>
+                    <MoreCoins />
                   </div>
-                  <Text className={cn(style.description)}>
-                    {'Играй, зарабатывай монеты и трать\nих на покупки в СберМегаМаркете!'}
-                  </Text>
-                  <div className={cn(style['motivator-wrapper'])}>
-                    <Motivator />
-                  </div>
-                </>
-                )}
-                <div className={cn(style['start-game-button-wrapper'])}>
-                  {
+                  {fetchedUser && (
+                  <>
+                    <div className={cn(style['greetings-wrapper'])}>
+                      {fetchedUser.photo_200 ? (
+                        <Avatar
+                          src={fetchedUser.photo_200}
+                          className={cn(style.avatar)}
+                          size={80}
+                        />
+                      ) : null}
+                      <Text className={cn(style.greetings)}>
+                        {`Привет, ${fetchedUser.first_name}!`}
+                      </Text>
+                    </div>
+                    <Text className={cn(style.description)}>
+                      {'Играй, зарабатывай монеты и трать\nих на покупки в СберМегаМаркете!'}
+                    </Text>
+                    <div className={cn(style['motivator-wrapper'])}>
+                      <Motivator />
+                    </div>
+                  </>
+                  )}
+                  <div className={cn(style['start-game-button-wrapper'])}>
+                    {
                   gamesAvailable > 0
                     ? <MainButton text="Начать игру" onClick={onStartGame} isAnimated />
                     : (
@@ -77,6 +84,16 @@ const Home = ({
                       </div>
                     )
                   }
+                  </div>
+                  <div className={cn(style['promocode-rules'])}>
+                    <Link
+                      className={cn(style['promocode-rules-link'])}
+                      onClick={() => window.open(PROMOTION_RULES.href, '_blank')}
+                    >
+                      {PROMOTION_RULES.title}
+                    </Link>
+                    <Link className={cn(style['promocode-rules-link'])} href={GAME_RULES.href}>{GAME_RULES.title}</Link>
+                  </div>
                 </div>
                 <div className={cn(style['navbar-container'])}>
                   <Navbar id={id} go={go} />

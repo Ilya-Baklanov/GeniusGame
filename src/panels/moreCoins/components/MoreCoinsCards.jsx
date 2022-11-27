@@ -19,8 +19,8 @@ const MoreCoinsCards = ({ go, onClickToCard, circumstances }) => {
         <Card
           key={index}
           text={text}
-          additionalCoins={additionalCoins}
-          isComplete={isComplete}
+          additionalCoins={id === 'STATUS' && isComplete ? null : additionalCoins}
+          isComplete={id !== 'STATUS' && isComplete}
           onClick={() => onClickToCard(id)}
         />
       ))}

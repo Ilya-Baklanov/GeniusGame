@@ -50,28 +50,28 @@ const GamersList = ({
   }, [fetchedUser, gamersListCommon, gamersListInFriends, isAllRating]);
 
   useEffect(() => {
-    if (
-      placeInFriendsLeaderBoard
-      && placeInLeaderBoard
-      && gamersListCommon
-      && gamersListInFriends
-    ) {
-      if (isAllRating) {
-        setPositionOnRating(placeInLeaderBoard.orderNumber);
-        setGamersOnRating(placeInLeaderBoard.totalUsersCount);
-        setCurrentGamersList(gamersListCommon
-          .filter((player) => +player.id !== +fetchedUser.id));
-      } else {
-        setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
-        setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
-        setCurrentGamersList(gamersListInFriends
-          .filter((player) => +player.id !== +fetchedUser.id));
-      }
+    if (placeInLeaderBoard && gamersListCommon && isAllRating && fetchedUser) {
+      setPositionOnRating(placeInLeaderBoard.orderNumber);
+      setGamersOnRating(placeInLeaderBoard.totalUsersCount);
+      setCurrentGamersList(gamersListCommon
+        .filter((player) => +player.id !== +fetchedUser.id));
+    }
+  }, [
+    placeInLeaderBoard,
+    gamersListCommon,
+    isAllRating,
+    fetchedUser,
+  ]);
+
+  useEffect(() => {
+    if (placeInFriendsLeaderBoard && gamersListInFriends && !isAllRating && fetchedUser) {
+      setPositionOnRating(placeInFriendsLeaderBoard.orderNumber);
+      setGamersOnRating(placeInFriendsLeaderBoard.totalUsersCount);
+      setCurrentGamersList(gamersListInFriends
+        .filter((player) => +player.id !== +fetchedUser.id));
     }
   }, [
     placeInFriendsLeaderBoard,
-    placeInLeaderBoard,
-    gamersListCommon,
     gamersListInFriends,
     isAllRating,
     fetchedUser,
@@ -160,6 +160,7 @@ const GamersList = ({
     friendList,
     fetchedUser,
     gamersListInFriends,
+    gamersOnRating,
   ]);
 
   const isItemLoaded = useCallback(
@@ -213,7 +214,7 @@ const GamersList = ({
               ({ onItemsRendered, ref }) => (
                 <List
                   className={cn(style.List)}
-                  height={320}
+                  height={350}
                   itemCount={itemCount}
                   itemSize={62}
                   onItemsRendered={onItemsRendered}
@@ -255,7 +256,7 @@ const GamersList = ({
                         ) : null;
                       }
                     )
-                    : () => (gamersOnRating <= 1
+                    : () => (+gamersOnRating <= 1
                       ? null
                       : (<ScreenSpinner size="large" />))}
                 </List>

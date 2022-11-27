@@ -4,7 +4,7 @@
     align-items: center;
     /* justify-content: space-between; */
 
-    padding: 0 17px;
+    padding: 10px 17px 0 17px;
 }
 
 .more-coins-status-list-wrapper {
@@ -18,31 +18,47 @@
 }
 
 .more-coins-status-list-item {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
 }
 
+.blurred {
+    opacity: 0.5;
+}
+
+.more-coins-status-list-item-active-background {
+    position: absolute;
+    top: -10px;
+    z-index: 0;
+
+    width: 64px;
+    height: 64px;
+}
+
 .more-coins-status-list-item-img {
     margin-bottom: 10px;
     width: 57px;
     height: 57px;
+    z-index: 10;
 }
 
 .more-coins-status-list-item-text {
-    
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
-
     white-space: break-spaces;
-
     color: #A2A2A2;
 }
 
+.more-coins-status-list-item-text.item-text-active {
+    color: #000000;
+}
+
 .more-coins-navbar-container {
-    border-top: 1px solid #EFEFEF;    
+    border-top: 1px solid #EFEFEF;
 
     width: 100%;
 }

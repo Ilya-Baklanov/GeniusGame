@@ -15,7 +15,7 @@ import {
 
 import style from './ModalGetPromoCode.module.css';
 import { CloseGray } from '../../../assets/image';
-import { CONTACTS_HELP } from '../../../assets/constants/constants';
+import { CONTACTS_HELP, SBERMEGAMARKET_LINK } from '../../../assets/constants/constants';
 
 const ModalGetPromoCode = ({
   id,
@@ -62,6 +62,17 @@ const ModalGetPromoCode = ({
             <Text className={cn(style['description-text'])}>
               {isCopied ? 'Промокод скопирован.' : ''}
             </Text>
+          </div>
+          <div className={style['sbermegamarket-button-wrapper']}>
+            <button
+              type="button"
+              className={style['sbermegamarket-button']}
+              onClick={() => window.open(SBERMEGAMARKET_LINK, '_blank')}
+            >
+              <Text className={style['sbermegamarket-button-text']}>
+                За покупками на СберМегаМаркет!
+              </Text>
+            </button>
           </div>
           <div className={cn(style.rules)}>
             <Text className={cn(style['rules-question'])}>{CONTACTS_HELP.question}</Text>

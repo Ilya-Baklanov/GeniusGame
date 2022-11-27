@@ -20,3 +20,39 @@
 .vkuiIconButton {
     border-radius: 0;
 }
+
+.vkuiPanelHeaderButton--android .vkuiIcon--28 {
+    padding: 2px;
+}
+
+.vkuiEpic .vkuiPanel__in {
+    padding: 0;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+::-webkit-scrollbar-track {
+    width: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 0px;
+}
+
+/* ::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    width: 5px;
+    background: #F6EBFF;
+}
+
+::-webkit-scrollbar-thumb {
+    width: 5px;
+    height: 133px;
+    background: #7E03B1;
+    border-radius: 2.5px;
+} */

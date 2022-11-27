@@ -1,0 +1,27 @@
+.button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 171px;
+    height: 52px;
+    background: #8C15A2;
+    border-radius: 13.12px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 23px;
+}
+
+.button-text {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    color: #FFFFFF;
+}

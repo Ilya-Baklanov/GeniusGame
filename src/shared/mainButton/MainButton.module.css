@@ -41,3 +41,9 @@
     color: #7E03B1;
     filter: opacity(70%);
 }
+
+@media (max-device-height: 900px) {
+    .main-button {
+        height: 65px;
+    }
+}

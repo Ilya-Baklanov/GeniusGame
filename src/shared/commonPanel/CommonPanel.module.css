@@ -7,7 +7,23 @@
   overflow: auto;
 
   width: 100%;
-  height: 100%;
+  height: calc(100% - 77px);
+}
+
+.with-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.with-scrollbar::-webkit-scrollbar-track {
+    width: 5px;
+    background: #F6EBFF;
+}
+
+.with-scrollbar::-webkit-scrollbar-thumb {
+    width: 5px;
+    height: 133px;
+    background: #7E03B1;
+    border-radius: 2.5px;
 }
 
 @media (max-device-width: 480px) {
@@ -48,8 +64,6 @@
 }
 
 .common-title {
-  
-  
   font-weight: 600;
   font-size: 20px;
   line-height: 25px;
@@ -64,8 +78,6 @@
 }
 
 .common-description {
-  
-  
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
@@ -82,14 +94,23 @@
 
 .common-children {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   top: 25%;
-  
   width: 100%;
+  min-height: 61vh;
+}
+
+.common-children.without-description {
+  top: 20%;
 }
 
 .navbar-container {
+  position: absolute;
+  bottom: 0px;
   width: 100%;
-  height: 75px;
+  height: 77px;
   padding: 0 17px;
-  background: #F6EBFF;
 }

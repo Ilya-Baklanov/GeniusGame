@@ -14,7 +14,9 @@ import { STATUS_LIST } from '../../../assets/constants/constants';
 const ModalMoreCoinsStatus = ({
   id,
   activePanelId,
+  content,
   onClose,
+  onSelect,
 }) => (
   <AppearanceProvider appearance="light">
     <ModalPage
@@ -33,23 +35,35 @@ const ModalMoreCoinsStatus = ({
             >
               <CloseGray />
             </IconButton>
-          )}
+            )}
         />
-      )}
+        )}
     >
       <div className={cn(style['more-coins-modal-wrapper'])}>
         <div className={cn(style['more-coins-status-list-wrapper'])}>
           {STATUS_LIST.map(({ statusId, img, text }, index) => (
-            <CopyToClipboard key={index} text={text}>
-              <div
-                className={cn(style['more-coins-status-list-item'])}
+            <div
+              key={index}
+              onClick={() => onSelect(statusId)}
+              className={cn(style['more-coins-status-list-item'], { [style.blurred]: !!content.statusId && content.statusId !== statusId })}
+            >
+              {content.statusId === statusId
+                && (
+                <img
+                  className={cn(style['more-coins-status-list-item-active-background'])}
+                  src="/img/cat_active_ellipse.png"
+                  alt="background-ellipse"
+                />
+                )}
+              <img className={cn(style['more-coins-status-list-item-img'])} src={img} alt={text} />
+              <Text className={cn(
+                style['more-coins-status-list-item-text'],
+                { [style['item-text-active']]: content.statusId === statusId },
+              )}
               >
-                <img className={cn(style['more-coins-status-list-item-img'])} src={img} alt={text} />
-                <Text className={cn(style['more-coins-status-list-item-text'])}>
-                  {text}
-                </Text>
-              </div>
-            </CopyToClipboard>
+                {text}
+              </Text>
+            </div>
           ))}
         </div>
 
@@ -64,11 +78,11 @@ const ModalMoreCoinsStatus = ({
 ModalMoreCoinsStatus.propTypes = {
   id: PropTypes.string.isRequired,
   activePanelId: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
   content: PropTypes.shape({
-    denomination: PropTypes.number,
-    promoCodeDescription: PropTypes.string,
+    statusId: PropTypes.string,
   }),
+  onClose: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
 };
 
 export default ModalMoreCoinsStatus;

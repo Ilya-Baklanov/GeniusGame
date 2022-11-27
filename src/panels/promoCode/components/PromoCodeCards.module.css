@@ -3,10 +3,10 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 435px;
+    /* height: 435px; */
     padding: 0 12px 0 17px;
 
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 .promocode-cards-container {
@@ -99,18 +99,14 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-
     width: 100%;
     padding: 0 0 9px 0;
 }
 
 .promocode-rules-link {
-
-
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-
     color: #7E03B1;
 }
