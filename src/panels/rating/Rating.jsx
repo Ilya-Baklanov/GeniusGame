@@ -17,7 +17,7 @@ const Rating = ({
   go,
   amountCoins,
   isLoading,
-  friendList,
+  // friendList,
   fetchedUser,
   getPlaceInLeaderBoard,
   getPlaceInFriendsLeaderBoard,
@@ -28,9 +28,24 @@ const Rating = ({
   isMobile,
   getFriendList,
   fetchFriendsToken,
-  allowed,
+  getAllowed,
 }) => {
-  const [isAllRating, setIsAllRating] = useState(false);
+  const [isAllRating, setIsAllRating] = useState(true);
+  const [allowed, setAllowed] = useState(false);
+  const [friendList, setFriendList] = useState([]);
+
+  const permissionRequest = useCallback(async () => {
+    const permissions = await getAllowed('friends');
+
+    const friendsAllowed = permissions.find((permission) => permission.scope === 'friends').allowed;
+
+    setAllowed(friendsAllowed);
+    return friendsAllowed;
+  }, []);
+
+  useEffect(() => {
+    permissionRequest();
+  }, []);
 
   const ratingSwitcherHandler = useCallback((e) => {
     setIsAllRating(e.target.checked);
@@ -39,38 +54,43 @@ const Rating = ({
   const fetchFriendsList = useCallback(async (user) => {
     const friendsToken = await fetchFriendsToken(user);
     if (friendsToken) {
-      getFriendList(friendsToken);
+      const friendsAllowed = await permissionRequest();
+      if (friendsAllowed) {
+        const friendListRequest = await getFriendList(friendsToken);
+        setFriendList(friendListRequest);
+        return friendListRequest;
+      }
     }
-  }, [allowed]);
+    return null;
+  }, [fetchFriendsToken, permissionRequest, getFriendList]);
+
+  // useEffect(() => {
+  //   // if (friendList && !allowed) {
+  //   //   window.location.reload();
+  //   // }
+  // }, [allowed, friendList]);
+
+  const getFriendsRatingData = useCallback(async (user) => {
+    const friendListRequest = await fetchFriendsList(user);
+    if (friendListRequest) {
+      getPlaceInFriendsLeaderBoard(user, friendListRequest);
+    }
+  }, [fetchFriendsList]);
+
+  // useEffect(() => {
+  //   if (fetchedUser) {
+  //   }
+  // }, [fetchedUser]);
 
   useEffect(() => {
-    // if (friendList && !allowed) {
-    //   window.location.reload();
-    // }
-  }, [allowed, friendList]);
-
-  const getFriendsRatingData = useCallback(() => {
-    if (fetchedUser && !friendList) {
-      fetchFriendsList(fetchedUser);
-    }
-    if (fetchedUser && friendList) {
-      getPlaceInFriendsLeaderBoard(fetchedUser, friendList);
-    }
-  }, [fetchedUser, friendList]);
-
-  const getAllRatingData = useCallback(() => {
     if (fetchedUser) {
+      if (!isAllRating) {
+        getFriendsRatingData(fetchedUser);
+      }
+
       getPlaceInLeaderBoard(fetchedUser);
     }
-  }, [fetchedUser]);
-
-  useEffect(() => {
-    getFriendsRatingData();
-  }, [getFriendsRatingData]);
-
-  useEffect(() => {
-    getAllRatingData();
-  }, [getAllRatingData]);
+  }, [fetchedUser, isAllRating]);
 
   return (
     <CommonPanel
@@ -84,6 +104,11 @@ const Rating = ({
       isLoading={isLoading}
       isMobile={isMobile}
     >
+      {placeInLeaderBoard
+      && (isAllRating ? true : placeInFriendsLeaderBoard)
+      && fetchedUser
+      && (isAllRating ? true : friendList.length > 0)
+      && (
       <GamersList
         amountCoins={amountCoins}
         isAllRating={isAllRating}
@@ -93,7 +118,9 @@ const Rating = ({
         placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
         getTopPlayers={getTopPlayers}
         getTopPlayersFriends={getTopPlayersFriends}
+        allowed={allowed}
       />
+      )}
       {!allowed && !isAllRating && (
       <div className={style['not-allowed-to-friends-list-wrapper']}>
         <div className={style['not-allowed-to-friends-list']}>
@@ -121,7 +148,7 @@ Rating.propTypes = {
   go: PropTypes.func.isRequired,
   amountCoins: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
-  friendList: PropTypes.any,
+  // friendList: PropTypes.any,
   fetchedUser: PropTypes.any,
   getPlaceInLeaderBoard: PropTypes.func,
   getPlaceInFriendsLeaderBoard: PropTypes.func,
@@ -132,7 +159,7 @@ Rating.propTypes = {
   isMobile: PropTypes.bool,
   getFriendList: PropTypes.func,
   fetchFriendsToken: PropTypes.func,
-  allowed: PropTypes.bool,
+  getAllowed: PropTypes.func,
 };
 
 export default Rating;

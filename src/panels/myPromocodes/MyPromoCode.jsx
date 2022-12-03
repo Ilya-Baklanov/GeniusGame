@@ -7,6 +7,7 @@ import { ScreenSpinner, Text } from '@vkontakte/vkui';
 
 import CommonPanel from '../../shared/commonPanel/CommonPanel';
 import style from './MyPromoCode.module.css';
+import MainButton from '../../shared/mainButton/MainButton';
 
 const MyPromoCode = ({
   id, go, amountCoins, isLoading, isMobile, fetchedUser, getUserPromoCodes,
@@ -36,7 +37,7 @@ const MyPromoCode = ({
       {promocodesList
         ? (
           <div className={style.wrapper}>
-            {promocodesList.map(({ promo, price }, index) => (
+            {promocodesList.length > 0 ? promocodesList.map(({ promo, price }, index) => (
               <CopyToClipboard
                 key={index}
                 onCopy={() => setIsCopied(promo)}
@@ -51,7 +52,22 @@ const MyPromoCode = ({
                   </Text>
                 </div>
               </CopyToClipboard>
-            ))}
+            ))
+              : (
+                <div className={style['no-promocode']}>
+                  <Text className={style['no-promocode-text']}>
+                    Пока что у тебя нет промокодов. Играй чаще, обменивай баллы на промокоды,
+                    и тогда они обязательно здесь появятся.
+                  </Text>
+                  <div className={style['no-promocode-button-wrapper']}>
+                    <MainButton
+                      text="На главную"
+                      onClick={go}
+                      goTo="home"
+                    />
+                  </div>
+                </div>
+              )}
           </div>
         )
         : (<ScreenSpinner size="large" />)}

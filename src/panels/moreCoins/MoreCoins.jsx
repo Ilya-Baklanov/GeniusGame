@@ -57,7 +57,7 @@ const MoreCoins = ({
       <MoreCoinsCards circumstances={circumstances} onClickToCard={onClickToCard} />
       <div className={cn(style['additional-actions-wrapper'])}>
         <div className={cn(style['additional-actions'])}>
-          <div className={cn(style['additional-action'])}>
+          {/* <div className={cn(style['additional-action'])}>
             <div className={cn(style['additional-action-description-wrapper'])}>
               <Text className={cn(style['additional-action-description'])}>
                 Пригласи к участию друзей
@@ -72,7 +72,7 @@ const MoreCoins = ({
                 Кликни
               </Text>
             </button>
-          </div>
+          </div> */}
           <div className={cn(style['additional-action'])}>
             <div className={cn(style['additional-action-description-wrapper'])}>
               <Text className={cn(style['additional-action-description'])}>

@@ -56,7 +56,6 @@ const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [earnedCoinOnCurrentGame, setEarnedCoinOnCurrentGame] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
-  const [allowed, setAllowed] = useState(false);
 
   const { activeView, activePanel } = useRouterSelector();
   const { toView, toPanel, toBack } = useRouterActions();
@@ -226,7 +225,7 @@ const App = () => {
   const changeStatusHandler = useCallback(async (statusId) => {
     const { response } = await setStatus(statusId);
 
-    if (response) {
+    if (response?.response) {
       setActiveModal((prev) => ({
         ...prev,
         content: {
@@ -235,7 +234,7 @@ const App = () => {
       }));
     }
 
-    if (response && userStat.circumstances[2] === '0') {
+    if (response?.response && userStat.circumstances[2] === '0') {
       postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
       updateCircumstancesStatus(fetchedUser, 2);
     }
@@ -346,7 +345,7 @@ const App = () => {
 
   const setStatusHandler = useCallback(async () => {
     const { statusToken, response } = await getStatus();
-    if (statusToken && response) {
+    if (statusToken) {
       activateModalMoreCoinsStatusHandler(response?.response?.status?.id || '');
     }
   }, [getStatus]);
@@ -375,12 +374,6 @@ const App = () => {
         return console.log('Invalid CardId');
     }
   }, [joinGroupHandler]);
-
-  useEffect(async () => {
-    const permissions = await getAllowed('friends');
-
-    setAllowed(permissions.find((permission) => permission.scope === 'friends').allowed);
-  }, []);
 
   return (
     <ConfigProvider scheme={fetchedScheme}>
@@ -455,7 +448,7 @@ const App = () => {
                       isMobile={isMobile}
                       getFriendList={getFriendList}
                       fetchFriendsToken={fetchFriendsToken}
-                      allowed={allowed}
+                      getAllowed={getAllowed}
                     />
                     <LossPanel
                       id={PanelTypes.lossGame}

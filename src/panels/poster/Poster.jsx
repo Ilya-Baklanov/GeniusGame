@@ -95,23 +95,27 @@ const Poster = ({
                             : [...prevList, name]));
                         }}
                       >
+                        {img_w && (
                         <img
                           className={cn(style[name], style.white, style)}
                           src={img_w}
                           alt={`${name} white`}
                         />
-                        <img
-                          className={cn(
-                            style[name],
-                            style.colorized,
-                            {
-                              [style.active]: colorizedItems.includes(name),
-                            },
-                            style.img,
-                          )}
-                          src={img_c}
-                          alt={`${name} colorized`}
-                        />
+                        )}
+                        {img_c && (
+                          <img
+                            className={cn(
+                              style[name],
+                              style.colorized,
+                              {
+                                [style.active]: colorizedItems.includes(name),
+                              },
+                              style.img,
+                            )}
+                            src={img_c}
+                            alt={`${name} colorized`}
+                          />
+                        )}
                       </div>
                     );
                 }

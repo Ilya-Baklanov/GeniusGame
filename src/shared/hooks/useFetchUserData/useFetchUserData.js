@@ -353,7 +353,7 @@ const useFetchUserData = () => {
             statusToken = await fetchStatusToken(fetchedUser);
         }
         if (statusToken) {
-            const { response } = await bridge.send('VKWebAppCallAPIMethod', {
+            const response = await bridge.send('VKWebAppCallAPIMethod', {
                 method: 'status.setImage',
                 params: {
                     status_id: statusId,
