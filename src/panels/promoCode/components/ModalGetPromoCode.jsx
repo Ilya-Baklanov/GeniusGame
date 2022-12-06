@@ -64,19 +64,25 @@ const ModalGetPromoCode = ({
             </Text>
           </div>
           <div className={style['sbermegamarket-button-wrapper']}>
-            <button
-              type="button"
+            <Link
               className={style['sbermegamarket-button']}
-              onClick={() => window.open(SBERMEGAMARKET_LINK, '_blank')}
+              target="_blank"
+              href={SBERMEGAMARKET_LINK}
             >
               <Text className={style['sbermegamarket-button-text']}>
                 За покупками на СберМегаМаркет!
               </Text>
-            </button>
+            </Link>
           </div>
           <div className={cn(style.rules)}>
             <Text className={cn(style['rules-question'])}>{CONTACTS_HELP.question}</Text>
-            <Link className={cn(style['rules-link'])} href={CONTACTS_HELP.href}>{CONTACTS_HELP.title}</Link>
+            <Link
+              className={cn(style['rules-link'])}
+              href={CONTACTS_HELP.href}
+              target="_blank"
+            >
+              {CONTACTS_HELP.title}
+            </Link>
           </div>
         </div>
       </ModalPage>
