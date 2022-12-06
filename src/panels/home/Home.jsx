@@ -88,11 +88,18 @@ const Home = ({
                   <div className={cn(style['promocode-rules'])}>
                     <Link
                       className={cn(style['promocode-rules-link'])}
-                      onClick={() => window.open(PROMOTION_RULES.href, '_blank')}
+                      target="_blank"
+                      href={PROMOTION_RULES.href}
                     >
                       {PROMOTION_RULES.title}
                     </Link>
-                    <Link className={cn(style['promocode-rules-link'])} href={GAME_RULES.href}>{GAME_RULES.title}</Link>
+                    <Link
+                      className={cn(style['promocode-rules-link'])}
+                      target="_blank"
+                      href={GAME_RULES.href}
+                    >
+                      {GAME_RULES.title}
+                    </Link>
                   </div>
                 </div>
                 <div className={cn(style['navbar-container'])}>

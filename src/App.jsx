@@ -16,6 +16,8 @@ import {
   SplitLayout,
   SplitCol,
   ModalRoot,
+  ModalCard,
+  Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import bridge from '@vkontakte/vk-bridge';
@@ -37,6 +39,7 @@ import {
   MODAL_MORE_COINS_INVITE_FRIENDS,
   STATUS_LIST,
   POSTER_PICTURES,
+  ALERT,
 } from './assets/constants/constants';
 import LossPanel from './panels/lossPanel/LossPanel';
 import WinPanel from './panels/winPanel/WinPanel';
@@ -246,6 +249,12 @@ const App = () => {
     });
   }, []);
 
+  const activateAlert = useCallback(() => {
+    setActiveModal({
+      id: ALERT,
+    });
+  }, []);
+
   const modal = useMemo(() => (
     <ModalRoot
       activeModal={activeModal ? activeModal.id : null}
@@ -277,6 +286,22 @@ const App = () => {
         id={MODAL_MORE_COINS_INVITE_FRIENDS}
         activePanelId={activePanel}
         onClose={closeModal}
+      />
+
+      <ModalCard
+        id={ALERT}
+        onClose={closeModal}
+        header="Вы уже подписаны :)"
+        subheader="Монеты будут начислены. Играй, и продолжай копить чтобы получить промокод!"
+        actions={(
+          <Button
+            size="l"
+            mode="primary"
+            onClick={closeModal}
+          >
+            Отлично!
+          </Button>
+              )}
       />
     </ModalRoot>
   ), [activeModal, userStat]);
@@ -329,7 +354,7 @@ const App = () => {
         const isSub = await checkIsUserSubscribed(fetchedUser.id, groupToken);
         if (isSub) {
         // eslint-disable-next-line no-alert
-          alert('Вы уже подписаны');
+          activateAlert();
           postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 0);
           updateCircumstancesStatus(fetchedUser, 0);
         } else {

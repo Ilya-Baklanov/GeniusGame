@@ -61,6 +61,7 @@ export const MODAL_PROMO_CODE = 'modal_promo_code';
 export const MODAL_GET_PROMO_CODE = 'modal_get_promo_code';
 export const MODAL_MORE_COINS_STATUS = 'modal_more_coins_status';
 export const MODAL_MORE_COINS_INVITE_FRIENDS = 'modal_more_coins_invite_friends';
+export const ALERT = 'alert';
 
 export const POST_MESSAGE = 'Астрологи объявили неделю обмена монет из игры на реальные промокоды. Неделя продлится долго, скорей играй и получай подарки от СберМегаМаркета.';
 export const POST_PHOTO_ID = '142880902_457244137';

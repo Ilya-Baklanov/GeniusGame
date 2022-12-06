@@ -94,7 +94,13 @@ const ModalPromoCode = ({
             </Text>
           </div>
           <div className={cn(style['promocode-modal-rules'])}>
-            <Link className={cn(style['promocode-modal-rules-link'])} href={GAME_RULES.href}>{GAME_RULES.title}</Link>
+            <Link
+              className={cn(style['promocode-modal-rules-link'])}
+              target="_blank"
+              href={GAME_RULES.href}
+            >
+              {GAME_RULES.title}
+            </Link>
           </div>
           <div className={cn(style['promocode-modal-button-wrapper'])}>
             <MainButton
