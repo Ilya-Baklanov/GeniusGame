@@ -38,13 +38,32 @@ const useFetchUserData = () => {
         if (!userStat) {
             setIsFetchUserStatLoaded(false);
         }
-        const response = await fetch(`https://sbermemorygame.ru/v1/api/getUserData/${user.id}`, {
+
+        const token = window.location.href.split('?')[1];
+
+        // const response = await fetch(`https://sbermemorygame.ru/v1/api/getUserData/${user.id}`, {
+        //     headers: {
+        //         Accept: 'application/json',
+        //         'Content-Type': 'application/json',
+        //         'Access-Control-Allow-Origin': 'sbermemorygame.ru',
+        //     },
+        // });
+
+        const requestOptions = {
+            method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': 'sbermemorygame.ru',
             },
-        });
+            dataType: 'json',
+            body: JSON.stringify({
+                userId: user.id,
+                vkToken: token,
+            }),
+        };
+        const response = await fetch(`https://sbermemorygame.ru/api/getUserData/${user.id}`, requestOptions);
+
         const data = await response.json();
         setUserStat(data);
         setIsFetchUserStatLoaded(true);
@@ -335,7 +354,7 @@ const useFetchUserData = () => {
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': 'localhost:8080',
+                'Access-Control-Allow-Origin': 'sbermemorygame.ru',
             },
             dataType: 'json',
             body: JSON.stringify({
