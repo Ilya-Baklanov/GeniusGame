@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable indent */
 import React, { useState, useEffect, useCallback } from 'react';
 import bridge from '@vkontakte/vk-bridge';
@@ -227,7 +228,7 @@ const useFetchUserData = () => {
         return value.access_token;
     }, []);
 
-    const postEarnedCoins = useCallback(async (allEarnedCoins, user, gameCountChange) => {
+    const postEarnedCoins = useCallback(async (allEarnedCoins, user, gameCountChange, circsIndex) => {
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -240,6 +241,7 @@ const useFetchUserData = () => {
                 userId: user.id,
                 coins: allEarnedCoins,
                 gameCount: gameCountChange,
+                circumstances: circsIndex,
                 vkToken: window.location.href.split('?')[1],
             }),
         };

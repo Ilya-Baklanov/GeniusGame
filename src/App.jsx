@@ -162,7 +162,7 @@ const App = () => {
   const endGameHandler = useCallback((earnedCoin) => {
     if (earnedCoin > 0 && userStat && fetchedUser) {
       const allEarnedCoins = +earnedCoin + +userStat.coins;
-      postEarnedCoins(allEarnedCoins, fetchedUser, '-1').then(() => {
+      postEarnedCoins(allEarnedCoins, fetchedUser, '-1', null).then(() => {
         setEarnedCoinOnCurrentGame(earnedCoin);
         console.log('EndgameHandler 2');
       });
@@ -172,7 +172,7 @@ const App = () => {
   const closeGameHandler = useCallback(
     () => {
       if (userStat && fetchedUser) {
-        postEarnedCoins(+userStat.coins, fetchedUser, '-1');
+        postEarnedCoins(+userStat.coins, fetchedUser, '-1', null);
       }
     },
     [postEarnedCoins, fetchedUser, userStat],
@@ -235,7 +235,7 @@ const App = () => {
     }
 
     if (response?.response && userStat.circumstances[2] === '0') {
-      postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
+      postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 2);
       updateCircumstancesStatus(fetchedUser, 2);
     }
   }, [setStatus, userStat, fetchedUser]);
@@ -285,7 +285,7 @@ const App = () => {
     const storiesToken = await fetchStoriesToken(fetchedUser);
     if (userStat && storiesToken && fetchedUser && storiesToken) {
       postStoriesPhoto(fetchedUser, storiesToken).then(() => {
-        postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
+        postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 1);
         updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
       });
     }
@@ -317,7 +317,7 @@ const App = () => {
           })
             .then((data) => {
               if (data.result) {
-                postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
+                postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 0);
                 updateCircumstancesStatus(fetchedUser, 0);
               }
             })
@@ -330,7 +330,7 @@ const App = () => {
         if (isSub) {
         // eslint-disable-next-line no-alert
           alert('Вы уже подписаны');
-          postEarnedCoins(+userStat.coins + 10, fetchedUser, '0');
+          postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 0);
           updateCircumstancesStatus(fetchedUser, 0);
         } else {
           joinGroup();
