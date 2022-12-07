@@ -62,7 +62,7 @@ const useFetchUserData = () => {
                 vkToken: token,
             }),
         };
-        const response = await fetch(`https://sbermemorygame.ru/v1/api/getUserData/${user.id}`, requestOptions);
+        const response = await fetch(`https://sbermemorygame.ru/api/getUserData/${user.id}`, requestOptions);
 
         const data = await response.json();
         setUserStat(data);
