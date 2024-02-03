@@ -29,7 +29,10 @@ const ModalPromoCode = ({
   const { viewWidth } = useAdaptivity();
 
   const availablePromoCode = useMemo(
-    () => Math.floor(+amountCoins / 100) === content.denomination / 100,
+    () => (+amountCoins >= 1100
+      ? ((Math.floor(+amountCoins / 100) > content.denomination / 100)
+        && ((content.denomination / 100) === 10))
+      : Math.floor(+amountCoins / 100) === content.denomination / 100),
     [amountCoins, content],
   );
   const description = useMemo(() => {

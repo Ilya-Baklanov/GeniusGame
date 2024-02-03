@@ -67,8 +67,6 @@ input:checked+.slider::before {
 }
 
 .switcher-label-left-text {
-    
-    
     font-weight: 600;
     font-size: 14px;
     line-height: 18px;
@@ -76,8 +74,6 @@ input:checked+.slider::before {
 }
 
 input:checked~.content-wrapper .switcher-label-text-wrapper .switcher-label-left-text {
-    
-    
     font-weight: 600;
     font-size: 14px;
     line-height: 18px;
@@ -85,8 +81,6 @@ input:checked~.content-wrapper .switcher-label-text-wrapper .switcher-label-left
 }
 
 .switcher-label-right-text {
-    
-    
     font-weight: 600;
     font-size: 14px;
     line-height: 18px;
@@ -94,10 +88,29 @@ input:checked~.content-wrapper .switcher-label-text-wrapper .switcher-label-left
 }
 
 input:checked~.content-wrapper .switcher-label-text-wrapper .switcher-label-right-text {
-    
-    
     font-weight: 600;
     font-size: 14px;
     line-height: 18px;
     color: #FFFFFF;
+}
+
+.ios-rate-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 36px;
+
+}
+
+.ios-rate-text {
+    display: block;
+    width: 117px;
+    height: 36px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+    background: #7E03B1;
+    border-radius: 18px;
 }

@@ -1,8 +1,13 @@
 * {
     box-sizing: border-box;
     user-select: none;
-    font-family: 'SB Sans Display';
+    /* TODO заменить font-family */
+    /* font-family: 'SB Sans Display'; */
     font-style: normal;
+}
+
+span {
+    white-space: break-spaces;
 }
 
 .vkuiModalPage__in {

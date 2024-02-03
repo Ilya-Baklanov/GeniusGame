@@ -114,3 +114,7 @@
   height: 77px;
   padding: 0 17px;
 }
+
+.navbar-container.ios {
+  bottom: 10px;
+}

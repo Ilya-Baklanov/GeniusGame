@@ -64,23 +64,12 @@ const Rating = ({
     return null;
   }, [fetchFriendsToken, permissionRequest, getFriendList]);
 
-  // useEffect(() => {
-  //   // if (friendList && !allowed) {
-  //   //   window.location.reload();
-  //   // }
-  // }, [allowed, friendList]);
-
   const getFriendsRatingData = useCallback(async (user) => {
     const friendListRequest = await fetchFriendsList(user);
     if (friendListRequest) {
       getPlaceInFriendsLeaderBoard(user, friendListRequest);
     }
   }, [fetchFriendsList]);
-
-  // useEffect(() => {
-  //   if (fetchedUser) {
-  //   }
-  // }, [fetchedUser]);
 
   useEffect(() => {
     if (fetchedUser) {
@@ -129,7 +118,7 @@ const Rating = ({
           </Text>
           <button
             type="button"
-            onClick={() => getFriendsRatingData()}
+            onClick={() => getFriendsRatingData(fetchedUser)}
             className={style['not-allowed-to-friends-list-button']}
           >
             <Text className={style['not-allowed-to-friends-list-button-text']}>

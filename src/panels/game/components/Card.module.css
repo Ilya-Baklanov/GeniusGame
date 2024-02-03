@@ -31,10 +31,6 @@
     background-repeat: no-repeat;
   }
 
-  .disable {
-    cursor: not-allowed;
-  }
-  
   @keyframes :global(hideCard) {
     0%,
     70% {

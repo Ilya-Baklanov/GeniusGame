@@ -5,3 +5,5 @@ export { ReactComponent as MoreCoins } from './moreCoins.svg';
 export { ReactComponent as Bag } from './bag.svg';
 export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as CloseGray } from './closeGray.svg';
+export { ReactComponent as MainLogo } from './main_logo.svg';
+export { ReactComponent as LogoLoader } from './logo_loader.svg';

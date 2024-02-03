@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import EndGamePanel from '../../shared/endGamePanel/EndGamePanel';
 
 const LossPanel = ({
-  id, go, isMoreGamesAvailable, timeUntilNextGame, isMobile,
+  id, go, isMoreGamesAvailable, timeUntilNextGame, isMobile, isLoading,
 }) => (
   <EndGamePanel
     id={id}
@@ -12,7 +12,7 @@ const LossPanel = ({
     lose
     isMoreGamesAvailable={isMoreGamesAvailable}
     timeUntilNextGame={timeUntilNextGame}
-    isLoading={false}
+    isLoading={isLoading}
     earnedCoin={0}
     isMobile={isMobile}
   />
@@ -21,6 +21,7 @@ const LossPanel = ({
 LossPanel.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
   isMoreGamesAvailable: PropTypes.bool,
   timeUntilNextGame: PropTypes.number,
   isMobile: PropTypes.bool,

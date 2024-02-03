@@ -11,26 +11,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-
-    width: 349px;
+    /* justify-content: space-between; */
+    /* justify-content: center; */
+    padding: 6px;
+    width: 100%;
+    max-width: 375px;
     height: calc(100vh - 61px);
     overflow: hidden;
+    border-radius: 20px 20px 0px 0px;
 
-    background:
-    radial-gradient(circle at 0% 0%,
-        rgb(135, 0, 255, .25),
-        rgb(135, 0, 255, 0) 30%),
-    radial-gradient(circle at 0% 70%,
-        rgb(135, 0, 255, .25),
-        rgb(135, 0, 255, 0) 30%),
-    radial-gradient(circle at 100% 0%,
-        rgb(135, 0, 255, .25),
-        rgb(135, 0, 255, 0) 30%),
-    radial-gradient(circle at 100% 70%,
-        rgb(255, 178, 34, .25),
-        rgb(255, 178, 34, 0) 30%),
-    #F6EBFF;
+    background: #FFFFFF;
+}
+
+.ios {
+    padding-top: 20px;
 }
 
 .content-wrapper {
@@ -38,10 +32,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     overflow: auto;
     width: 100%;
     height: calc(100% - 77px);
+    gap: 4px;
 }
 
 @media (max-device-width: 480px) {
@@ -52,142 +47,370 @@
     }
 }
 
-.home-earned {
-    position: relative;
-    /* top: 4%; */
-
-    display: flex;
-    align-items: center;
-    margin-top: 28px;
-}
-
-.home-earned-count {
-    
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 25px;
-    color: #000000;
-
-    margin-right: 5px;
-}
-
-.home-earned>svg>path {
-    fill: #9B37E5;
-}
-
-.greetings-wrapper {
-    position: relative;
-    /* top: 9%; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.game-block {
     width: 100%;
-    height: 115px;
+    border-radius: 20px;
+    background: #8654CC;
+    padding: 20px;
 }
 
-.avatar {
-    border: 2px solid #9B37E5;
-    border-radius: 40px;
+.game-block_header {
+    display: flex;
+}
+
+.game-block_logo,
+.game-block_picture {
+    flex-basis: 50%;
+}
+
+.motivator_title,
+.motivator_text {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-style: normal;
+}
+
+.motivator_title {
+    font-family: "Mega Sans S";
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 90%;
     margin-bottom: 10px;
 }
 
-.greetings {
-    max-width: 250px;
-    height: 25px;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 25px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: #000000;
-}
-
-.description {
-    position: relative;
-    /* top: 27%; */
-    
-    
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 18px;
-    text-align: center;
-    white-space: break-spaces;
-
-    color: #5E5E5E;
-}
-
-.motivator-wrapper {
-    position: relative;
-    /* top: 32%; */
-    width: 100%;
-    height: 270px;
-    margin-bottom: 20px;
-    overflow: hidden;
+.motivator_text {
+    font-family: "Mega Sans J";
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 120%;
+    margin-bottom: 24px;
 }
 
 .start-game-button-wrapper {
-    position: relative;
-    /* top: 74%; */
-    width: 100%;
-    padding: 0 17px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.timer-until-next-game-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 81px;
-    border: 1px solid #7E03B1;
-    padding: 18px 0 17px 0;
     border-radius: 10px;
 }
 
-.timer-until-next-game-text { 
-    font-weight: 400;
+.timer-until-next-game-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    gap: 14px;
+    flex-shrink: 0;
+    padding: 18px 16px 18px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.timer-until-next-game-text {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
     font-size: 12px;
-    line-height: 15px;
-    color: #7E03B1;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    text-transform: lowercase;
+    opacity: 0.6;
 }
 
 .timer-until-next-game-time {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 25px;
-    text-align: center;
-    color: #7E03B1;
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 90%;
 }
 
-.promocode-rules {
-    position: relative;
-    /* top: 87%; */
+.profile-and-promo-block {
+    width: 100%;
+    display: flex;
+    gap: 4px;
+}
+
+.profile,
+.promo {
+    flex-basis: 50%;
+    border-radius: 20px;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 51px 20px 20px;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 29px;
+    background: #C2F09C;
+}
+
+.profile_wrapper {
+    display: flex;
+    gap: 6px;
+}
+
+.profile_avatar {
+    /* width: 34px;
+height: 34px; */
+}
+
+.profile_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile_name {
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.profile_link {
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    text-transform: lowercase;
+    opacity: 0.6;
+}
+
+.earned-coins {
+    display: flex;
+    padding: 4px 6px;
+    align-items: center;
+    gap: 4px;
+    border-radius: 40px;
+    background: #FFF;
+}
+
+.earned-coins>svg>path {
+    fill: #9B37E5;
+}
+
+.earned-coins_count {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.earned-coins_text {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    opacity: 0.6;
+}
+
+.promo {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    width: 100%;
+    justify-content: space-between;
+    padding: 20px 20px 25px;
+    background: #EDCFFC;
+    overflow: hidden;
 }
 
-.promocode-rules-link {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: center;
-    color: #7E03B1;
+.promo::before,
+.promo::after {
+    content: "";
+    display: block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
 }
+
+.promo::before {
+    margin-left: -27px;
+}
+
+.promo::after {
+    margin-right: -27px;
+}
+
+.promo_content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 24px;
+}
+
+.promo_title {
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.promo_count_wrapper {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.promo_count {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.promo_count_additional_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 16px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.20);
+}
+
+.promo_count_additional {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    word-wrap: normal;
+}
+
+.rating_wrapper {
+    display: flex;
+    padding: 20px;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #F2F2F2;
+}
+
+.rating_main_info {
+    display: flex;
+    flex-direction: column;
+    gap: 55px;
+    flex-basis: 50%;
+}
+
+.rating_title {
+    color: #252822;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.rating_numbers {
+    display: flex;
+    align-items: flex-end;
+}
+
+.rating_position {
+    color: #252822;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 85%;
+}
+
+.rating_total_members {
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 100%;
+    opacity: 0.6;
+}
+
+.rating_list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 50%;
+}
+
+.rating_list_item {
+    display: flex;
+    width: 142px;
+    padding: 4px 12px 4px 6px;
+    align-items: center;
+    gap: 6px;
+    border-radius: 20px;
+    background: #FFF;
+    box-shadow: 2px 5px 26px 0px rgba(26, 25, 28, 0.10);
+}
+
+.rating_list_item:nth-child(1) {
+    transform: rotate(5deg);
+    z-index: 3;
+}
+
+.rating_list_item:nth-child(2) {
+    opacity: 0.8;
+    background: #F6F6F6;
+    margin-top: -12px;
+    margin-left: -3px;
+    margin-bottom: -12px;
+    z-index: 2;
+}
+
+.rating_list_item:nth-child(3) {
+    transform: rotate(-5deg);
+    border-radius: 20px;       
+    opacity: 0.4;
+    z-index: 1;
+}
+
+.rating_avatar {}
+
+.rating_list_item_info {}
+
+.rating_name {}
+
+.rating_earned-coins {
+    display: flex;
+}
+
+.rating_earned-coins_count {}
+
+
+
+
 
 /* Navbar */
 
 .navbar-container {
     position: absolute;
-    bottom: 0px; 
+    bottom: 0px;
     width: 100%;
     height: 77px;
     padding: 0 17px;

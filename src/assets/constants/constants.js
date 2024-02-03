@@ -2,40 +2,44 @@
 export const APP_NAME = 'МегаИгра';
 
 export const MOTIVATOR = [
-    { name: 'lamp', img: '/img/lamp.png' },
-    { name: 'headphones', img: '/img/headphones.png' },
-    { name: 'headset', img: '/img/headset.png' },
-    { name: 'wafer', img: '/img/wafer.png' },
-    { name: 'waffleIron', img: '/img/waffleIron.png' },
-    { name: 'watch', img: '/img/watch.png' },
-    { name: 'tablet', img: '/img/tablet.png' },
-    { name: 'laptop', img: '/img/laptop.png' },
+    { name: 'lamp', img: './img/lamp.png' },
+    { name: 'headphones', img: './img/headphones.png' },
+    { name: 'headset', img: './img/headset.png' },
+    { name: 'wafer', img: './img/wafer.png' },
+    { name: 'waffleIron', img: './img/waffleIron.png' },
+    { name: 'watch', img: './img/watch.png' },
+    { name: 'tablet', img: './img/tablet.png' },
+    { name: 'laptop', img: './img/laptop.png' },
 ];
 
 export const CARDS_COUNT = 64;
 export const NUMBER_UNIQUE_CARDS_IN_GAME = 10;
 export const CARDS = Array(CARDS_COUNT).fill().map((_, index) => ({
     id: index,
-    img: `/img/${index + 1}.png`,
+    img: `./img/${index + 1}.png`,
     stat: '',
 }));
 
 export const STATUS_LIST = [
-    { statusId: '788', text: 'на спокойном', img: '/img/cat1.png' },
-    { statusId: '786', text: 'на созвоне\nбез камеры', img: '/img/cat2.png' },
-    { statusId: '787', text: 'дайте поспать', img: '/img/cat3.png' },
+    { statusId: '788', text: 'на спокойном', img: './img/cat1.png' },
+    { statusId: '786', text: 'на созвоне\nбез камеры', img: './img/cat2.png' },
+    { statusId: '787', text: 'дайте поспать', img: './img/cat3.png' },
 ];
 
 export const POSTER_PICTURES = [
-    { name: 'coin1', img_w: '/img/coin1_w.png', img_c: '/img/coin1_c.png' },
-    { name: 'coin2', img_w: '/img/coin2_w.png', img_c: '/img/coin2_c.png' },
-    { name: 'coin3', img_w: '/img/coin3_w.png', img_c: '/img/coin3_c.png' },
-    { name: 'gamepad', img_w: '/img/gamepad_w.png', img_c: '/img/gamepad_c.png' },
-    { name: 'plus1', img_w: '/img/plus1_w.png', img_c: '/img/plus1_c.png' },
-    { name: 'plus2', img_w: '/img/plus2_w.png', img_c: '/img/plus2_c.png' },
-    { name: 'logo', img_w: '/img/logo_w.png', img_c: '/img/logo_b.png' },
-    { name: 'phone', img: '/img/phone.png' },
-    { name: 'BG', img: '/img/BG_1.png' },
+    { name: 'coin1', img_w: './img/coin1_w.png', img_c: './img/coin1_c.png' },
+    { name: 'coin2', img_w: './img/coin2_w.png', img_c: './img/coin2_c.png' },
+    { name: 'coin3', img_w: './img/coin3_w.png', img_c: './img/coin3_c.png' },
+    { name: 'gamepad', img_w: './img/gamepad_w.png', img_c: './img/gamepad_c.png' },
+    { name: 'plus1', img_w: './img/plus1_w.png', img_c: './img/plus1_c.png' },
+    { name: 'plus2', img_w: './img/plus2_w.png', img_c: './img/plus2_c.png' },
+    { name: 'logo', img_w: './img/logo_w.png', img_c: './img/logo_b.png' },
+    { name: 'phone', img: './img/phone.png' },
+    { name: 'BG', img: './img/BG_1.png' },
+];
+
+export const COMMON_PICTURES = [
+    { name: 'MainPicture', img: './img/Home_MainCards.png' },
 ];
 
 export const PROMOCODES = [
@@ -67,13 +71,13 @@ export const POST_MESSAGE = 'Астрологи объявили неделю о
 export const POST_PHOTO_ID = '142880902_457244137';
 
 export const PROMOTION_RULES = {
-    title: 'Правила акции',
-    href: 'https://sbermegamarket.ru/promo/pravila-akczii-megaigra',
+    title: 'Правила игры',
+    href: 'https://vk.com/@sbermm-pravila-ispolzovaniya-igrovogo-prilozheniya-megaigra',
 };
 
 export const GAME_RULES = {
-    title: 'Правила игры',
-    href: 'https://docs.google.com/document/d/15JpFeHvjNW7036Bo-e0qJXUfLgE3ggCwFEhD3mVqlTs/edit',
+    title: 'FAQ',
+    href: 'https://vk.com/@sbermm-megaigra-faq',
 };
 
 export const CONTACTS_HELP = {

@@ -24,7 +24,6 @@
 
 .main-button.disabled {
     background: #EDC8FF;
-    cursor: not-allowed;
 }
 
 .main-button-text {

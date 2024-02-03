@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 
 import {
-  Panel, PanelHeader, PanelHeaderBack, Text, ScreenSpinner,
+  Panel,
+  PanelHeader,
+  PanelHeaderBack,
+  Text,
+  ScreenSpinner,
+  usePlatform,
 } from '@vkontakte/vkui';
 
 import Navbar from '../navbar/Navbar';
@@ -24,20 +29,25 @@ const CommonPanel = ({
   isMobile,
   withScrollbar,
   activeTab,
-}) => (
-  <Panel id={id}>
-    {!isMobile && (
-    <PanelHeader
-      left={<PanelHeaderBack onClick={go} data-to="home" />}
-    >
-      {APP_NAME}
-    </PanelHeader>
-    )}
-    {isLoading
-      ? (<ScreenSpinner size="large" />)
-      : (
+}) => {
+  const platform = usePlatform();
+
+  return (
+    <Panel id={id}>
+      {!isMobile && (
+        <PanelHeader left={<PanelHeaderBack onClick={go} data-to="home" />}>
+          {APP_NAME}
+        </PanelHeader>
+      )}
+      {isLoading ? (
+        <ScreenSpinner size="large" />
+      ) : (
         <MainLayout>
-          <div className={cn(style['common-panel-main'], { [style['with-scrollbar']]: withScrollbar })}>
+          <div
+            className={cn(style['common-panel-main'], {
+              [style['with-scrollbar']]: withScrollbar,
+            })}
+          >
             <div className={cn(style['common-panel-earned'])}>
               <Text className={cn(style['common-panel-earned-count'])}>
                 {amountCoins}
@@ -45,33 +55,41 @@ const CommonPanel = ({
               <MoreCoins />
             </div>
             {title && (
-            <div className={cn(style['common-title-wrapper'])}>
-              <Text className={cn(style['common-title'])}>{title}</Text>
-            </div>
+              <div className={cn(style['common-title-wrapper'])}>
+                <Text className={cn(style['common-title'])}>{title}</Text>
+              </div>
             )}
             {description && (
-            <div className={cn(style['common-description-wrapper'])}>
-              <Text className={cn(style['common-description'])}>{description}</Text>
-            </div>
+              <div className={cn(style['common-description-wrapper'])}>
+                <Text className={cn(style['common-description'])}>
+                  {description}
+                </Text>
+              </div>
             )}
             {additionalBlock && (
-            <div className={cn(style['common-additional-block'])}>
-              {additionalBlock}
-            </div>
+              <div className={cn(style['common-additional-block'])}>
+                {additionalBlock}
+              </div>
             )}
             {children && (
-            <div className={cn(style['common-children'], { [style['without-description']]: !description && !additionalBlock })}>
-              {children}
-            </div>
+              <div
+                className={cn(style['common-children'], {
+                  [style['without-description']]:
+                    !description && !additionalBlock,
+                })}
+              >
+                {children}
+              </div>
             )}
           </div>
-          <div className={cn(style['navbar-container'])}>
+          <div className={cn(style['navbar-container'], style[platform])}>
             <Navbar id={activeTab || id} go={go} />
           </div>
         </MainLayout>
       )}
-  </Panel>
-);
+    </Panel>
+  );
+};
 
 CommonPanel.propTypes = {
   id: PropTypes.string.isRequired,

@@ -1,6 +1,7 @@
 {
   "name": "mini-app",
-  "version": "0.0.0",
+  "version": "0.0.10",
+  "homepage": "./",
   "scripts": {
     "start": "cross-env PORT=10888 HTTPS=true node scripts/start.js",
     "build": "node scripts/build.js",

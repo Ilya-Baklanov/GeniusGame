@@ -16,7 +16,11 @@
   width: 349px;
   height: calc(100vh - 61px);
 
-  background: #F6EBFF;
+  background: #FFFFFF;
+}
+
+.ios {
+  padding-top: 5px;
 }
 
 @media (max-device-width: 480px) {

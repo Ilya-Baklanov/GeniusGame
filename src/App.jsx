@@ -9,7 +9,6 @@ import { useRouterSelector, useRouterActions } from 'react-router-vkminiapps';
 import {
   Epic,
   View,
-  ScreenSpinner,
   AdaptivityProvider,
   AppRoot,
   ConfigProvider,
@@ -18,6 +17,7 @@ import {
   ModalRoot,
   ModalCard,
   Button,
+  usePlatform,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import bridge from '@vkontakte/vk-bridge';
@@ -40,6 +40,7 @@ import {
   STATUS_LIST,
   POSTER_PICTURES,
   ALERT,
+  COMMON_PICTURES,
 } from './assets/constants/constants';
 import LossPanel from './panels/lossPanel/LossPanel';
 import WinPanel from './panels/winPanel/WinPanel';
@@ -51,6 +52,7 @@ import ModalGetPromoCode from './panels/promoCode/components/ModalGetPromoCode';
 import { timeHandler } from './shared/timer/Timer';
 import ModalMoreCoinsInviteFriends from './panels/moreCoins/components/ModalMoreCoinsInviteFriends';
 import MyPromoCode from './panels/myPromocodes/MyPromoCode';
+import LoadingPage from './shared/LoadingPage/LoadingPage';
 
 const { body } = document;
 const isMobile = body.offsetWidth <= 480;
@@ -60,13 +62,14 @@ const App = () => {
   const [earnedCoinOnCurrentGame, setEarnedCoinOnCurrentGame] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
 
+  const platform = usePlatform();
   const { activeView, activePanel } = useRouterSelector();
   const { toView, toPanel, toBack } = useRouterActions();
 
   const activateLoader = useCallback(() => { setIsLoaded(false); }, []);
   const shutdownLoader = useCallback(() => { setIsLoaded(true); }, []);
 
-  const isPicturesLoaded = usePreloadImage([
+  const { isPicturesLoaded, downloadPercentage } = usePreloadImage([
     ...CARDS.map((card) => card.img),
     ...MOTIVATOR.map((item) => item.img),
     ...STATUS_LIST.map((status) => status.img),
@@ -79,6 +82,7 @@ const App = () => {
 
       return pictureList;
     }).flat(),
+    ...COMMON_PICTURES.map((item) => item.img),
   ]);
 
   const {
@@ -163,11 +167,10 @@ const App = () => {
   }, [refetchUserStat, fetchedUser]);
 
   const endGameHandler = useCallback((earnedCoin) => {
-    if (earnedCoin > 0 && userStat && fetchedUser) {
+    if (earnedCoin >= 0 && userStat && fetchedUser) {
       const allEarnedCoins = +earnedCoin + +userStat.coins;
       postEarnedCoins(allEarnedCoins, fetchedUser, '-1', null).then(() => {
         setEarnedCoinOnCurrentGame(earnedCoin);
-        console.log('EndgameHandler 2');
       });
     }
   }, [userStat, fetchedUser]);
@@ -401,12 +404,13 @@ const App = () => {
   }, [joinGroupHandler]);
 
   return (
-    <ConfigProvider scheme={fetchedScheme}>
+    <ConfigProvider appearance={fetchedScheme}>
       <AdaptivityProvider>
         <AppRoot>
           <SplitLayout modal={modal}>
             <SplitCol animate>
-              {isLoaded && userStat ? (
+              {/* {isLoaded && userStat ? ( */}
+              {isLoaded ? (
                 <Epic activeStory={activeView}>
                   <View id="main" activePanel={activePanel}>
                     <Home
@@ -414,12 +418,14 @@ const App = () => {
                       fetchedUser={fetchedUser}
                       go={go}
                       onStartGame={startGameHandler}
-                      amountCoins={userStat.coins || '0'}
-                      isLoading={!isFetchUserStatLoaded}
-                      gamesAvailable={+userStat.gameCount || 0}
+                      amountCoins={userStat?.coins || '0'}
+                      // isLoading={!isFetchUserStatLoaded}
+                      isLoading={false}
+                      gamesAvailable={Number(userStat?.gameCount ?? 0)}
                       timeUntilNextGame={timeUntilNextGameInSeconds}
                       onEndedTimerUntilNextGame={endedTimerUntilNextGame}
                       isMobile={isMobile}
+                      platform={platform}
                     />
                     <Game
                       id={PanelTypes.gameBoard}
@@ -431,16 +437,18 @@ const App = () => {
                     <PromoCode
                       id={PanelTypes.promoCode}
                       go={go}
-                      amountCoins={userStat.coins || '0'}
+                      amountCoins={userStat?.coins || '0'}
                       onActivateModal={activateModalPromoCodeHandler}
-                      isLoading={!isFetchUserStatLoaded}
+                      // isLoading={!isFetchUserStatLoaded}
+                      isLoading={false}
                       isMobile={isMobile}
                     />
                     <MyPromoCode
                       id={PanelTypes.myPromoCode}
                       go={go}
-                      amountCoins={userStat.coins || '0'}
-                      isLoading={!isFetchUserStatLoaded}
+                      amountCoins={userStat?.coins || '0'}
+                      // isLoading={!isFetchUserStatLoaded}
+                      isLoading={false}
                       isMobile={isMobile}
                       fetchedUser={fetchedUser}
                       getUserPromoCodes={getUserPromoCodes}
@@ -448,20 +456,22 @@ const App = () => {
                     <MoreCoins
                       id={PanelTypes.moreCoins}
                       go={go}
-                      amountCoins={userStat.coins || '0'}
-                      circumstances={userStat.circumstances || ''}
-                      notificationStatus={userStat.notifications || ''}
+                      amountCoins={userStat?.coins || '0'}
+                      circumstances={userStat?.circumstances || ''}
+                      notificationStatus={userStat?.notifications || ''}
                       onClickToCard={moreCoinsCardClickHandler}
                       fetchedUser={fetchedUser}
-                      isLoading={!isFetchUserStatLoaded}
+                      // isLoading={!isFetchUserStatLoaded}
+                      isLoading={false}
                       onUpdateNotificationStatus={updateNotificationStatus}
                       isMobile={isMobile}
                     />
                     <Rating
                       id={PanelTypes.rating}
                       go={go}
-                      amountCoins={userStat.coins || '0'}
-                      isLoading={!isFetchUserStatLoaded}
+                      amountCoins={userStat?.coins || '0'}
+                      // isLoading={!isFetchUserStatLoaded}
+                      isLoading={false}
                       friendList={friendList}
                       fetchedUser={fetchedUser}
                       getPlaceInLeaderBoard={getPlaceInLeaderBoard}
@@ -478,7 +488,9 @@ const App = () => {
                     <LossPanel
                       id={PanelTypes.lossGame}
                       go={go}
-                      isMoreGamesAvailable={+userStat.gameCount > 0}
+                      // isLoading={!isEarnedCoinsPosted}
+                      isLoading={false}
+                      isMoreGamesAvailable={Number(userStat?.gameCount ?? 0) > 0}
                       timeUntilNextGame={timeUntilNextGameInSeconds}
                       isMobile={isMobile}
                     />
@@ -486,8 +498,9 @@ const App = () => {
                       id={PanelTypes.winGame}
                       go={go}
                       earnedCoin={earnedCoinOnCurrentGame}
-                      isLoading={!isEarnedCoinsPosted}
-                      isMoreGamesAvailable={+userStat.gameCount > 0}
+                      // isLoading={!isEarnedCoinsPosted}
+                      isLoading={false}
+                      isMoreGamesAvailable={Number(userStat?.gameCount ?? 0) > 0}
                       timeUntilNextGame={timeUntilNextGameInSeconds}
                       isMobile={isMobile}
                     />
@@ -500,7 +513,7 @@ const App = () => {
                   </View>
                 </Epic>
               ) : (
-                <ScreenSpinner size="large" />
+                <LoadingPage downloadPercentage={downloadPercentage} />
               )}
             </SplitCol>
           </SplitLayout>

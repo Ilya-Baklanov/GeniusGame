@@ -9,7 +9,10 @@ import { GAME_RULES, PROMOCODES, PROMOTION_RULES } from '../../../assets/constan
 
 const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
   const isActivePromoCode = useCallback(
-    (denomination) => Math.floor(+amountCoins / 100) === denomination / 100,
+    (denomination) => (+amountCoins >= 1100
+      ? ((Math.floor(+amountCoins / 100) > denomination / 100)
+        && ((denomination / 100) === 10))
+      : Math.floor(+amountCoins / 100) === denomination / 100),
     [amountCoins],
   );
   const promocodeCardsClickHandler = useCallback((denomination, promoCodeDescription) => {
