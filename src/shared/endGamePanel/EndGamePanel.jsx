@@ -89,8 +89,7 @@ const EndGamePanel = ({
               <div className={cn(style['end-game-button-wrapper'])}>
                 <MainButton
                   text={isMoreGamesAvailable ? 'Играть' : 'На главную'}
-                  onClick={go}
-                  goTo={isMoreGamesAvailable ? 'gameBoard' : 'home'}
+                  onClick={() => go(null, isMoreGamesAvailable ? 'gameBoard' : 'home')}
                 />
               </div>
             </>

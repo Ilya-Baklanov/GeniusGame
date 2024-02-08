@@ -56,7 +56,10 @@ const ModalPromoCode = ({
       <ModalPage
         id={id}
         onClose={onClose}
-        size="s"
+        settlingHeight={100}
+        height="100%"
+        // size="l"
+        // hideCloseButton
         header={(
           <ModalPageHeader
             right={(

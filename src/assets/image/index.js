@@ -7,3 +7,4 @@ export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as CloseGray } from './closeGray.svg';
 export { ReactComponent as MainLogo } from './main_logo.svg';
 export { ReactComponent as LogoLoader } from './logo_loader.svg';
+export { ReactComponent as RightArrow } from './right_arrow.svg';

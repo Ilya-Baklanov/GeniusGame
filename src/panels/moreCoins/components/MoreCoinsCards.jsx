@@ -12,15 +12,19 @@ const MoreCoinsCards = ({ go, onClickToCard, circumstances }) => {
     <div className={cn(style['more-coins-cards-wrapper'])}>
       {cardList.map(({
         id,
-        text,
+        title,
+        description,
         additionalCoins,
         isComplete,
+        textOnSuccess,
       }, index) => (
         <Card
           key={index}
-          text={text}
+          title={title}
+          description={description}
           additionalCoins={id === 'STATUS' && isComplete ? null : additionalCoins}
           isComplete={id !== 'STATUS' && isComplete}
+          textOnSuccess={textOnSuccess}
           onClick={() => onClickToCard(id)}
         />
       ))}

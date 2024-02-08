@@ -1,70 +1,91 @@
-.more-coins-card {
+.card_wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    width: 100%;
-    height: 75px;
-    margin-bottom: 15px;
-    border-radius: 15px;
-    padding: 15px;
-    background: linear-gradient(45deg, #24B571, 15%, #7E03B1, 90%, #FFB222);
-}
-
-.more-coins-card.complete {
-    background: #F6EAFF;
-    border: 1px solid #7E03B1;
-}
-
-.more-coins-card-content-container {
-    display: flex;
-    align-items: flex-start;
     justify-content: space-between;
-
     width: 100%;
+    padding: 20px;
+    /* gap: 10px; */
+    border-radius: 10px;
+    background: #F1F1F1;
 }
 
-.more-coins-card-text {
-    
-    font-weight: 400;
+.card_wrapper.complete {
+    opacity: 0.4;
+}
+
+.text_content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.title {
+    color: #252822;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
     font-size: 14px;
-    line-height: 18px;
-    white-space: break-spaces;
-
-    color: #FDFDFD;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    /* 16.8px */
 }
 
-.more-coins-card-text.complete {
-    color: #7E03B1;
+.description {
+    color: #252822;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    opacity: 0.8;
 }
 
-.more-coins-card-additional-coins-wrapper {
+.additional_coins_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.text_on_success {
+    color: #252822;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    text-transform: lowercase;
+    opacity: 0.6;
+}
+
+.additional_coins {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.more-coins-card-additional-coins-text {
-    
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 20px;
-    text-align: right;
-    letter-spacing: -0.216563px;
-    color: #FFFFFF;
-
-    margin-right: 3px;
+.additional_coins_numbers {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    text-transform: lowercase;
 }
 
-.more-coins-card-additional-coins-text.complete {
-    color: #000000;
+.additional_coins_numbers.complete {
+    color: #252822;
 }
 
-.more-coins-card-additional-coins-wrapper>svg>path {
-    fill: #FFFFFF;
+.additional_coins>svg>path {
+    fill: #8654CC;
 }
 
-.more-coins-card-additional-coins-wrapper.complete>svg>path {
-    fill: #7E03B1;
+.additional_coins.complete>svg>path {
+    fill: #252822;
 }

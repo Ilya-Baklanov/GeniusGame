@@ -43,22 +43,28 @@ export const COMMON_PICTURES = [
 ];
 
 export const PROMOCODES = [
-    { denomination: 100, description: 'Можно\n использовать\nпри заказе\nот 500₽' },
-    { denomination: 200, description: 'Можно\n использовать\nпри заказе\nот 700₽' },
-    { denomination: 300, description: 'Можно\n использовать\nпри заказе\nот 1000₽' },
-    { denomination: 400, description: 'Можно\n использовать\nпри заказе\nот 1300₽' },
-    { denomination: 500, description: 'Можно\n использовать\nпри заказе\nот 1700₽' },
-    { denomination: 600, description: 'Можно\n использовать\nпри заказе\nот 2000₽' },
-    { denomination: 700, description: 'Можно\n использовать\nпри заказе\nот 2500₽' },
-    { denomination: 800, description: 'Можно\n использовать\nпри заказе\nот 3500₽' },
-    { denomination: 900, description: 'Можно\n использовать\nпри заказе\nот 4000₽' },
+    { denomination: 100, description: 'Можно\nиспользовать\nпри заказе\nот 500₽' },
+    { denomination: 200, description: 'Можно\nиспользовать\nпри заказе\nот 700₽' },
+    { denomination: 300, description: 'Можно\nиспользовать\nпри заказе\nот 1000₽' },
+    { denomination: 400, description: 'Можно\nиспользовать\nпри заказе\nот 1300₽' },
+    { denomination: 500, description: 'Можно\nиспользовать\nпри заказе\nот 1700₽' },
+    { denomination: 600, description: 'Можно\nиспользовать\nпри заказе\nот 2000₽' },
+    { denomination: 700, description: 'Можно\nиспользовать\nпри заказе\nот 2500₽' },
+    { denomination: 800, description: 'Можно\nиспользовать\nпри заказе\nот 3500₽' },
+    { denomination: 900, description: 'Можно\nиспользовать\nпри заказе\nот 4000₽' },
     { denomination: 1000, description: 'Можно использовать при заказе от 5000₽' },
 ];
 
 export const MORE_COINS_CARDS = [
-    { id: 'JOIN_GROUP', additionalCoins: 10, text: 'Вступи в официальную группу\nСберМегаМаркета в Вконтакте' },
-    { id: 'REPOST', additionalCoins: 10, text: 'Раскрась баннер игры\nи поделись им в своих историях' },
-    { id: 'STATUS', additionalCoins: 10, text: 'Подбери фирменный статус\nпо настроению' },
+    {
+ id: 'JOIN_GROUP', additionalCoins: 10, title: 'Вступи в группу', description: 'Вступи в официальную группу\nМегамаркета в Вконтакте.', textOnSuccess: 'получено',
+},
+    {
+ id: 'REPOST', additionalCoins: 10, title: 'Раскрась баннер', description: 'Раскрась баннер игры\nи поделись им в своих историях.', textOnSuccess: 'получено',
+},
+    {
+ id: 'STATUS', additionalCoins: 10, title: 'Подбери статус ', description: 'Подбери фирменный статус\nпо настроению.', textOnSuccess: 'получено',
+},
 ];
 
 export const MODAL_PROMO_CODE = 'modal_promo_code';
@@ -71,12 +77,12 @@ export const POST_MESSAGE = 'Астрологи объявили неделю о
 export const POST_PHOTO_ID = '142880902_457244137';
 
 export const PROMOTION_RULES = {
-    title: 'Правила игры',
+    title: 'Правила акции',
     href: 'https://vk.com/@sbermm-pravila-ispolzovaniya-igrovogo-prilozheniya-megaigra',
 };
 
 export const GAME_RULES = {
-    title: 'FAQ',
+    title: 'Правила игры',
     href: 'https://vk.com/@sbermm-megaigra-faq',
 };
 

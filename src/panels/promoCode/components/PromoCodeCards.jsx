@@ -6,6 +6,7 @@ import cn from 'classnames';
 
 import style from './PromoCodeCards.module.css';
 import { GAME_RULES, PROMOCODES, PROMOTION_RULES } from '../../../assets/constants/constants';
+import { RightArrow } from '../../../assets/image';
 
 const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
   const isActivePromoCode = useCallback(
@@ -37,16 +38,18 @@ const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
         <Link
           className={cn(style['promocode-rules-link'])}
           target="_blank"
-          href={PROMOTION_RULES.href}
+          href={GAME_RULES.href}
         >
-          {PROMOTION_RULES.title}
+          {GAME_RULES.title}
+          <RightArrow />
         </Link>
         <Link
           className={cn(style['promocode-rules-link'])}
           target="_blank"
-          href={GAME_RULES.href}
+          href={PROMOTION_RULES.href}
         >
-          {GAME_RULES.title}
+          {PROMOTION_RULES.title}
+          <RightArrow />
         </Link>
       </div>
     </div>

@@ -55,34 +55,30 @@ const MoreCoins = ({
       isMobile={isMobile}
     >
       <MoreCoinsCards circumstances={circumstances} onClickToCard={onClickToCard} />
-      <div className={cn(style['additional-actions-wrapper'])}>
-        <div className={cn(style['additional-actions'])}>
-          {/* <div className={cn(style['additional-action'])}>
-            <div className={cn(style['additional-action-description-wrapper'])}>
-              <Text className={cn(style['additional-action-description'])}>
-                Пригласи к участию друзей
-              </Text>
-            </div>
-            <button
-              onClick={() => onClickToCard('INVITE_FRIENDS')}
-              className={cn(style['additional-action-invite-friends-button'])}
-              type="button"
-            >
-              <Text className={cn(style['additional-action-invite-friends-text'])}>
-                Кликни
-              </Text>
-            </button>
-          </div> */}
-          <div className={cn(style['additional-action'])}>
-            <div className={cn(style['additional-action-description-wrapper'])}>
-              <Text className={cn(style['additional-action-description'])}>
-                {'Подпишись на push,\nчтобы не пропустить новые игры'}
-              </Text>
-            </div>
-            <Switcher onToggle={pushSwitcherHandler} state={switcherState} />
-          </div>
+      {/* <div className={cn(style['additional-actions-wrapper'])}> */}
+      <div className={cn(style['additional-actions'])}>
+        <div className={cn(style['invite-friends'])}>
+          <Text className={cn(style['invite-friends_title'])}>
+            {'Пригласи друзей\nк участию'}
+          </Text>
+          <button
+            onClick={() => onClickToCard('INVITE_FRIENDS')}
+            className={cn(style['invite-friends_button'])}
+            type="button"
+          >
+            <Text className={cn(style['invite-friends_button_text'])}>
+              Пригласить
+            </Text>
+          </button>
+        </div>
+        <div className={cn(style['push-notification'])}>
+          <Text className={cn(style['push-notification_title'])}>
+            {'Подпишись на push - уведомления,\nчтобы не пропустить новые игры.'}
+          </Text>
+          <Switcher onToggle={pushSwitcherHandler} state={switcherState} />
         </div>
       </div>
+      {/* </div> */}
     </CommonPanel>
   );
 };

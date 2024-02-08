@@ -409,8 +409,8 @@ const App = () => {
         <AppRoot>
           <SplitLayout modal={modal}>
             <SplitCol animate>
-              {/* {isLoaded && userStat ? ( */}
-              {isLoaded ? (
+              {isLoaded && userStat ? (
+              // {isLoaded ? (
                 <Epic activeStory={activeView}>
                   <View id="main" activePanel={activePanel}>
                     <Home
@@ -419,13 +419,13 @@ const App = () => {
                       go={go}
                       onStartGame={startGameHandler}
                       amountCoins={userStat?.coins || '0'}
-                      // isLoading={!isFetchUserStatLoaded}
-                      isLoading={false}
+                      isLoading={!isFetchUserStatLoaded}
                       gamesAvailable={Number(userStat?.gameCount ?? 0)}
                       timeUntilNextGame={timeUntilNextGameInSeconds}
                       onEndedTimerUntilNextGame={endedTimerUntilNextGame}
                       isMobile={isMobile}
                       platform={platform}
+                      placeInLeaderBoard={placeInLeaderBoard}
                     />
                     <Game
                       id={PanelTypes.gameBoard}
@@ -439,16 +439,14 @@ const App = () => {
                       go={go}
                       amountCoins={userStat?.coins || '0'}
                       onActivateModal={activateModalPromoCodeHandler}
-                      // isLoading={!isFetchUserStatLoaded}
-                      isLoading={false}
+                      isLoading={!isFetchUserStatLoaded}
                       isMobile={isMobile}
                     />
                     <MyPromoCode
                       id={PanelTypes.myPromoCode}
                       go={go}
                       amountCoins={userStat?.coins || '0'}
-                      // isLoading={!isFetchUserStatLoaded}
-                      isLoading={false}
+                      isLoading={!isFetchUserStatLoaded}
                       isMobile={isMobile}
                       fetchedUser={fetchedUser}
                       getUserPromoCodes={getUserPromoCodes}
@@ -461,8 +459,7 @@ const App = () => {
                       notificationStatus={userStat?.notifications || ''}
                       onClickToCard={moreCoinsCardClickHandler}
                       fetchedUser={fetchedUser}
-                      // isLoading={!isFetchUserStatLoaded}
-                      isLoading={false}
+                      isLoading={!isFetchUserStatLoaded}
                       onUpdateNotificationStatus={updateNotificationStatus}
                       isMobile={isMobile}
                     />
@@ -470,8 +467,7 @@ const App = () => {
                       id={PanelTypes.rating}
                       go={go}
                       amountCoins={userStat?.coins || '0'}
-                      // isLoading={!isFetchUserStatLoaded}
-                      isLoading={false}
+                      isLoading={!isFetchUserStatLoaded}
                       friendList={friendList}
                       fetchedUser={fetchedUser}
                       getPlaceInLeaderBoard={getPlaceInLeaderBoard}
@@ -488,8 +484,7 @@ const App = () => {
                     <LossPanel
                       id={PanelTypes.lossGame}
                       go={go}
-                      // isLoading={!isEarnedCoinsPosted}
-                      isLoading={false}
+                      isLoading={!isEarnedCoinsPosted}
                       isMoreGamesAvailable={Number(userStat?.gameCount ?? 0) > 0}
                       timeUntilNextGame={timeUntilNextGameInSeconds}
                       isMobile={isMobile}
@@ -498,8 +493,7 @@ const App = () => {
                       id={PanelTypes.winGame}
                       go={go}
                       earnedCoin={earnedCoinOnCurrentGame}
-                      // isLoading={!isEarnedCoinsPosted}
-                      isLoading={false}
+                      isLoading={!isEarnedCoinsPosted}
                       isMoreGamesAvailable={Number(userStat?.gameCount ?? 0) > 0}
                       timeUntilNextGame={timeUntilNextGameInSeconds}
                       isMobile={isMobile}

@@ -15,12 +15,11 @@ const PromoCode = ({
     go={go}
     amountCoins={amountCoins}
     title="Промокоды"
-    description={'Обменивай монеты на промокоды\nи делай покупки в СберМегаМаркете!'}
+    description={'Обменивай монеты на промокоды\nи совершай покупки на Мегамаркете!'}
     isLoading={isLoading}
     isMobile={isMobile}
     withScrollbar
-  >
-    <div className={style['button-wrapper']}>
+    button={(
       <button
         type="button"
         className={style.button}
@@ -30,7 +29,8 @@ const PromoCode = ({
           Мои промокоды
         </Text>
       </button>
-    </div>
+    )}
+  >
     <PromoCodeCards amountCoins={amountCoins} onActivateModal={onActivateModal} />
   </CommonPanel>
 );

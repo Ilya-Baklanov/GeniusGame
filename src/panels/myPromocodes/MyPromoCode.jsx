@@ -12,15 +12,16 @@ import MainButton from '../../shared/mainButton/MainButton';
 const MyPromoCode = ({
   id, go, amountCoins, isLoading, isMobile, fetchedUser, getUserPromoCodes,
 }) => {
-  const [promocodesList, setPromocodesList] = useState();
+  // TODO поставить null как дефолтное значение
+  const [promocodesList, setPromocodesList] = useState([]);
   const [isCopied, setIsCopied] = useState([]);
 
   useEffect(() => {
     if (fetchedUser) {
-      getUserPromoCodes(fetchedUser)
-        .then((response) => {
-          setPromocodesList(response.promoList);
-        });
+      // getUserPromoCodes(fetchedUser)
+      //   .then((response) => {
+      //     setPromocodesList(response.promoList);
+      //   });
     }
   }, [fetchedUser]);
 
@@ -30,14 +31,26 @@ const MyPromoCode = ({
       go={go}
       amountCoins={amountCoins}
       title="Мои промокоды"
+      description={'Обменивай монеты на промокоды\nи совершай покупки на Мегамаркете!'}
       isLoading={isLoading}
       isMobile={isMobile}
       activeTab="promoCode"
+      button={(
+        <button
+          type="button"
+          className={style.button}
+          onClick={() => go(null, 'promoCode')}
+        >
+          <Text className={style['button-text']}>
+            Все промокоды
+          </Text>
+        </button>
+      )}
     >
       {promocodesList
         ? (
           <div className={style.wrapper}>
-            {promocodesList.length > 0 ? promocodesList.map(({ promo, price }, index) => (
+            {promocodesList.map(({ promo, price }, index) => (
               <CopyToClipboard
                 key={index}
                 onCopy={() => setIsCopied(promo)}
@@ -52,22 +65,7 @@ const MyPromoCode = ({
                   </Text>
                 </div>
               </CopyToClipboard>
-            ))
-              : (
-                <div className={style['no-promocode']}>
-                  <Text className={style['no-promocode-text']}>
-                    Пока что у тебя нет промокодов. Играй чаще, обменивай баллы на промокоды,
-                    и тогда они обязательно здесь появятся.
-                  </Text>
-                  <div className={style['no-promocode-button-wrapper']}>
-                    <MainButton
-                      text="На главную"
-                      onClick={go}
-                      goTo="home"
-                    />
-                  </div>
-                </div>
-              )}
+            ))}
           </div>
         )
         : (<ScreenSpinner size="large" />)}

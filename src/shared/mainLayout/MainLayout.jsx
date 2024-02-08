@@ -11,7 +11,9 @@ const MainLayout = ({ children }) => {
   return (
     <div className={cn(style['layout-wrapper'])}>
       <div className={cn(style.layout, style[platform])}>
-        {children}
+        <div className={cn(style.layout_frame)}>
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -36,6 +36,7 @@ const Home = ({
   onEndedTimerUntilNextGame,
   isMobile,
   platform,
+  placeInLeaderBoard,
 }) => (
   <Panel id={id}>
     {!isMobile && <PanelHeader>{APP_NAME}</PanelHeader>}
@@ -65,7 +66,7 @@ const Home = ({
               <div className={cn(style['start-game-button-wrapper'])}>
                 {
                   gamesAvailable > 0
-                    ? <MainButton text="Начать игру" onClick={onStartGame} isAnimated />
+                    ? <MainButton text="Продолжить игру" onClick={onStartGame} isAnimated />
                     : (
                       <div className={cn(style['timer-until-next-game-wrapper'])}>
                         <Text className={cn(style['timer-until-next-game-text'])}>
@@ -134,10 +135,10 @@ const Home = ({
                 </Text>
                 <div className={cn(style.rating_numbers)}>
                   <Text className={cn(style.rating_position)}>
-                    4
+                    {placeInLeaderBoard.orderNumber}
                   </Text>
                   <Text className={cn(style.rating_total_members)}>
-                    из 28
+                    {`из ${placeInLeaderBoard.totalUsersCount}`}
                   </Text>
                 </div>
               </div>
@@ -236,6 +237,12 @@ Home.propTypes = {
   onEndedTimerUntilNextGame: PropTypes.func,
   isMobile: PropTypes.bool,
   platform: PropTypes.string,
+  placeInLeaderBoard: PropTypes.shape({
+    orderNumber: PropTypes.string,
+    totalUsersCount: PropTypes.string,
+    userId: PropTypes.string,
+    vkToken: PropTypes.string,
+  }),
 };
 
 export default Home;

@@ -23,7 +23,7 @@ const GamersList = ({
   placeInFriendsLeaderBoard,
   getTopPlayers,
   getTopPlayersFriends,
-  allowed,
+  // allowed,
 }) => {
   const [positionOnRating, setPositionOnRating] = useState('');
   const [gamersOnRating, setGamersOnRating] = useState('');
@@ -121,7 +121,8 @@ const GamersList = ({
   }, [friendList, isAllRating]);
 
   return (
-    (allowed || isAllRating) && (
+    // (allowed || isAllRating) && (
+    (isAllRating) && (
       <div className={cn(style['gamers-list-wrapper'])}>
         <div className={cn(style['position-on-rating-wrapper'])}>
           <Text className={cn(style['position-on-rating-your'])}>
@@ -225,7 +226,7 @@ GamersList.propTypes = {
   placeInFriendsLeaderBoard: PropTypes.any,
   getTopPlayers: PropTypes.func,
   getTopPlayersFriends: PropTypes.func,
-  allowed: PropTypes.bool,
+  // allowed: PropTypes.bool,
 };
 
 export default GamersList;

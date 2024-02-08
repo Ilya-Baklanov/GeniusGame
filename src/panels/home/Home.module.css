@@ -15,7 +15,7 @@
     /* justify-content: center; */
     padding: 6px;
     width: 100%;
-    max-width: 375px;
+    max-width: 400px;
     height: calc(100vh - 61px);
     overflow: hidden;
     border-radius: 20px 20px 0px 0px;
@@ -325,8 +325,9 @@ height: 34px; */
 }
 
 .rating_numbers {
-    display: flex;
-    align-items: flex-end;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
 }
 
 .rating_position {

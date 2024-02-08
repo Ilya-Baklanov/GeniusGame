@@ -1,59 +1,73 @@
-.additional-actions-wrapper {
+/* .additional-actions-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     padding: 0 17px;
-}
+} */
 
 .additional-actions {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    background: #FFFFFF;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    gap: 20px;
     border-radius: 15px;
+    background: #8654CC;
 }
 
-.additional-action {
+.invite-friends {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 74px;
-    padding: 0 15px;
+    gap: 20px;
 }
 
-.additional-action:first-child {
-    border-bottom: 1px solid #F0E4F9;
-}
-
-.additional-action-description-wrapper {
-    width: 200px;
-}
-
-.additional-action-description {
+.invite-friends_title {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 14px;
+    font-style: normal;
     font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-    white-space: break-spaces;
-    color: #5E5E5E;
+    line-height: 120%;
 }
 
-.additional-action-invite-friends-button {
-    width: 95px;
-    height: 32px;
-    background: #8C15A2;
-    border-radius: 8px;
+.invite-friends_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 18px 24px;
     border: none;
-    cursor: pointer;
+    border-radius: 10px;
+    background: #FFF;
 }
 
-.additional-action-invite-friends-text {
+.invite-friends_button_text {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 16px;
+    font-style: normal;
     font-weight: 400;
+    line-height: 90%;
+}
+
+.push-notification {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+}
+
+.push-notification_title {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
     font-size: 12px;
-    line-height: 15px;
-    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    opacity: 0.8;
 }

@@ -22,13 +22,13 @@ const CommonPanel = ({
   go,
   title,
   description,
-  additionalBlock,
   children,
   amountCoins,
   isLoading,
   isMobile,
   withScrollbar,
   activeTab,
+  button,
 }) => {
   const platform = usePlatform();
 
@@ -48,38 +48,46 @@ const CommonPanel = ({
               [style['with-scrollbar']]: withScrollbar,
             })}
           >
-            <div className={cn(style['common-panel-earned'])}>
-              <Text className={cn(style['common-panel-earned-count'])}>
-                {amountCoins}
-              </Text>
-              <MoreCoins />
-            </div>
-            {title && (
-              <div className={cn(style['common-title-wrapper'])}>
+            <div className={cn(style['common-header'])}>
+              {title && (
                 <Text className={cn(style['common-title'])}>{title}</Text>
-              </div>
-            )}
-            {description && (
-              <div className={cn(style['common-description-wrapper'])}>
+              )}
+              {description && (
                 <Text className={cn(style['common-description'])}>
                   {description}
                 </Text>
+              )}
+              <div className={cn(style['common-action-container'])}>
+                {button && (
+                <div
+                  className={cn(style['common-button'], {
+                    [style['without-description']]:
+                    !description,
+                  })}
+                >
+                  {button}
+                </div>
+                )}
+                <div className={cn(style['common-panel-earned'])}>
+                  <MoreCoins />
+                  <Text className={cn(style['common-panel-earned-count'])}>
+                    {amountCoins}
+                  </Text>
+                  <Text className={cn(style['common-panel-earned-count_text'])}>
+                    балла/ов
+                  </Text>
+                </div>
               </div>
-            )}
-            {additionalBlock && (
-              <div className={cn(style['common-additional-block'])}>
-                {additionalBlock}
-              </div>
-            )}
+            </div>
             {children && (
-              <div
-                className={cn(style['common-children'], {
-                  [style['without-description']]:
-                    !description && !additionalBlock,
-                })}
-              >
-                {children}
-              </div>
+            <div
+              className={cn(style['common-children'], {
+                [style['without-description']]:
+                    !description,
+              })}
+            >
+              {children}
+            </div>
             )}
           </div>
           <div className={cn(style['navbar-container'], style[platform])}>
@@ -96,13 +104,13 @@ CommonPanel.propTypes = {
   go: PropTypes.func.isRequired,
   title: PropTypes.string,
   description: PropTypes.string,
-  additionalBlock: PropTypes.node,
   children: PropTypes.node,
   amountCoins: PropTypes.string,
   isLoading: PropTypes.bool,
   isMobile: PropTypes.bool,
   withScrollbar: PropTypes.bool,
   activeTab: PropTypes.string,
+  button: PropTypes.node,
 };
 
 export default CommonPanel;

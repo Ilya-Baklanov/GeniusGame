@@ -10,33 +10,45 @@ import style from './Card.module.css';
 import { MoreCoins } from '../../../assets/image';
 
 const Card = ({
-  onClick, goTo, text, additionalCoins, isComplete,
+  onClick, goTo, title, description, textOnSuccess, additionalCoins, isComplete,
 }) => (
   <div
     onClick={isComplete ? null : onClick}
     data-to={goTo}
-    className={cn(style['more-coins-card'], { [style.complete]: isComplete })}
+    className={cn(style.card_wrapper, { [style.complete]: isComplete })}
   >
-    <div className={cn(style['more-coins-card-content-container'])}>
-      <Text className={cn(style['more-coins-card-text'], { [style.complete]: isComplete })}>
-        {text}
+    <div className={cn(style.text_content)}>
+      <Text className={cn(style.title)}>
+        {title}
       </Text>
-      {additionalCoins && (
-      <div className={cn(style['more-coins-card-additional-coins-wrapper'], { [style.complete]: isComplete })}>
-        <Text className={cn(style['more-coins-card-additional-coins-text'], { [style.complete]: isComplete })}>
-          {`+${additionalCoins}`}
-        </Text>
-        <MoreCoins />
-      </div>
-      )}
+      <Text className={cn(style.description)}>
+        {description}
+      </Text>
     </div>
+    {additionalCoins && (
+      <div className={cn(style.additional_coins_wrapper)}>
+        {isComplete && (
+          <Text className={cn(style.text_on_success)}>
+            {textOnSuccess}
+          </Text>
+        )}
+        <div className={cn(style.additional_coins, { [style.complete]: isComplete })}>
+          <MoreCoins />
+          <Text className={cn(style.additional_coins_numbers, { [style.complete]: isComplete })}>
+            {`+${additionalCoins}`}
+          </Text>
+        </div>
+      </div>
+    )}
   </div>
 );
 
 Card.propTypes = {
   onClick: PropTypes.func,
   goTo: PropTypes.string,
-  text: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  textOnSuccess: PropTypes.string,
   additionalCoins: PropTypes.number,
   isComplete: PropTypes.bool,
 };

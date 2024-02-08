@@ -17,7 +17,7 @@ const Rating = ({
   go,
   amountCoins,
   isLoading,
-  // friendList,
+  friendList,
   fetchedUser,
   getPlaceInLeaderBoard,
   getPlaceInFriendsLeaderBoard,
@@ -31,55 +31,57 @@ const Rating = ({
   getAllowed,
 }) => {
   const [isAllRating, setIsAllRating] = useState(true);
-  const [allowed, setAllowed] = useState(false);
-  const [friendList, setFriendList] = useState([]);
+  // const [allowed, setAllowed] = useState(false);
+  // const [friendList, setFriendList] = useState([]);
 
-  const permissionRequest = useCallback(async () => {
-    const permissions = await getAllowed('friends');
+  // const permissionRequest = useCallback(async () => {
+  //   const permissions = await getAllowed('friends');
 
-    const friendsAllowed = permissions.find((permission) => permission.scope === 'friends').allowed;
+  // const friendsAllowed = permissions
+  // .find((permission) => permission.scope === 'friends').allowed;
 
-    setAllowed(friendsAllowed);
-    return friendsAllowed;
-  }, []);
+  //   setAllowed(friendsAllowed);
+  //   return friendsAllowed;
+  // }, []);
 
-  useEffect(() => {
-    permissionRequest();
-  }, []);
+  // useEffect(() => {
+  //   permissionRequest();
+  // }, []);
 
   const ratingSwitcherHandler = useCallback((e) => {
     setIsAllRating(e.target.checked);
   }, []);
 
-  const fetchFriendsList = useCallback(async (user) => {
-    const friendsToken = await fetchFriendsToken(user);
-    if (friendsToken) {
-      const friendsAllowed = await permissionRequest();
-      if (friendsAllowed) {
-        const friendListRequest = await getFriendList(friendsToken);
-        setFriendList(friendListRequest);
-        return friendListRequest;
-      }
-    }
-    return null;
-  }, [fetchFriendsToken, permissionRequest, getFriendList]);
+  // const fetchFriendsList = useCallback(async (user) => {
+  //   const friendsToken = await fetchFriendsToken(user);
+  //   if (friendsToken) {
+  //     const friendsAllowed = await permissionRequest();
+  //     if (friendsAllowed) {
+  //       const friendListRequest = await getFriendList(friendsToken);
+  //       setFriendList(friendListRequest);
+  //       return friendListRequest;
+  //     }
+  //   }
+  //   return null;
+  // }, [fetchFriendsToken, permissionRequest, getFriendList]);
 
-  const getFriendsRatingData = useCallback(async (user) => {
-    const friendListRequest = await fetchFriendsList(user);
-    if (friendListRequest) {
-      getPlaceInFriendsLeaderBoard(user, friendListRequest);
-    }
-  }, [fetchFriendsList]);
+  // const getFriendsRatingData = useCallback(async (user) => {
+  //   // const friendListRequest = await fetchFriendsList(user);
+  //   // if (friendListRequest) {
+  //   if (friendList) {
+  //     getPlaceInFriendsLeaderBoard(user, friendList);
+  //   }
+  // }, [friendList]);
 
-  useEffect(() => {
-    if (fetchedUser) {
-      if (!isAllRating) {
-        getFriendsRatingData(fetchedUser);
-      }
+  // useEffect(() => {
+  //   if (fetchedUser) {
+  //     // if (!isAllRating) {
+  //     //   getFriendsRatingData(fetchedUser);
+  //     // }
 
-      getPlaceInLeaderBoard(fetchedUser);
-    }
-  }, [fetchedUser, isAllRating]);
+  //     // getPlaceInLeaderBoard(fetchedUser);
+  //   }
+  // }, [fetchedUser, isAllRating]);
 
   return (
     <CommonPanel
@@ -87,9 +89,6 @@ const Rating = ({
       go={go}
       amountCoins={amountCoins}
       title="Рейтинг"
-      additionalBlock={(
-        <Switcher onToggle={ratingSwitcherHandler} isAllRating={isAllRating} />
-        )}
       isLoading={isLoading}
       isMobile={isMobile}
     >
@@ -107,10 +106,10 @@ const Rating = ({
         placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
         getTopPlayers={getTopPlayers}
         getTopPlayersFriends={getTopPlayersFriends}
-        allowed={allowed}
+        // allowed={allowed}
       />
       )}
-      {!allowed && !isAllRating && (
+      {/* {!allowed && !isAllRating && (
       <div className={style['not-allowed-to-friends-list-wrapper']}>
         <div className={style['not-allowed-to-friends-list']}>
           <Text className={style['not-allowed-to-friends-list-description']}>
@@ -127,7 +126,7 @@ const Rating = ({
           </button>
         </div>
       </div>
-      )}
+      )} */}
     </CommonPanel>
   );
 };
@@ -137,7 +136,7 @@ Rating.propTypes = {
   go: PropTypes.func.isRequired,
   amountCoins: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
-  // friendList: PropTypes.any,
+  friendList: PropTypes.any,
   fetchedUser: PropTypes.any,
   getPlaceInLeaderBoard: PropTypes.func,
   getPlaceInFriendsLeaderBoard: PropTypes.func,

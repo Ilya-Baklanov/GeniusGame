@@ -6,12 +6,10 @@ import { POST_MESSAGE, POST_PHOTO_ID } from '../../../assets/constants/constants
 // import { topPlayersResponse } from './topPlayersResponse';
 
 const useFetchUserData = () => {
-    // TODO поменять на false
-    const [isFetchUserLoaded, setIsFetchUserLoaded] = useState(true);
+    const [isFetchUserLoaded, setIsFetchUserLoaded] = useState(false);
     const [fetchedUser, setUser] = useState(null);
     const [fetchedScheme, setScheme] = useState('bright_light');
-    // TODO поменять на false
-    const [isFetchUserStatLoaded, setIsFetchUserStatLoaded] = useState(true);
+    const [isFetchUserStatLoaded, setIsFetchUserStatLoaded] = useState(false);
     const [userStat, setUserStat] = useState(null);
     const [isEarnedCoinsPosted, setIsEarnedCoinsPosted] = useState(false);
     const [serverTime, setServerTime] = useState('');
@@ -42,14 +40,6 @@ const useFetchUserData = () => {
         }
 
         const token = window.location.href.split('?')[1];
-
-        // const response = await fetch(`https://sbermemory.ru/v1/api/getUserData/${user.id}`, {
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type': 'application/json',
-        //         'Access-Control-Allow-Origin': 'sbermemory.ru',
-        //     },
-        // });
 
         const requestOptions = {
             method: 'POST',
@@ -92,7 +82,7 @@ const useFetchUserData = () => {
             params: {
                 order: 'random',
                 fields: 'first_name,last_name,photo_100',
-                v: '5.131',
+                v: '5.199',
                 access_token: token,
             },
         });
@@ -193,7 +183,7 @@ const useFetchUserData = () => {
 
     const fetchFriendsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51476270,
+            app_id: 51435598,
             scope: 'friends',
         });
         bridge.send(
@@ -208,7 +198,7 @@ const useFetchUserData = () => {
 
     const fetchGroupsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51476270,
+            app_id: 51435598,
             scope: 'groups',
         });
         bridge.send(
@@ -223,7 +213,7 @@ const useFetchUserData = () => {
 
     const fetchStoriesToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51476270,
+            app_id: 51435598,
             scope: 'stories',
         });
         bridge.send(
@@ -238,7 +228,7 @@ const useFetchUserData = () => {
 
     const fetchStatusToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51476270,
+            app_id: 51435598,
             scope: 'status',
         });
         bridge.send(
@@ -384,7 +374,7 @@ const useFetchUserData = () => {
                 params: {
                     status_id: statusId,
                     access_token: statusToken,
-                    v: '5.131',
+                    v: '5.199',
                 },
             }).catch((error) => console.log('GET_STATUS_ERROR: ', error));
 
@@ -400,7 +390,7 @@ const useFetchUserData = () => {
                 method: 'status.getImage',
                 params: {
                     access_token: statusToken,
-                    v: '5.131',
+                    v: '5.199',
                 },
             }).catch((error) => console.log('GET_STATUS_ERROR: ', error));
 
@@ -410,14 +400,14 @@ const useFetchUserData = () => {
     }, [fetchedUser]);
 
     const fetchUserData = useCallback(async () => {
+        await getServerTime();
         const user = await bridge.send('VKWebAppGetUserInfo');
         setUser(user);
         await fetchUserStat(user);
-        // const friendsToken = await fetchFriendsToken(user);
-        // const friendsList = await getFriendList(friendsToken);
-        // await getPlaceInLeaderBoard(user);
-        // await getPlaceInFriendsLeaderBoard(user, friendsList);
-        await getServerTime();
+        const friendsToken = await fetchFriendsToken(user);
+        const friendsList = await getFriendList(friendsToken);
+        await getPlaceInLeaderBoard(user);
+        await getPlaceInFriendsLeaderBoard(user, friendsList);
         setIsFetchUserLoaded(true);
     }, []);
 

@@ -10,7 +10,7 @@ span {
     white-space: break-spaces;
 }
 
-.vkuiModalPage__in {
+/* .vkuiModalPage__in {
     max-width: 349px;
     padding: 0 12px;
 }
@@ -32,7 +32,7 @@ span {
 
 .vkuiEpic .vkuiPanel__in {
     padding: 0;
-}
+} */
 
 ::-webkit-scrollbar {
     width: 0px;
