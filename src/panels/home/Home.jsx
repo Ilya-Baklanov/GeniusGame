@@ -21,7 +21,6 @@ import {
   MAX_AVAILABLE_GAMES_COUNT,
 } from '../../assets/constants/constants';
 import MainButton from '../../shared/mainButton/MainButton';
-import Motivator from './components/Motivator';
 import Timer from '../../shared/timer/Timer';
 import { PanelTypes } from '../../structure';
 

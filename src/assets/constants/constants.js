@@ -1,17 +1,6 @@
 /* eslint-disable indent */
 export const APP_NAME = 'МегаИгра';
 
-export const MOTIVATOR = [
-    { name: 'lamp', img: './img/lamp.png' },
-    { name: 'headphones', img: './img/headphones.png' },
-    { name: 'headset', img: './img/headset.png' },
-    { name: 'wafer', img: './img/wafer.png' },
-    { name: 'waffleIron', img: './img/waffleIron.png' },
-    { name: 'watch', img: './img/watch.png' },
-    { name: 'tablet', img: './img/tablet.png' },
-    { name: 'laptop', img: './img/laptop.png' },
-];
-
 export const CARDS_COUNT = 64;
 export const NUMBER_UNIQUE_CARDS_IN_GAME = 10;
 export const CARDS = Array(CARDS_COUNT).fill().map((_, index) => ({

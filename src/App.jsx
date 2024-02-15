@@ -34,7 +34,6 @@ import {
   CARDS,
   MODAL_PROMO_CODE,
   MODAL_GET_PROMO_CODE,
-  MOTIVATOR,
   MODAL_MORE_COINS_STATUS,
   MODAL_MORE_COINS_INVITE_FRIENDS,
   STATUS_LIST,
@@ -77,7 +76,6 @@ const App = () => {
 
   const { isPicturesLoaded, downloadPercentage } = usePreloadImage([
     ...CARDS.map((card) => card.img),
-    ...MOTIVATOR.map((item) => item.img),
     ...STATUS_LIST.map((status) => status.img),
     ...POSTER_PICTURES.map((posterPicture) => {
       const pictureList = [];
