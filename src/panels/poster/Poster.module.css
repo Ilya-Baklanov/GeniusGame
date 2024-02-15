@@ -4,95 +4,84 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: calc(100% - 77px);
-  padding: 31px 17px 0 17px;
+  height: 100%;
+  padding: 14px 10px 20px;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 14px;
 }
 
 .header {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 
   width: 100%;
   /* margin-bottom: 10px; */
 }
 
-.close-button-wrapper {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-
-  height: 100%;
-}
-
 .close-button {
-  width: 15px;
-  height: 15px;
-}
-
-.poster-picture-wrapper {
-  width: 100%;
-  height: 87%;
-  padding: 0;
-}
-
-.title-wrapper {
-  /* position: absolute; */
-  /* top: 10%; */
-  height: 25px;
+  display: flex;
+  width: 39px;
+  height: 39px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  background: rgba(34, 31, 35, 0.05);
 }
 
 .title {
-  
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 25px;
-  text-align: center;
-  color: #000000;
+  color: #252822;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans Beta";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 90%;
 }
 
 .description-wrapper {
-  /* position: absolute; */
-  /* top: 16%; */
-  white-space: break-spaces;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .description {
-  
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 18px;
-  text-align: center;
-  color: #5E5E5E;
+  color: #252822;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans J";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 120%;
+  opacity: 0.8;
 }
 
 .picture-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* position: absolute; */
-  /* top: 25%; */
-  
   width: 100%;
-  height: 317px;
-}
-
-.picture-background {
-  width: 315px;
-  height: 317px;
-  background: white;
-  border-radius: 15px;
+  height: 70%;
+  padding: 0;
   overflow: hidden;
+  background: #EDCFFC;
+  border-radius: 15px;
 }
 
-.background-colorized {
-  background: linear-gradient(45deg, #24B571, 25%, #7E03B1, 85%, #FFB222);
+.img_wrapper {
+  line-height: 0;
+  position: absolute;
 }
 
 .img {
-  position: absolute;
-  left: 0;
-  top: 0;
+  width: 100%;
 }
 
 .white {
@@ -100,6 +89,9 @@
 }
 
 .colorized {
+  position: absolute;
+  left: 0;
+  top: 0;
   z-index: 100;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
@@ -109,121 +101,32 @@
   opacity: 1;
 }
 
-.coin1-wrapper {
-  position: relative;
-  top: 158px;
-  left: -10px;
-  width: 43px;
+.coin_big-wrapper {
+  bottom: -10px;
+  left: 0px;
+  width: 25%;
 }
 
-.coin1 {
-  width: 43px;
+.coin_small-wrapper {
+  bottom: 100px;
+  right: -10px;
+  width: 15%;
 }
 
-.coin2-wrapper {
-  position: relative;
-  top: -55px;
-  left: 280px;
-  width: 43px;
+.hand_with_phone-wrapper {
+  bottom: -83px;
+  left: 100px;
+  width: 60%;
 }
 
-.coin2 {
-  width: 43px;
-}
-
-
-.coin3-wrapper {
-  position: relative;
-  top: 207px;
-  left: 283px;
-  width: 30px;
-}
-
-.coin3 {
-  width: 30px;
-}
-
-.gamepad-wrapper {
-  position: relative;
-  top: 70px;
-  left: 190px;
-  width: 100px;
-
-  z-index: 20;
-}
-
-.gamepad {
-  width: 100px;
-}
-
-.plus1-wrapper {
-  position: relative;
-  top: -190px;
-  left: 60px;
-  width: 73px;
-
-  z-index: 20;
-}
-
-.plus1 {
-  width: 73px;
-}
-
-.plus2-wrapper {
-  position: relative;
+.shoes-wrapper {
   top: 0px;
-  left: 25px;
-  width: 50px;
+  left: -75px;
+  width:70%;
 }
 
-.plus2 {
-  width: 50px;
-}
-
-.logo-wrapper {
-  position: relative;
-  top: -55px;
-  left: 115px;
-  width: 100px;
-}
-
-.logo {
-  width: 100px;
-}
-
-.phone-wrapper {
-  position: relative;
-  top: -340px;
-  left: 85px;
-  width: 150px;
-
-  z-index: 10;
-}
-
-.phone {
-  width: 150px;
-}
-
-.repost-button-wrapper {
-    /* position: absolute; */
-    /* top: 74%; */
-    width: 100%;
-    padding: 0 17px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.navbar-container {
-  /* position: absolute; */
-  /* bottom: 0px; */
-  width: 100%;
-  height: 77px;
-  padding: 0 17px;
-}
-
-@media (min-device-height: 450px) {
-  .poster-wrapper {
-    padding: 20px 17px 0 17px;
-  }
+.headphone_new-wrapper {
+  top: 70px;
+  right: -37px;
+  width: 45%;
 }

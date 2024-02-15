@@ -3,32 +3,42 @@
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
 
     width: 100%;
-    padding-top: 15px;
+    padding: 0 10px;
+}
+
+.navbar-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 76px;
+    height: 49px;
+    padding: 6px 0;
+    gap: 2px;
+    flex-shrink: 0;
 }
 
 .navbar-button_text {
-    font-weight: 400;
+    color: #252822;
+    font-family: "Mega Sans Beta";
     font-size: 12px;
-    line-height: 15px;
-
-    color: #A2A2A2;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    opacity: 0.6;
+    text-transform: lowercase;
 }
 
 .navbar-button_text.active {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-
-    color: #9B37E5;
+    color: #8654CC;
 }
 
-.navbar-button.active>svg>path {
-    fill: #9B37E5;
+.navbar-button.active>svg path {
+    stroke: #8654CC;
 }

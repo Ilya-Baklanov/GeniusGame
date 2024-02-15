@@ -6,7 +6,9 @@ import {
   Panel, PanelHeader, PanelHeaderBack, Text, IconButton, ScreenSpinner,
 } from '@vkontakte/vkui';
 
-import { MoreCoins, Close } from '../../assets/image';
+import {
+  MoreCoins, CloseGray, MainLogo,
+} from '../../assets/image';
 import style from './EndGamePanel.module.css';
 import { APP_NAME } from '../../assets/constants/constants';
 import MainLayout from '../mainLayout/MainLayout';
@@ -14,7 +16,16 @@ import MainButton from '../mainButton/MainButton';
 import Timer from '../timer/Timer';
 
 const EndGamePanel = ({
-  id, go, isMoreGamesAvailable, lose, win, timeUntilNextGame, isLoading, earnedCoin, isMobile,
+  id,
+  go,
+  isMoreGamesAvailable,
+  loss,
+  win,
+  timeUntilNextGame,
+  isLoading,
+  earnedCoin,
+  isMobile,
+  picturePath,
 }) => {
   const hours = useMemo(() => Math.trunc((timeUntilNextGame / 3600) % 60), [timeUntilNextGame]);
   const minutes = useMemo(() => Math.trunc((timeUntilNextGame / 60) % 60), [timeUntilNextGame]);
@@ -36,62 +47,63 @@ const EndGamePanel = ({
     <Panel id={id}>
       {!isMobile && (
         <PanelHeader
-          left={<PanelHeaderBack onClick={go} data-to="home" />}
+          before={<PanelHeaderBack onClick={go} data-to="home" />}
         >
           {APP_NAME}
         </PanelHeader>
       )}
-      <MainLayout>
+      <MainLayout backgroundColor="secondary">
         <div className={cn(style['end-game-wrapper'])}>
           <div className={cn(style['end-game-header'])}>
-            <div className={cn(style['end-game-close-button-wrapper'])}>
-              <IconButton
-                hasActive={false}
-                hasHover={false}
-                hoverMode=""
-                focusVisibleMode=""
-                onClick={go}
-                data-to="home"
-                className={cn(style['end-game-close-button'])}
-              >
-                <Close />
-              </IconButton>
-            </div>
+            <MainLogo />
+            <IconButton
+              aria-label="Крестик для закрытия текущего окна"
+              hasActive={false}
+              hasHover={false}
+              hoverMode=""
+              focusVisibleMode=""
+              onClick={go}
+              data-to="home"
+              className={cn(style['end-game-close-button'])}
+            >
+              <CloseGray />
+            </IconButton>
           </div>
           {isLoading ? (<ScreenSpinner size="large" />) : (
             <>
+              <div className={cn(style.picture)}>
+                <img src={picturePath} alt="Игра окончена" />
+              </div>
               <div className={cn(style['end-game-main-content'])}>
+                <Text className={cn(style['end-game-title'])}>
+                  {loss && 'Не грусти!'}
+                  {win && 'Поздравляем!'}
+                </Text>
                 <div className={cn(style['end-game-earned-wrapper'])}>
                   <Text className={cn(style['end-game-earned-title'])}>
                     Заработано:
                   </Text>
                   <div className={cn(style['end-game-earned'])}>
+                    <MoreCoins />
                     <Text className={cn(style['end-game-earned-count'])}>
                       {earnedCoin}
                     </Text>
-                    <MoreCoins />
+                    <Text className={cn(style['end-game-earned-text'])}>
+                      балла/ов
+                    </Text>
                   </div>
                 </div>
-                <div className={cn(style['end-game-title-wrapper'])}>
-                  <Text className={cn(style['end-game-title'])}>
-                    {lose && 'Не грусти!'}
-                    {win && 'Поздравляем!'}
-                  </Text>
-                </div>
-                <div className={cn(style['end-game-description-wrapper'])}>
-                  <Text className={cn(style['end-game-description'])}>
-                    {isMoreGamesAvailable
-                      ? 'Ты можешь сыграть\nещё одну игру!'
-                      : `Следующая игра станет\nдоступна через ${hoursText} ${minutes ? `${minutes} минут` : ''}.`}
-                  </Text>
-                </div>
+                <Text className={cn(style['end-game-description'])}>
+                  {isMoreGamesAvailable
+                    ? 'Ты можешь сыграть\nещё одну игру!'
+                    : `Следующая игра станет\nдоступна через ${hoursText} ${minutes ? `${minutes} минут` : ''}.`}
+                </Text>
               </div>
-              <div className={cn(style['end-game-button-wrapper'])}>
-                <MainButton
-                  text={isMoreGamesAvailable ? 'Играть' : 'На главную'}
-                  onClick={() => go(null, isMoreGamesAvailable ? 'gameBoard' : 'home')}
-                />
-              </div>
+              <MainButton
+                text={isMoreGamesAvailable ? 'Играть' : 'На главную'}
+                onClick={() => go(null, isMoreGamesAvailable ? 'gameBoard' : 'home')}
+                isFullWidth
+              />
             </>
           )}
         </div>
@@ -104,12 +116,13 @@ EndGamePanel.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
   isMoreGamesAvailable: PropTypes.bool,
-  lose: PropTypes.bool,
+  loss: PropTypes.bool,
   win: PropTypes.bool,
   timeUntilNextGame: PropTypes.number,
   isLoading: PropTypes.bool,
   earnedCoin: PropTypes.number,
   isMobile: PropTypes.bool,
+  picturePath: PropTypes.string,
 };
 
 export default EndGamePanel;

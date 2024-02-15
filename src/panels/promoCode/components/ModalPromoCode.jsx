@@ -14,7 +14,7 @@ import {
 
 import style from './ModalPromoCode.module.css';
 import MainButton from '../../../shared/mainButton/MainButton';
-import { CloseGray } from '../../../assets/image';
+import { CloseGray, RightArrow } from '../../../assets/image';
 import { GAME_RULES } from '../../../assets/constants/constants';
 
 const ModalPromoCode = ({
@@ -22,9 +22,11 @@ const ModalPromoCode = ({
   onClose,
   content,
   amountCoins,
-  userId,
+  fetchedUser,
   onActiveModalGetPromocode,
   getPromoCode,
+  getUserPromoCodes,
+  platform,
 }) => {
   const { viewWidth } = useAdaptivity();
 
@@ -41,11 +43,11 @@ const ModalPromoCode = ({
     }
     switch (true) {
       case availablePromoCode:
-        return 'Ты можешь забрать этот промокод или продолжить играть, чтобы заработать монеты на промокод ещё большего номинала.';
+        return 'Вам доступен промокод, который вы можете забрать сейчас и потратить монеты. Либо продолжайте играть, чтобы получить промокод ещё большего номинала.';
       case Math.floor(+amountCoins / 100) > content.denomination / 100:
-        return 'У тебя есть возможность получить промокод с большим номиналом! Ты можешь забрать его или продолжить играть, чтобы заработать монеты на промокод ещё большего номинала.';
+        return 'У вас есть шанс получить еще более выгодный промокод! Для этого можете продолжить играть и зарабатывать монеты. Либо потратить монеты сейчас и забрать этот промокод.';
       case Math.floor(+amountCoins / 100) < content.denomination / 100 || amountCoins === '0':
-        return 'Пока у тебя недостаточно монет, чтобы получить этот промокод. Продолжай играть, чтобы заработать монеты на промокод!';
+        return 'Сейчас у вас не хватает монет, чтобы получить этот промокод. Продолжайте играть и совсем скоро вы сможете воспользоваться этим выгодным предложением!';
       default:
         return '';
     }
@@ -58,64 +60,69 @@ const ModalPromoCode = ({
         onClose={onClose}
         settlingHeight={100}
         height="100%"
-        // size="l"
-        // hideCloseButton
-        header={(
-          <ModalPageHeader
-            right={(
-              <IconButton
-                hasActive={false}
-                hasHover={false}
-                hoverMode=""
-                focusVisibleMode=""
-                onClick={onClose}
-              >
-                <CloseGray />
-              </IconButton>
-            )}
-          />
-      )}
+        size={platform === 'vkcom' && 400}
+        hideCloseButton
       >
         <div className={cn(style['promocode-modal-wrapper'])}>
-          <div className={cn(style['promocode-modal-promocode-card'], {
-            [style.availablePromoCode]: availablePromoCode,
-          })}
-          >
-            <Text className={cn(style['promocode-modal-promocode-card-text'], {
+          <div className={cn(style['promocode-modal-content'])}>
+            <div className={cn(style['promocode-modal-promocode-card'], {
               [style.availablePromoCode]: availablePromoCode,
             })}
             >
-              {`Промокод на ${content.denomination}₽`}
-            </Text>
-            <Text className={cn(style['promocode-modal-promocode-card-description'], {
-              [style.availablePromoCode]: availablePromoCode,
-            })}
-            >
-              {content.promoCodeDescription}
-            </Text>
-          </div>
-          <div className={cn(style['promocode-modal-description-wrapper'])}>
-            <Text className={cn(style['promocode-modal-description-text'])}>
-              {description}
-            </Text>
-          </div>
-          <div className={cn(style['promocode-modal-rules'])}>
-            <Link
-              className={cn(style['promocode-modal-rules-link'])}
-              target="_blank"
-              href={GAME_RULES.href}
-            >
-              {GAME_RULES.title}
-            </Link>
+              <div className={style['promocode-modal-promocode-card-header']}>
+                <Text className={cn(style['promocode-modal-promocode-card-title'], {
+                  [style.availablePromoCode]: availablePromoCode,
+                })}
+                >
+                  {`Промокод\nна ${content.denomination}₽`}
+                </Text>
+                <IconButton
+                  aria-label="Крестик для закрытия текущего окна"
+                  hasActive={false}
+                  hasHover={false}
+                  hoverMode=""
+                  focusVisibleMode=""
+                  onClick={onClose}
+                  className={style['close-button']}
+                >
+                  <CloseGray />
+                </IconButton>
+              </div>
+              <Text className={cn(style['promocode-modal-promocode-card-description'], {
+                [style.availablePromoCode]: availablePromoCode,
+              })}
+              >
+                {content.promoCodeDescription}
+              </Text>
+            </div>
+            <div className={cn(style['promocode-modal-description-wrapper'])}>
+              <Text className={cn(style['promocode-modal-description-text'])}>
+                {description}
+              </Text>
+            </div>
+            <div className={cn(style['promocode-modal-rules'])}>
+              <Link
+                className={cn(style['promocode-modal-rules-link'])}
+                target="_blank"
+                href={GAME_RULES.href}
+              >
+                {GAME_RULES.title}
+                <RightArrow />
+              </Link>
+            </div>
           </div>
           <div className={cn(style['promocode-modal-button-wrapper'])}>
             <MainButton
+              isFullWidth
+              theme="secondary"
               text="Получить"
               disabled={!availablePromoCode}
-              onClick={() => {
-                getPromoCode(userId, `${content.denomination}`).then((promocode) => {
-                  onActiveModalGetPromocode(promocode);
-                });
+              onClick={async () => {
+                const promocode = await getPromoCode(fetchedUser.id, `${content.denomination}`);
+
+                onActiveModalGetPromocode(promocode);
+
+                await getUserPromoCodes(fetchedUser);
               }}
             />
           </div>
@@ -133,9 +140,19 @@ ModalPromoCode.propTypes = {
     promoCodeDescription: PropTypes.string,
   }),
   amountCoins: PropTypes.string,
-  userId: PropTypes.number,
+  fetchedUser: PropTypes.shape({
+    id: PropTypes.number,
+    photo_200: PropTypes.string,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+    city: PropTypes.shape({
+      title: PropTypes.string,
+    }),
+  }),
   onActiveModalGetPromocode: PropTypes.func,
   getPromoCode: PropTypes.func,
+  getUserPromoCodes: PropTypes.func,
+  platform: PropTypes.string,
 };
 
 export default ModalPromoCode;

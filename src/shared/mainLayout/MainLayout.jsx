@@ -5,12 +5,12 @@ import cn from 'classnames';
 import { usePlatform } from '@vkontakte/vkui';
 import style from './MainLayout.module.css';
 
-const MainLayout = ({ children }) => {
+const MainLayout = ({ children, backgroundColor = 'primary' }) => {
   const platform = usePlatform();
 
   return (
     <div className={cn(style['layout-wrapper'])}>
-      <div className={cn(style.layout, style[platform])}>
+      <div className={cn(style.layout, style[platform], style[backgroundColor])}>
         <div className={cn(style.layout_frame)}>
           {children}
         </div>
@@ -21,6 +21,7 @@ const MainLayout = ({ children }) => {
 
 MainLayout.propTypes = {
   children: PropTypes.node,
+  backgroundColor: PropTypes.oneOf(['primary', 'secondary']),
 };
 
 export default MainLayout;

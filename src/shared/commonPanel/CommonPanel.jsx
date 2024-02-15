@@ -35,7 +35,7 @@ const CommonPanel = ({
   return (
     <Panel id={id}>
       {!isMobile && (
-        <PanelHeader left={<PanelHeaderBack onClick={go} data-to="home" />}>
+        <PanelHeader before={<PanelHeaderBack onClick={go} data-to="home" />}>
           {APP_NAME}
         </PanelHeader>
       )}
@@ -44,7 +44,7 @@ const CommonPanel = ({
       ) : (
         <MainLayout>
           <div
-            className={cn(style['common-panel-main'], {
+            className={cn(style['common-panel-main'], style[platform], {
               [style['with-scrollbar']]: withScrollbar,
             })}
           >

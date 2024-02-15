@@ -13,8 +13,9 @@ const WinPanel = ({
     isMoreGamesAvailable={isMoreGamesAvailable}
     timeUntilNextGame={timeUntilNextGame}
     isLoading={isLoading}
-    earnedCoin={String(Number(earnedCoin))}
+    earnedCoin={earnedCoin}
     isMobile={isMobile}
+    picturePath="/img/winPicture.png"
   />
 );
 

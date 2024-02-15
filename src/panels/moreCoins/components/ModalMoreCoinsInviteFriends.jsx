@@ -13,16 +13,20 @@ const ModalMoreCoinsInviteFriends = ({
   id,
   activePanelId,
   onClose,
+  platform,
 }) => (
   <AppearanceProvider appearance="light">
     <ModalPage
       id={id}
       onClose={onClose}
-      size="s"
+      // height="100%"
+      size={platform === 'vkcom' && 400}
+      hideCloseButton
       header={(
         <ModalPageHeader
           right={(
             <IconButton
+              aria-label="Крестик для закрытия текущего окна"
               hasActive={false}
               hasHover={false}
               hoverMode=""
@@ -41,9 +45,9 @@ const ModalMoreCoinsInviteFriends = ({
             Пригласить к участию друзей можно через три точки (…), либо нажать на «Действия».
           </Text>
         </div>
-        <div className={cn(style['more-coins-navbar-container'])}>
+        {/* <div className={cn(style['more-coins-navbar-container'])}>
           <Navbar id={activePanelId} />
-        </div>
+        </div> */}
       </div>
     </ModalPage>
   </AppearanceProvider>
@@ -53,10 +57,7 @@ ModalMoreCoinsInviteFriends.propTypes = {
   id: PropTypes.string.isRequired,
   activePanelId: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  content: PropTypes.shape({
-    denomination: PropTypes.number,
-    promoCodeDescription: PropTypes.string,
-  }),
+  platform: PropTypes.string,
 };
 
 export default ModalMoreCoinsInviteFriends;

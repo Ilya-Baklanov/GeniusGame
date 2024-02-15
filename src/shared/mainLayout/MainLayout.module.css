@@ -16,22 +16,35 @@
   padding: 6px;
   width: 100%;
   max-width: 400px;
-  height: calc(100vh - 61px);
+  height: calc(100vh - 56px);
   overflow: hidden;
   border-radius: 20px 20px 0px 0px;
+}
 
+/* .layout.ios {
+  padding-top: 5px;
+} */
+
+.layout.ios,
+.layout.android {
+    max-width: none;
+    height: 100vh;
+}
+
+.layout.primary {
   background: #FFFFFF;
 }
 
+.layout.secondary {
+  background: #8654CC;
+}
+
 .layout_frame {
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
   border-radius: 20px 20px 0px 0px;
-}
-
-.ios {
-  padding-top: 5px;
 }
 
 @media (max-device-width: 480px) {

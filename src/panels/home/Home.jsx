@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -17,12 +18,12 @@ import Navbar from '../../shared/navbar/Navbar';
 import style from './Home.module.css';
 import {
   APP_NAME,
-  GAME_RULES,
-  PROMOTION_RULES,
+  MAX_AVAILABLE_GAMES_COUNT,
 } from '../../assets/constants/constants';
 import MainButton from '../../shared/mainButton/MainButton';
 import Motivator from './components/Motivator';
 import Timer from '../../shared/timer/Timer';
+import { PanelTypes } from '../../structure';
 
 const Home = ({
   id,
@@ -37,192 +38,165 @@ const Home = ({
   isMobile,
   platform,
   placeInLeaderBoard,
-}) => (
-  <Panel id={id}>
-    {!isMobile && <PanelHeader>{APP_NAME}</PanelHeader>}
-    {isLoading ? (
-      <ScreenSpinner size="large" />
-    ) : (
-      <div className={cn(style['home-wrapper'])}>
-        <div className={cn(style.home, style[platform])}>
-          <div className={cn(style['content-wrapper'])}>
-            <div className={cn(style['game-block'])}>
-              <div className={cn(style['game-block_header'])}>
-                <div className={cn(style['game-block_logo'])}>
-                  <MainLogo />
+  topPlayers,
+  promocodesList,
+}) => {
+  const startGameButtonText = gamesAvailable === MAX_AVAILABLE_GAMES_COUNT
+    ? 'Начать игру' : 'Продолжить игру';
+
+  return (
+    <Panel id={id}>
+      {!isMobile && <PanelHeader>{APP_NAME}</PanelHeader>}
+      {isLoading ? (
+        <ScreenSpinner size="large" />
+      ) : (
+        <div className={cn(style['home-wrapper'])}>
+          <div className={cn(style.home, style[platform])}>
+            <div className={cn(style['content-wrapper'])}>
+              <div className={cn(style['game-block'])}>
+                <div className={cn(style['game-block_header'])}>
+                  <div className={cn(style['game-block_logo'])}>
+                    <MainLogo />
+                  </div>
+                  <div className={cn(style['game-block_picture'])}>
+                    <img src="/img/Home_MainCards.png" alt="Home_MainCardsImage" />
+                  </div>
                 </div>
-                <div className={cn(style['game-block_picture'])}>
-                  <img src="/img/Home_MainCards.png" alt="Home_MainCardsImage" />
+                <div className={cn(style.motivator_wrapper)}>
+                  <Text className={cn(style.motivator_title)}>
+                    {'Играй\nи покупай'}
+                  </Text>
+                  <Text className={cn(style.motivator_text)}>
+                    {'Играй, зарабатывай монеты и трать\nих на покупки в Мегамаркете!'}
+                  </Text>
+                </div>
+                <div className={cn(style['start-game-button-wrapper'])}>
+                  {
+                    gamesAvailable > 0
+                      ? <MainButton text={startGameButtonText} onClick={onStartGame} />
+                      : (
+                        <div className={cn(style['timer-until-next-game-wrapper'])}>
+                          <Text className={cn(style['timer-until-next-game-text'])}>
+                            {'до следующей\nигры осталось'}
+                          </Text>
+                          <Text className={cn(style['timer-until-next-game-time'])}>
+                            <Timer
+                              time={timeUntilNextGame}
+                              onEndedTime={onEndedTimerUntilNextGame}
+                            />
+                          </Text>
+                        </div>
+                      )
+                    }
                 </div>
               </div>
-              <div className={cn(style.motivator_wrapper)}>
-                <Text className={cn(style.motivator_title)}>
-                  {'Играй\nи покупай'}
-                </Text>
-                <Text className={cn(style.motivator_text)}>
-                  {'Играй, зарабатывай монеты и трать\nих на покупки в Мегамаркете!'}
-                </Text>
+              <div className={cn(style['profile-and-promo-block'])}>
+                <div className={cn(style.profile)}>
+                  <div className={cn(style.profile_wrapper)}>
+                    {fetchedUser.photo_200 ? (
+                      <Avatar
+                        src={fetchedUser.photo_200}
+                        className={cn(style.profile_avatar)}
+                        size={34}
+                        withBorder={false}
+                      />
+                    ) : null}
+                    <div className={cn(style.profile_info)}>
+                      <Text className={cn(style.profile_name)}>
+                        {fetchedUser.first_name}
+                      </Text>
+                      <Link
+                        target="_blank"
+                        href={`https://vk.com/id${fetchedUser?.id}`}
+                      >
+                        <Text className={cn(style.profile_link)}>
+                          в профиль
+                        </Text>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className={cn(style['earned-coins'])}>
+                    <MoreCoins />
+                    <Text className={cn(style['earned-coins_count'])}>
+                      {amountCoins}
+                    </Text>
+                    <Text className={cn(style['earned-coins_text'])}>
+                      балла/ов
+                    </Text>
+                  </div>
+                </div>
+                <div onClick={() => go(null, PanelTypes.myPromoCode)} className={cn(style.promo)}>
+                  <div className={cn(style.promo_content)}>
+                    <Text className={cn(style.promo_title)}>
+                      Промокоды
+                    </Text>
+                    <div className={cn(style.promo_count_wrapper)}>
+                      <Text className={cn(style.promo_count)}>
+                        {promocodesList?.length ?? 0}
+                      </Text>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className={cn(style['start-game-button-wrapper'])}>
-                {
-                  gamesAvailable > 0
-                    ? <MainButton text="Продолжить игру" onClick={onStartGame} isAnimated />
-                    : (
-                      <div className={cn(style['timer-until-next-game-wrapper'])}>
-                        <Text className={cn(style['timer-until-next-game-text'])}>
-                          {'до следующей\nигры осталось'}
+              <div onClick={() => go(null, PanelTypes.rating)} className={cn(style.rating_wrapper)}>
+                <div className={cn(style.rating_main_info)}>
+                  <Text className={cn(style.rating_title)}>
+                    Рейтинг
+                  </Text>
+                  <div className={cn(style.rating_numbers)}>
+                    <Text className={cn(style.rating_position)}>
+                      {placeInLeaderBoard.orderNumber}
+                    </Text>
+                    <Text className={cn(style.rating_total_members)}>
+                      {`из ${placeInLeaderBoard.totalUsersCount}`}
+                    </Text>
+                  </div>
+                </div>
+                <div className={cn(style.rating_list)}>
+                  {topPlayers?.slice(0, 3).map(({
+                    id: playerId, photo, firstName, coins,
+                  }) => (
+                    <div key={playerId} className={cn(style.rating_list_item)}>
+                      {photo ? (
+                        <Avatar
+                          src={photo}
+                          className={cn(style.rating_avatar)}
+                          size={34}
+                          withBorder={false}
+                        />
+                      ) : null}
+                      <div className={cn(style.rating_list_item_info)}>
+                        <Text className={cn(style.rating_name)}>
+                          {firstName}
                         </Text>
-                        <Text className={cn(style['timer-until-next-game-time'])}>
-                          <Timer time={timeUntilNextGame} onEndedTime={onEndedTimerUntilNextGame} />
-                        </Text>
+                        <div className={cn(style['rating_earned-coins'])}>
+                          <MoreCoins />
+                          <Text className={cn(style['rating_earned-coins_count'])}>
+                            {coins}
+                          </Text>
+                        </div>
                       </div>
-                    )
-                  }
-              </div>
-            </div>
-            <div className={cn(style['profile-and-promo-block'])}>
-              <div className={cn(style.profile)}>
-                <div className={cn(style.profile_wrapper)}>
-                  {fetchedUser.photo_200 ? (
-                    <Avatar
-                      src={fetchedUser.photo_200}
-                      className={cn(style.profile_avatar)}
-                      size={34}
-                      noBorder={true}
-                    />
-                  ) : null}
-                  <div className={cn(style.profile_info)}>
-                    <Text className={cn(style.profile_name)}>
-                      {fetchedUser.first_name}
-                    </Text>
-                    <Text className={cn(style.profile_link)}>
-                      link to profile
-                    </Text>
-                  </div>
-                </div>
-                <div className={cn(style['earned-coins'])}>
-                  <MoreCoins />
-                  <Text className={cn(style['earned-coins_count'])}>
-                    {amountCoins}
-                  </Text>
-                  <Text className={cn(style['earned-coins_text'])}>
-                    балла/ов
-                  </Text>
-                </div>
-              </div>
-              <div className={cn(style.promo)}>
-                <div className={cn(style.promo_content)}>
-                  <Text className={cn(style.promo_title)}>
-                    Промокоды
-                  </Text>
-                  <div className={cn(style.promo_count_wrapper)}>
-                    <Text className={cn(style.promo_count)}>
-                      15
-                    </Text>
-                    <div className={cn(style.promo_count_additional_wrapper)}>
-                      <Text className={cn(style.promo_count_additional)}>
-                        +1
-                      </Text>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
-            <div className={cn(style.rating_wrapper)}>
-              <div className={cn(style.rating_main_info)}>
-                <Text className={cn(style.rating_title)}>
-                  Рейтинг
-                </Text>
-                <div className={cn(style.rating_numbers)}>
-                  <Text className={cn(style.rating_position)}>
-                    {placeInLeaderBoard.orderNumber}
-                  </Text>
-                  <Text className={cn(style.rating_total_members)}>
-                    {`из ${placeInLeaderBoard.totalUsersCount}`}
-                  </Text>
-                </div>
-              </div>
-              <div className={cn(style.rating_list)}>
-                <div className={cn(style.rating_list_item)}>
-                  {fetchedUser.photo_200 ? (
-                    <Avatar
-                      src={fetchedUser.photo_200}
-                      className={cn(style.rating_avatar)}
-                      size={34}
-                      noBorder={true}
-                    />
-                  ) : null}
-                  <div className={cn(style.rating_list_item_info)}>
-                    <Text className={cn(style.rating_name)}>
-                      {fetchedUser.first_name}
-                    </Text>
-                    <div className={cn(style['rating_earned-coins'])}>
-                      <MoreCoins />
-                      <Text className={cn(style['rating_earned-coins_count'])}>
-                        {amountCoins}
-                      </Text>
-                    </div>
-                  </div>
-                </div>
-                <div className={cn(style.rating_list_item)}>
-                  {fetchedUser.photo_200 ? (
-                    <Avatar
-                      src={fetchedUser.photo_200}
-                      className={cn(style.rating_avatar)}
-                      size={34}
-                      noBorder={true}
-                    />
-                  ) : null}
-                  <div className={cn(style.rating_list_item_info)}>
-                    <Text className={cn(style.rating_name)}>
-                      {fetchedUser.first_name}
-                    </Text>
-                    <div className={cn(style['rating_earned-coins'])}>
-                      <MoreCoins />
-                      <Text className={cn(style['rating_earned-coins_count'])}>
-                        {amountCoins}
-                      </Text>
-                    </div>
-                  </div>
-                </div>
-                <div className={cn(style.rating_list_item)}>
-                  {fetchedUser.photo_200 ? (
-                    <Avatar
-                      src={fetchedUser.photo_200}
-                      className={cn(style.rating_avatar)}
-                      size={34}
-                      noBorder={true}
-                    />
-                  ) : null}
-                  <div className={cn(style.rating_list_item_info)}>
-                    <Text className={cn(style.rating_name)}>
-                      {fetchedUser.first_name}
-                    </Text>
-                    <div className={cn(style['rating_earned-coins'])}>
-                      <MoreCoins />
-                      <Text className={cn(style['rating_earned-coins_count'])}>
-                        {amountCoins}
-                      </Text>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className={cn(style['navbar-container'], style[platform])}>
+              <Navbar id={id} go={go} />
             </div>
-          </div>
-          <div className={cn(style['navbar-container'])}>
-            <Navbar id={id} go={go} />
           </div>
         </div>
-      </div>
-    )}
-  </Panel>
-);
+      )}
+    </Panel>
+  );
+};
 
 Home.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
   onStartGame: PropTypes.func,
   fetchedUser: PropTypes.shape({
+    id: PropTypes.number,
     photo_200: PropTypes.string,
     first_name: PropTypes.string,
     last_name: PropTypes.string,
@@ -243,6 +217,14 @@ Home.propTypes = {
     userId: PropTypes.string,
     vkToken: PropTypes.string,
   }),
+  topPlayers: PropTypes.arrayOf(PropTypes.shape({
+    photo: PropTypes.string,
+    id: PropTypes.number,
+    firstName: PropTypes.string,
+    secondName: PropTypes.string,
+    coins: PropTypes.number,
+  })),
+  promocodesList: PropTypes.array,
 };
 
 export default Home;

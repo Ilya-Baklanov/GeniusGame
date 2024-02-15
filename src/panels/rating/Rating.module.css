@@ -1,11 +1,220 @@
-.not-allowed-to-friends-list-wrapper {
+.content_wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100% - 71px);
+    gap: 4px;
+}
+
+.content_wrapper.ios,
+.content_wrapper.android {
+    height: calc(100% - 80px);
+}
+
+.rating_wrapper {
+    display: flex;
+    padding: 20px;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #8654CC;
+}
+
+.rating_main_info {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    flex-basis: 50%;
+}
+
+.rating_title {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans S";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 90%;
+}
+
+.rating_numbers {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rating_position {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.rating_total_members {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.rating_total_members_text,
+.rating_total_members_numbers {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    text-transform: lowercase;
+}
+
+.rating_total_members_text {
+    opacity: 0.8;
+}
+
+.rating_total_members_numbers {
+    opacity: 0.6;
+}
+
+.rating_list {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    flex-basis: 50%;
+}
+
+.rating_list_item {
+    display: flex;
+    width: 142px;
+    padding: 4px 12px 4px 6px;
+    align-items: center;
+    gap: 6px;
+    border-radius: 20px;
+    background: #FFF;
+    box-shadow: 2px 5px 26px 0px rgba(26, 25, 28, 0.10);
+}
+
+.rating_list_item:nth-child(1) {
+    transform: rotate(5deg);
+    z-index: 3;
+}
+
+.rating_list_item:nth-child(2) {
+    opacity: 0.8;
+    background: #F6F6F6;
+    margin-top: -12px;
+    margin-left: -3px;
+    margin-bottom: -12px;
+    z-index: 2;
+}
+
+.rating_list_item:nth-child(3) {
+    transform: rotate(-5deg);
+    border-radius: 20px;
+    opacity: 0.4;
+    z-index: 1;
+}
+
+.rating_avatar {
+    width: 34px;
+    height: 34px;
+}
+
+.rating_list_item_info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.rating_name {
+    color: #252822;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.rating_earned-coins {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rating_earned-coins>svg {
+    width: 9px;
+}
+
+.rating_earned-coins>svg>path {
+    fill: #8654CC;
+}
+
+.rating_earned-coins_count {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    text-transform: lowercase;
+}
+
+.main_content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    min-height: calc(100% - 155px);
+    border-radius: 20px;
+    padding: 20px;
+    background: #F2F2F2;
+}
+
+.main_content_header {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 100%;
-    padding: 0 17px;
+}
+
+.earned-coins {
+    display: flex;
+    padding: 4px 6px;
+    align-items: center;
+    gap: 4px;
+    border-radius: 40px;
+}
+
+.earned-coins>svg>path {
+    fill: #8654CC;
+}
+
+.earned-coins_count {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.earned-coins_text {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    opacity: 0.6;
 }
 
 .not-allowed-to-friends-list {
@@ -14,33 +223,30 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 140px;
+    gap: 14px;
+    padding-top: 35%;
 }
 
 .not-allowed-to-friends-list-description {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
+    color: #252822;
     text-align: center;
-    white-space: break-spaces;
-    color: #000000;
-}
-
-.not-allowed-to-friends-list-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 177px;
-    height: 49px;
-    background: #8C15A2;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-}
-
-.not-allowed-to-friends-list-button-text {
-    font-weight: 600;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
     font-size: 14px;
-    line-height: 18px;
-    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
 }
+
+.navbar-container {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    height: 49px;
+    background-color: #FFF;
+  }
+  
+  .navbar-container.ios,
+  .navbar-container.android {
+    bottom: 19px;
+  }

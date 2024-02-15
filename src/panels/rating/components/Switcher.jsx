@@ -6,19 +6,19 @@ import { Text } from '@vkontakte/vkui';
 
 import style from './Switcher.module.css';
 
-const Switcher = ({ onToggle, isAllRating }) => (
+const Switcher = ({ onToggle, checked }) => (
   <label htmlFor="switcher" className={cn(style.switcher)}>
-    <input id="switcher" onChange={onToggle} checked={isAllRating} type="checkbox" />
+    <input id="switcher" onChange={onToggle} checked={checked} type="checkbox" />
     <div className={cn(style.slider)} />
     <div className={cn(style['content-wrapper'])}>
-      <div className={cn(style['switcher-label-text-wrapper'])}>
+      <div className={cn(style['switcher-label-left-text-wrapper'])}>
         <Text className={cn(style['switcher-label-left-text'])}>
-          Друзья
+          Все игроки
         </Text>
       </div>
-      <div className={cn(style['switcher-label-text-wrapper'])}>
+      <div className={cn(style['switcher-label-right-text-wrapper'])}>
         <Text className={cn(style['switcher-label-right-text'])}>
-          Все игроки
+          Друзья
         </Text>
       </div>
     </div>
@@ -27,7 +27,7 @@ const Switcher = ({ onToggle, isAllRating }) => (
 
 Switcher.propTypes = {
   onToggle: PropTypes.func,
-  isAllRating: PropTypes.bool,
+  checked: PropTypes.bool,
 };
 
 export default Switcher;

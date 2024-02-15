@@ -37,7 +37,7 @@
 }
 
 .promocode-card.active {
-    background: linear-gradient(45deg, #24B571, 15%, #7E03B1, 90%, #FFB222);
+    background: #8654CC;
     border: none;
 }
 

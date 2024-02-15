@@ -55,7 +55,6 @@ const MoreCoins = ({
       isMobile={isMobile}
     >
       <MoreCoinsCards circumstances={circumstances} onClickToCard={onClickToCard} />
-      {/* <div className={cn(style['additional-actions-wrapper'])}> */}
       <div className={cn(style['additional-actions'])}>
         <div className={cn(style['invite-friends'])}>
           <Text className={cn(style['invite-friends_title'])}>
@@ -78,7 +77,6 @@ const MoreCoins = ({
           <Switcher onToggle={pushSwitcherHandler} state={switcherState} />
         </div>
       </div>
-      {/* </div> */}
     </CommonPanel>
   );
 };
@@ -90,7 +88,15 @@ MoreCoins.propTypes = {
   circumstances: PropTypes.string,
   notificationStatus: PropTypes.string,
   onClickToCard: PropTypes.func,
-  fetchedUser: PropTypes.shape(),
+  fetchedUser: PropTypes.shape({
+    id: PropTypes.number,
+    photo_200: PropTypes.string,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+    city: PropTypes.shape({
+      title: PropTypes.string,
+    }),
+  }),
   isLoading: PropTypes.bool,
   onUpdateNotificationStatus: PropTypes.func,
   isMobile: PropTypes.bool,

@@ -16,15 +16,21 @@
     padding: 6px;
     width: 100%;
     max-width: 400px;
-    height: calc(100vh - 61px);
+    height: calc(100vh - 56px);
     overflow: hidden;
     border-radius: 20px 20px 0px 0px;
 
     background: #FFFFFF;
 }
 
-.ios {
+/* .home.ios {
     padding-top: 20px;
+} */
+
+.home.ios,
+.home.android {
+    max-width: none;
+    height: 100vh;
 }
 
 .content-wrapper {
@@ -35,17 +41,22 @@
     /* justify-content: space-between; */
     overflow: auto;
     width: 100%;
-    height: calc(100% - 77px);
+    height: calc(100% - 71px);
     gap: 4px;
 }
 
-@media (max-device-width: 480px) {
+.home.ios .content-wrapper,
+.home.android .content-wrapper {
+    height: calc(100% - 80px);
+}
+
+/* @media (max-device-width: 480px) {
     .home {
         width: 100vw;
         height: 100vh;
         overflow: hidden;
     }
-}
+} */
 
 .game-block {
     width: 100%;
@@ -139,7 +150,7 @@
 .profile {
     display: flex;
     flex-direction: column;
-    padding: 20px 51px 20px 20px;
+    padding: 20px 20px 20px 20px;
     justify-content: center;
     align-items: flex-start;
     gap: 29px;
@@ -193,7 +204,7 @@ height: 34px; */
 }
 
 .earned-coins>svg>path {
-    fill: #9B37E5;
+    fill: #8654CC;
 }
 
 .earned-coins_count {
@@ -215,6 +226,11 @@ height: 34px; */
     font-weight: 300;
     line-height: 120%;
     opacity: 0.6;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .promo {
@@ -224,6 +240,7 @@ height: 34px; */
     padding: 20px 20px 25px;
     background: #EDCFFC;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .promo::before,
@@ -278,33 +295,13 @@ height: 34px; */
     line-height: 120%;
 }
 
-.promo_count_additional_wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 25px;
-    height: 16px;
-    border-radius: 50px;
-    background: rgba(255, 255, 255, 0.20);
-}
-
-.promo_count_additional {
-    color: #8654CC;
-    font-feature-settings: 'clig' off, 'liga' off;
-    font-family: "Mega Sans Beta";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 120%;
-    word-wrap: normal;
-}
-
 .rating_wrapper {
     display: flex;
     padding: 20px;
     width: 100%;
     border-radius: 20px;
     background-color: #F2F2F2;
+    cursor: pointer;
 }
 
 .rating_main_info {
@@ -386,38 +383,76 @@ height: 34px; */
 
 .rating_list_item:nth-child(3) {
     transform: rotate(-5deg);
-    border-radius: 20px;       
+    border-radius: 20px;
     opacity: 0.4;
     z-index: 1;
 }
 
-.rating_avatar {}
+.rating_avatar {
+    width: 34px;
+    height: 34px;
+}
 
-.rating_list_item_info {}
+.rating_list_item_info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
 
-.rating_name {}
+.rating_name {
+    color: #252822;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    /* 16.8px */
+}
 
 .rating_earned-coins {
     display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
-.rating_earned-coins_count {}
+.rating_earned-coins>svg {
+    width: 9px;
+}
 
+.rating_earned-coins>svg>path {
+    fill: #8654CC;
+}
 
-
-
+.rating_earned-coins_count {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    text-transform: lowercase;
+}
 
 /* Navbar */
 
 .navbar-container {
     position: absolute;
-    bottom: 0px;
+    bottom: 16px;
     width: 100%;
-    height: 77px;
-    padding: 0 17px;
-}
+    height: 49px;
+    padding: 0 6px;
+    background-color: #FFF;
+  }
+  
+  .navbar-container.ios,
+  .navbar-container.android {
+    bottom: 25px;
+  }
 
-@media (max-device-height: 900px) {
+/* @media (max-device-height: 900px) {
     .home-earned {
         margin-top: 18px;
     }
@@ -425,4 +460,4 @@ height: 34px; */
     .motivator-wrapper {
         margin-bottom: 10px;
     }
-}
+} */

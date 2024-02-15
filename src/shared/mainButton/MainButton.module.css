@@ -1,28 +1,48 @@
 .main-button {
     display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 18px 24px;
     gap: 10px;
     border: none;
     border-radius: 10px;
-    background: #FFF;
 }
 
 .main-button.disabled {
-    opacity: 0.4;
+    opacity: 0.2;
+}
+
+.main-button.primary {
+    background: #FFF;
+}
+
+.main-button.secondary {
+    background: #8654CC;
+}
+
+.main-button.full_width {
+    width: 100%;
 }
 
 .main-button-text {
-    color: #8654CC;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: "Mega Sans Beta";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 90%; /* 14.4px */
+    line-height: 90%;
+}
+
+.main-button-text.primary {
+    color: #8654CC;
+}
+
+.main-button-text.secondary {
+    color: #FFF;
 }
 
 .main-button-text.disabled {
-    opacity: 0.4;
+    opacity: 0.2;
 }
 
 /* @media (max-device-height: 900px) {

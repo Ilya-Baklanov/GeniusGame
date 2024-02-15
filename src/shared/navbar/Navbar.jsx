@@ -8,7 +8,7 @@ import {
 } from '@vkontakte/vkui';
 
 import {
-  UserMain, PromoCode, Rating, MoreCoins,
+  UserMain, PromoCode, Rating, MoreCoinsTab,
 } from '../../assets/image';
 
 import style from './Navbar.module.css';
@@ -16,6 +16,7 @@ import style from './Navbar.module.css';
 const Navbar = ({ id, go }) => (
   <div className={cn(style.navbar)}>
     <IconButton
+      aria-label="Вкладка 'Главная'"
       hasActive={false}
       hasHover={false}
       hoverMode=""
@@ -37,6 +38,7 @@ const Navbar = ({ id, go }) => (
       </Text>
     </IconButton>
     <IconButton
+      aria-label="Вкладка 'Промокоды'"
       hasActive={false}
       hasHover={false}
       hoverMode=""
@@ -58,6 +60,7 @@ const Navbar = ({ id, go }) => (
       </Text>
     </IconButton>
     <IconButton
+      aria-label="Вкладка 'Рейтинг'"
       hasActive={false}
       hasHover={false}
       hoverMode=""
@@ -79,6 +82,7 @@ const Navbar = ({ id, go }) => (
       </Text>
     </IconButton>
     <IconButton
+      aria-label="Вкладка 'Ещё монеты'"
       hasActive={false}
       hasHover={false}
       hoverMode=""
@@ -90,7 +94,7 @@ const Navbar = ({ id, go }) => (
       onClick={go}
       data-to="moreCoins"
     >
-      <MoreCoins />
+      <MoreCoinsTab />
       <Text className={cn(style['navbar-button_text'], {
         [style.active]: id === 'moreCoins',
         [style.disabled]: !go,

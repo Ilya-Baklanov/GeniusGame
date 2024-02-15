@@ -1,145 +1,127 @@
 .end-game-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  padding: 31px 17px 39px 17px;
+  padding: 24px 10px 30px;
 }
 
-@media (max-device-width: 480px) {
+/* @media (max-device-width: 480px) {
   .end-game-wrapper {
     padding: 55px 17px 39px 17px;
   }
-}
+} */
 
 /* HEADER */
 
 .end-game-header {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-
+  justify-content: space-between;
   width: 100%;
-  height: 47px;
-
   margin-bottom: 29px;
 }
 
-.end-game-close-button-wrapper {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-
-  height: 100%;
-}
-
 .end-game-close-button {
-  width: 22px;
-  height: 22px;
+  display: flex;
+  width: 39px;
+  height: 39px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 /* MAIN */
 
+.picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .end-game-main-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-
+  align-items: flex-start;
   width: 100%;
-  height: 185px;
+  gap: 24px;
+}
+
+.end-game-title {
+  color: #FFF;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans S";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 90%;
 }
 
 .end-game-earned-wrapper {
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
+  padding: 11px 24px;
   align-items: center;
-  justify-content: space-around;
-  width: 205px;
-  height: 66px;
-
-  background: #F6EAFF;
-  border: 1px solid #7E03B1;
-  border-radius: 10px;
+  gap: 14px;
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.10);
 }
 
 .end-game-earned-title {
-  
-  
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 20px;
-  
-  color: #7E04B1;
+  color: #FFF;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans Beta";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+  opacity: 0.8;
 }
 
 .end-game-earned {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  align-items: baseline;
+  gap: 6px;
 }
 
 .end-game-earned-count {
-  
-  
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 25px;
-
-  color: #000000;
-
-  margin-right: 5px;
+  color: #FFF;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans Beta";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
 }
 
-.end-game-earned>svg>path {
-  fill: #9B37E5;
-}
-
-.end-game-title-wrapper {
-  width: 100%;
-  height: 30px;
-}
-
-.end-game-title {
-  
-  
-  font-weight: 750;
-  font-size: 32px;
-  line-height: 92.9%;
-  text-align: center;
-  white-space: break-spaces;
-  color: #7E04B1;
-}
-
-.end-game-description-wrapper {
-  width: 300px;
-  height: 40px;
+.end-game-earned-text {
+  color: #FFF;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans J";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 120%;
+  opacity: 0.6;
 }
 
 .end-game-description {
-  
-  
-  font-weight: 400;
+  color: #FFF;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans J";
   font-size: 16px;
-  line-height: 20px;
-  text-align: center;
-  white-space: break-spaces;
-  color: #000000;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 120%;
 }
 
 .end-game-button-wrapper {
   width: 100%;
   padding: 0 17px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.end-game-loader {
-  width: 100%;
-  height: 90%;
   display: flex;
   align-items: center;
   justify-content: center;

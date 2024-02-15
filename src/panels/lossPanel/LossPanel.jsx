@@ -9,12 +9,13 @@ const LossPanel = ({
   <EndGamePanel
     id={id}
     go={go}
-    lose
+    loss
     isMoreGamesAvailable={isMoreGamesAvailable}
     timeUntilNextGame={timeUntilNextGame}
     isLoading={isLoading}
     earnedCoin={0}
     isMobile={isMobile}
+    picturePath="/img/lossPicture.png"
   />
 );
 

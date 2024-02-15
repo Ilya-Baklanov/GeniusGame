@@ -7,6 +7,8 @@ import style from './Card.module.css';
 const Card = ({
   item, index, handleClick, disable,
 }) => {
+  if (!item) return null;
+
   const clickHandler = useCallback(() => handleClick(index), [handleClick]);
 
   return item && (
@@ -14,21 +16,15 @@ const Card = ({
     className={cn(
       style.card,
       {
-        [style.preview]: !!item.stat && item.stat === 'preview',
-      },
-      {
-        [style.checked]: !!item.stat && item.stat !== 'preview',
-      },
-      {
-        [style[item.stat]]: !!item.stat && item.stat !== 'preview',
-      },
-      {
-        [style.disable]: disable,
+        [style[item.stat]]: !!item.stat,
       },
     )}
     onClick={disable ? null : clickHandler}
   >
-    <img className={style['card-img']} src={item.img} alt="" />
+    <div className={style['card-img_wrapper']}>
+      <img className={style['card-img']} src={item.img} alt="" />
+    </div>
+    <div className={style.back} />
   </div>
   );
 };

@@ -6,8 +6,13 @@
   /* justify-content: space-between; */
   overflow: auto;
   width: 100%;
-  height: calc(100% - 77px);
+  height: calc(100% - 71px);
   gap: 20px;
+}
+
+.common-panel-main.ios,
+.common-panel-main.android {
+    height: calc(100% - 80px);
 }
 
 /* .with-scrollbar::-webkit-scrollbar {
@@ -146,13 +151,13 @@
 
 .navbar-container {
   position: absolute;
-  bottom: 0px;
+  bottom: 10px;
   width: 100%;
-  height: 77px;
-  padding: 0 17px;
+  height: 49px;
   background-color: #FFF;
 }
 
-.navbar-container.ios {
-  bottom: 10px;
+.navbar-container.ios,
+.navbar-container.android {
+  bottom: 19px;
 }

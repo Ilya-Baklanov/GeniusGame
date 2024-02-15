@@ -15,6 +15,7 @@ export const PanelTypes = {
     lossGame: 'lossGame',
     winGame: 'winGame',
     poster: 'poster',
+    dailyChallenge: 'dailyChallenge',
 };
 
 const structure = [
@@ -57,6 +58,10 @@ const structure = [
             {
                 id: 'poster',
                 hash: '/poster',
+            },
+            {
+                id: 'dailyChallenge',
+                hash: '/dailyChallenge',
             },
         ],
     },

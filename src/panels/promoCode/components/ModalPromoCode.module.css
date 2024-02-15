@@ -2,92 +2,121 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    padding: 6px 6px 35px;
+    width: 400px;
+    height: 100%;
+}
 
-    height: 450px;
-    /* justify-content: space-between; */
+.promocode-modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 20px;
+}
+
+.close-button {
+    display: flex;
+    width: 39px;
+    height: 39px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+    background: rgba(34, 31, 35, 0.05);
 }
 
 .promocode-modal-promocode-card {
     display: flex;
+    width: 100%;
+    padding: 20px;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    width: 315px;
-    height: 159px;
-    border: 1px solid #7E03B1;
-    backdrop-filter: blur(2.84028px);
-    border-radius: 15px;
-    padding: 54px 10px 30px 10px;
-    margin-bottom: 21px;
+    align-items: flex-start;
+    gap: 14px;
+    border-radius: 10px;
+    background: #F2F2F2;
 }
 
 .promocode-modal-promocode-card.availablePromoCode {
-    border: none;
-    background: linear-gradient(45deg, #24B571, 25%, #7E03B1, 85%, #FFB222);
+    border: 1px solid #F2F2F2;
+    background: #8654CC;
 }
 
-.promocode-modal-promocode-card-text {
-    
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 30px;
-    text-align: center;
-
-    color: #7E03B1;
+.promocode-modal-promocode-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.promocode-modal-promocode-card-text.availablePromoCode {
-    color: #FFFFFF;
+.promocode-modal-promocode-card-title {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans S";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 90%;
+    /* 32.4px */
 }
 
 .promocode-modal-promocode-card-description {
-    
-    font-weight: 400;
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
     font-size: 12px;
-    line-height: 15px;
-    text-align: center;
-
-    color: #7E03B1;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    opacity: 0.6;
 }
 
+.promocode-modal-promocode-card-title.availablePromoCode,
 .promocode-modal-promocode-card-description.availablePromoCode {
     color: #FFFFFF;
 }
 
 .promocode-modal-description-wrapper {
-    width: 315px;
-    margin-bottom: 25px;
+    width: 286px;
+    padding-left: 10px;
 }
 
 .promocode-modal-description-text {
-    
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 150%;
-    color: #5E5E5E;
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    opacity: 0.6;
 }
 
 .promocode-modal-rules {
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
-    padding: 0 0 9px 0;
-    margin-bottom: 24px;
+    padding-left: 10px;
+    gap: 14px;
+    margin-bottom: 20px;
 }
 
-.promocode-modal-rules-link {  
-    
-    font-weight: 400;
+.promocode-modal-rules-link {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
     font-size: 14px;
-    line-height: 17px;
-    text-align: center;
-
-    color: #7E03B1;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
 }
 
 .promocode-modal-button-wrapper {
-    width: 315px;
-    margin-bottom: 36px;
+    width: 100%;
+    padding: 0 10px;
 }

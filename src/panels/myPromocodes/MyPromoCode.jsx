@@ -10,20 +10,10 @@ import style from './MyPromoCode.module.css';
 import MainButton from '../../shared/mainButton/MainButton';
 
 const MyPromoCode = ({
-  id, go, amountCoins, isLoading, isMobile, fetchedUser, getUserPromoCodes,
+  id, go, amountCoins, isLoading, isMobile, promocodesList,
 }) => {
   // TODO поставить null как дефолтное значение
-  const [promocodesList, setPromocodesList] = useState([]);
-  const [isCopied, setIsCopied] = useState([]);
-
-  useEffect(() => {
-    if (fetchedUser) {
-      // getUserPromoCodes(fetchedUser)
-      //   .then((response) => {
-      //     setPromocodesList(response.promoList);
-      //   });
-    }
-  }, [fetchedUser]);
+  const [isCopied, setIsCopied] = useState();
 
   return (
     <CommonPanel
@@ -61,7 +51,7 @@ const MyPromoCode = ({
                     {promo}
                   </Text>
                   <Text className={style['promocode-price']}>
-                    {isCopied.includes(promo) ? 'Промокод скопирован.' : `Промокод на ${price}₽`}
+                    {isCopied === promo ? 'Промокод скопирован.' : `Промокод на ${price}₽`}
                   </Text>
                 </div>
               </CopyToClipboard>
@@ -79,8 +69,7 @@ MyPromoCode.propTypes = {
   amountCoins: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   isMobile: PropTypes.bool,
-  fetchedUser: PropTypes.any,
-  getUserPromoCodes: PropTypes.func,
+  promocodesList: PropTypes.array,
 };
 
 export default MyPromoCode;

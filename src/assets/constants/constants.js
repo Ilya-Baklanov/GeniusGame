@@ -27,19 +27,25 @@ export const STATUS_LIST = [
 ];
 
 export const POSTER_PICTURES = [
-    { name: 'coin1', img_w: './img/coin1_w.png', img_c: './img/coin1_c.png' },
-    { name: 'coin2', img_w: './img/coin2_w.png', img_c: './img/coin2_c.png' },
-    { name: 'coin3', img_w: './img/coin3_w.png', img_c: './img/coin3_c.png' },
-    { name: 'gamepad', img_w: './img/gamepad_w.png', img_c: './img/gamepad_c.png' },
-    { name: 'plus1', img_w: './img/plus1_w.png', img_c: './img/plus1_c.png' },
-    { name: 'plus2', img_w: './img/plus2_w.png', img_c: './img/plus2_c.png' },
-    { name: 'logo', img_w: './img/logo_w.png', img_c: './img/logo_b.png' },
-    { name: 'phone', img: './img/phone.png' },
-    { name: 'BG', img: './img/BG_1.png' },
+    { name: 'coin_big', img_w: './img/coin_big_white.png', img_c: './img/coin_big.png' },
+    { name: 'coin_small', img_w: './img/coin_small_white.png', img_c: './img/coin_small.png' },
+    { name: 'hand_with_phone', img_w: './img/hand_with_phone_white.png', img_c: './img/hand_with_phone.png' },
+    { name: 'shoes', img_w: './img/shoes_white.png', img_c: './img/shoes.png' },
+    { name: 'headphone_new', img_w: './img/headphone_new_white.png', img_c: './img/headphone_new.png' },
 ];
 
 export const COMMON_PICTURES = [
     { name: 'MainPicture', img: './img/Home_MainCards.png' },
+    { name: 'WinPicture', img: './img/winPicture.png' },
+    { name: 'LossPicture', img: './img/lossPicture.png' },
+];
+
+export const DAILY_CHALLENGE_PICTURES = [
+    { name: 'MainPicture', img: './img/craft_box.png', dayNumber: 1 },
+    { name: 'MainPicture', img: './img/craft_box_with_logo.png', dayNumber: 2 },
+    { name: 'MainPicture', img: './img/craft_box_with_percent.png', dayNumber: 3 },
+    { name: 'MainPicture', img: './img/percent_with_hand.png', dayNumber: 4 },
+    { name: 'MainPicture', img: './img/hand_with_stars.png', dayNumber: 5 },
 ];
 
 export const PROMOCODES = [
@@ -71,6 +77,7 @@ export const MODAL_PROMO_CODE = 'modal_promo_code';
 export const MODAL_GET_PROMO_CODE = 'modal_get_promo_code';
 export const MODAL_MORE_COINS_STATUS = 'modal_more_coins_status';
 export const MODAL_MORE_COINS_INVITE_FRIENDS = 'modal_more_coins_invite_friends';
+export const MODAL_EXIT_CONFIRM = 'modal_exit_confirm';
 export const ALERT = 'alert';
 
 export const POST_MESSAGE = 'Астрологи объявили неделю обмена монет из игры на реальные промокоды. Неделя продлится долго, скорей играй и получай подарки от СберМегаМаркета.';
@@ -93,3 +100,11 @@ export const CONTACTS_HELP = {
 };
 
 export const SBERMEGAMARKET_LINK = 'https://sbermegamarket.ru';
+
+export const RATING_LIMIT = 1000;
+
+export const MAX_AVAILABLE_GAMES_COUNT = 2;
+
+export const GAME_DURATION = 10000;
+
+export const COUNTDOWN = 3;

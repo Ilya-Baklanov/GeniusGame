@@ -17,29 +17,21 @@ const ModalMoreCoinsStatus = ({
   content,
   onClose,
   onSelect,
+  platform,
 }) => (
   <AppearanceProvider appearance="light">
     <ModalPage
       id={id}
       onClose={onClose}
-      size="s"
-      header={(
-        <ModalPageHeader
-          right={(
-            <IconButton
-              hasActive={false}
-              hasHover={false}
-              hoverMode=""
-              focusVisibleMode=""
-              onClick={onClose}
-            >
-              <CloseGray />
-            </IconButton>
-            )}
-        />
-        )}
+      size={platform === 'vkcom' && 400}
+      hideCloseButton
     >
-      <div className={cn(style['more-coins-modal-wrapper'])}>
+      <div className={cn(style['more-coins-modal-wrapper'], style[platform])}>
+        <div className={style.title_wrapper}>
+          <Text className={style.title}>
+            Подбери статус
+          </Text>
+        </div>
         <div className={cn(style['more-coins-status-list-wrapper'])}>
           {STATUS_LIST.map(({ statusId, img, text }, index) => (
             <div
@@ -49,10 +41,8 @@ const ModalMoreCoinsStatus = ({
             >
               {content.statusId === statusId
                 && (
-                <img
+                <div
                   className={cn(style['more-coins-status-list-item-active-background'])}
-                  src="/img/cat_active_ellipse.png"
-                  alt="background-ellipse"
                 />
                 )}
               <img className={cn(style['more-coins-status-list-item-img'])} src={img} alt={text} />
@@ -65,10 +55,6 @@ const ModalMoreCoinsStatus = ({
               </Text>
             </div>
           ))}
-        </div>
-
-        <div className={cn(style['more-coins-navbar-container'])}>
-          <Navbar id={activePanelId} />
         </div>
       </div>
     </ModalPage>
@@ -83,6 +69,7 @@ ModalMoreCoinsStatus.propTypes = {
   }),
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
+  platform: PropTypes.string,
 };
 
 export default ModalMoreCoinsStatus;

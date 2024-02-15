@@ -1,0 +1,190 @@
+.main_layout_wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(#8700FF 5%, #F6EBFF);
+}
+
+.main_layout {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+    height: calc(100vh - 56px);
+    overflow: hidden;
+    border-radius: 20px 20px 0px 0px;
+    padding: 30px 16px 35px;
+    background: #8654CC;
+}
+
+/* .main_layout.ios {
+    padding-top: 20px;
+} */
+
+.main_layout.ios,
+.main_layout.android {
+    max-width: none;
+    height: 100vh;
+}
+
+.main_layout_top {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+
+.main_layout_bottom {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 40px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 39px;
+}
+
+.close_button {
+    display: flex;
+    width: 39px;
+    height: 39px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+    background: rgba(34, 31, 35, 0.05);
+}
+
+.daily_count_wrapper {
+    display: flex;
+    width: 100%;
+    gap: 4px;
+    min-height: 24px;
+}
+
+.daily_count_item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-basis: 20%;
+}
+
+.daily_count_line {
+    width: 100%;
+    height: 4px;
+    border-radius: 55px;
+    opacity: 0.1;
+    background: #FFF;
+}
+
+.daily_count_text_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start
+}
+
+.daily_count_item.active .daily_count_text_wrapper {
+    justify-content: space-between;
+}
+
+.daily_count_text_bonus_wrapper {
+    display: flex;
+    width: 22px;
+    height: 14px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    background: #FFF;
+}
+
+.daily_count_text_bonus {
+    color: var(--accent, #8654CC);
+    text-align: center;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.daily_count_text {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    opacity: 0.4;
+}
+
+.daily_count_item.active .daily_count_line,
+.daily_count_item.active .daily_count_text {
+    opacity: 1;
+}
+
+.daily_count_item.complete .daily_count_line,
+.daily_count_item.complete .daily_count_text {
+    opacity: 0.6;
+}
+
+.daily_challenge_picture_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.daily_challenge_picture_wrapper.day_4 {
+    justify-content: flex-end;
+}
+
+.daily_challenge_picture_wrapper img {
+    width: 80%;
+}
+
+.daily_challenge_picture_wrapper.day_4 img {
+    margin-right: -16px;
+}
+
+.daily_challenge_picture_wrapper.day_5 img {
+    width: 100%;
+}
+
+.daily_challenge_description {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 24px;
+    min-height: 94px;
+}
+
+.daily_challenge_description_title {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans S";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 90%;
+}
+
+.daily_challenge_description_text {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+}

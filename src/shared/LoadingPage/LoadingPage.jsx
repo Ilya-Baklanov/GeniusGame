@@ -7,9 +7,9 @@ import { LogoLoader } from '../../assets/image';
 
 import style from './LoadingPage.module.css';
 
-const LoadingPage = ({ downloadPercentage }) => (
+const LoadingPage = ({ downloadPercentage, platform }) => (
   <div className={cn(style['loader-wrapper'])}>
-    <div className={cn(style.loader)}>
+    <div className={cn(style.loader, style[platform])}>
       <LogoLoader />
       <div className={cn(style.percentage)}>
         <Text className={cn(style.percentage_number)}>
@@ -25,6 +25,7 @@ const LoadingPage = ({ downloadPercentage }) => (
 
 LoadingPage.propTypes = {
   downloadPercentage: PropTypes.number,
+  platform: PropTypes.string,
 };
 
 export default LoadingPage;

@@ -1,21 +1,30 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/forbid-prop-types */
 import React, {
-  useCallback, useEffect, useState,
+  useCallback, useEffect, useMemo, useState,
 } from 'react';
 import PropTypes from 'prop-types';
+import cn from 'classnames';
 
-import { ScreenSpinner, Text } from '@vkontakte/vkui';
+import {
+  Avatar,
+  Panel, PanelHeader, PanelHeaderBack, ScreenSpinner, Text,
+  usePlatform,
+} from '@vkontakte/vkui';
 
 import CommonPanel from '../../shared/commonPanel/CommonPanel';
 import GamersList from './components/GamersList';
 import Switcher from './components/Switcher';
 import style from './Rating.module.css';
+import { APP_NAME, RATING_LIMIT } from '../../assets/constants/constants';
+import MainLayout from '../../shared/mainLayout/MainLayout';
+import Navbar from '../../shared/navbar/Navbar';
+import { MoreCoins } from '../../assets/image';
+import MainButton from '../../shared/mainButton/MainButton';
 
 const Rating = ({
   id,
   go,
-  amountCoins,
   isLoading,
   friendList,
   fetchedUser,
@@ -29,115 +38,194 @@ const Rating = ({
   getFriendList,
   fetchFriendsToken,
   getAllowed,
+  topPlayers,
+  topPlayersFriends,
 }) => {
   const [isAllRating, setIsAllRating] = useState(true);
-  // const [allowed, setAllowed] = useState(false);
-  // const [friendList, setFriendList] = useState([]);
+  const [allowed, setAllowed] = useState(false);
 
-  // const permissionRequest = useCallback(async () => {
-  //   const permissions = await getAllowed('friends');
+  const platform = usePlatform();
 
-  // const friendsAllowed = permissions
-  // .find((permission) => permission.scope === 'friends').allowed;
+  const allUserCoins = String(topPlayers?.find(
+    (player) => +player.id === fetchedUser.id,
+  )?.coins);
 
-  //   setAllowed(friendsAllowed);
-  //   return friendsAllowed;
-  // }, []);
+  const friendsIdList = friendList?.map((friends) => String(friends.id));
 
-  // useEffect(() => {
-  //   permissionRequest();
-  // }, []);
+  const placeInRate = isAllRating ? placeInLeaderBoard : placeInFriendsLeaderBoard;
 
-  const ratingSwitcherHandler = useCallback((e) => {
-    setIsAllRating(e.target.checked);
+  const topPlayersList = isAllRating ? topPlayers : topPlayersFriends;
+
+  const permissionRequest = useCallback(async () => {
+    const permissions = await getAllowed('friends');
+
+    const friendsAllowed = permissions?.find((permission) => permission.scope === 'friends').allowed;
+
+    setAllowed(friendsAllowed);
+    return friendsAllowed;
   }, []);
 
-  // const fetchFriendsList = useCallback(async (user) => {
-  //   const friendsToken = await fetchFriendsToken(user);
-  //   if (friendsToken) {
-  //     const friendsAllowed = await permissionRequest();
-  //     if (friendsAllowed) {
-  //       const friendListRequest = await getFriendList(friendsToken);
-  //       setFriendList(friendListRequest);
-  //       return friendListRequest;
-  //     }
-  //   }
-  //   return null;
-  // }, [fetchFriendsToken, permissionRequest, getFriendList]);
+  useEffect(() => {
+    permissionRequest();
+  }, []);
 
-  // const getFriendsRatingData = useCallback(async (user) => {
-  //   // const friendListRequest = await fetchFriendsList(user);
-  //   // if (friendListRequest) {
-  //   if (friendList) {
-  //     getPlaceInFriendsLeaderBoard(user, friendList);
-  //   }
-  // }, [friendList]);
+  const ratingSwitcherHandler = useCallback((e) => {
+    setIsAllRating(!e.target.checked);
+  }, []);
 
-  // useEffect(() => {
-  //   if (fetchedUser) {
-  //     // if (!isAllRating) {
-  //     //   getFriendsRatingData(fetchedUser);
-  //     // }
+  const fetchFriendsList = useCallback(async (user) => {
+    const friendsToken = await fetchFriendsToken(user);
+    if (friendsToken) {
+      setAllowed(true);
 
-  //     // getPlaceInLeaderBoard(fetchedUser);
-  //   }
-  // }, [fetchedUser, isAllRating]);
+      const fetchedFriendList = await getFriendList(friendsToken);
+
+      return fetchedFriendList;
+      // }
+    }
+    return null;
+  }, [fetchFriendsToken, getFriendList]);
+
+  const getFriendsRatingData = useCallback(async (user) => {
+    const fetchedFriendList = await fetchFriendsList(user);
+    if (fetchedFriendList) {
+      await getPlaceInFriendsLeaderBoard(user, fetchedFriendList);
+      await getTopPlayersFriends(fetchedFriendList, user, 0, RATING_LIMIT);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (fetchedUser) {
+      if (!isAllRating && (!topPlayersFriends || !placeInFriendsLeaderBoard)) {
+        getFriendsRatingData(fetchedUser);
+      }
+    }
+  }, [fetchedUser, isAllRating, topPlayersFriends, placeInFriendsLeaderBoard]);
 
   return (
-    <CommonPanel
-      id={id}
-      go={go}
-      amountCoins={amountCoins}
-      title="Рейтинг"
-      isLoading={isLoading}
-      isMobile={isMobile}
-    >
-      {placeInLeaderBoard
-      && (isAllRating ? true : placeInFriendsLeaderBoard)
-      && fetchedUser
-      && (isAllRating ? true : friendList.length > 0)
-      && (
-      <GamersList
-        amountCoins={amountCoins}
-        isAllRating={isAllRating}
-        friendList={friendList}
-        fetchedUser={fetchedUser}
-        placeInLeaderBoard={placeInLeaderBoard}
-        placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
-        getTopPlayers={getTopPlayers}
-        getTopPlayersFriends={getTopPlayersFriends}
-        // allowed={allowed}
-      />
+    <Panel id={id}>
+      {!isMobile && (
+      <PanelHeader before={<PanelHeaderBack onClick={go} data-to="home" />}>
+        {APP_NAME}
+      </PanelHeader>
       )}
-      {/* {!allowed && !isAllRating && (
-      <div className={style['not-allowed-to-friends-list-wrapper']}>
-        <div className={style['not-allowed-to-friends-list']}>
-          <Text className={style['not-allowed-to-friends-list-description']}>
-            {'Рейтинг друзей доступен,\nесли ты подтвердил запрос\nна доступ к друзьям.'}
-          </Text>
-          <button
-            type="button"
-            onClick={() => getFriendsRatingData(fetchedUser)}
-            className={style['not-allowed-to-friends-list-button']}
+      {isLoading ? (
+        <ScreenSpinner size="large" />
+      ) : (
+        <MainLayout>
+          <div
+            className={cn(style.content_wrapper, style[platform])}
           >
-            <Text className={style['not-allowed-to-friends-list-button-text']}>
-              Доступ к друзьям
-            </Text>
-          </button>
-        </div>
-      </div>
-      )} */}
-    </CommonPanel>
+            <div className={cn(style.rating_wrapper)}>
+              <div className={cn(style.rating_main_info)}>
+                <Text className={cn(style.rating_title)}>
+                  Рейтинг
+                </Text>
+                <div className={cn(style.rating_numbers)}>
+                  <Text className={cn(style.rating_position)}>
+                    {placeInRate?.orderNumber}
+                  </Text>
+                  <div className={cn(style.rating_total_members)}>
+                    <Text className={cn(style.rating_total_members_text)}>
+                      ваше место
+                    </Text>
+                    <Text className={cn(style.rating_total_members_numbers)}>
+                      {placeInRate?.totalUsersCount ? `из ${placeInRate?.totalUsersCount}` : 'не определено'}
+                    </Text>
+                  </div>
+                </div>
+              </div>
+              <div className={cn(style.rating_list)}>
+                {topPlayersList?.slice(0, 3).map(({
+                  id: playerId, photo, firstName, coins,
+                }) => (
+                  <div key={playerId} className={cn(style.rating_list_item)}>
+                    {photo ? (
+                      <Avatar
+                        src={photo}
+                        className={cn(style.rating_avatar)}
+                        size={34}
+                        withBorder={false}
+                      />
+                    ) : null}
+                    <div className={cn(style.rating_list_item_info)}>
+                      <Text className={cn(style.rating_name)}>
+                        {firstName}
+                      </Text>
+                      <div className={cn(style['rating_earned-coins'])}>
+                        <MoreCoins />
+                        <Text className={cn(style['rating_earned-coins_count'])}>
+                          {coins}
+                        </Text>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className={style.main_content}>
+              <div className={style.main_content_header}>
+                <Switcher onToggle={ratingSwitcherHandler} checked={!isAllRating} />
+                <div className={cn(style['earned-coins'])}>
+                  <MoreCoins />
+                  <Text className={cn(style['earned-coins_count'])}>
+                    {allUserCoins}
+                  </Text>
+                  <Text className={cn(style['earned-coins_text'])}>
+                    балла/ов
+                  </Text>
+                </div>
+              </div>
+              {(isAllRating || (!isAllRating && allowed)) && (
+              <GamersList
+                amountCoins={allUserCoins}
+                isAllRating={isAllRating}
+                friendsIdList={friendsIdList}
+                fetchedUser={fetchedUser}
+                placeInLeaderBoard={placeInLeaderBoard}
+                placeInFriendsLeaderBoard={placeInFriendsLeaderBoard}
+                topPlayers={topPlayers}
+                topPlayersFriends={topPlayersFriends}
+              />
+              )}
+              {!allowed && !isAllRating && (
+                <div className={style['not-allowed-to-friends-list']}>
+                  <Text className={style['not-allowed-to-friends-list-description']}>
+                    {'Рейтинг друзей будет открыт, когда\nты подтвердишь запрос на доступ.'}
+                  </Text>
+                  <MainButton
+                    theme="secondary"
+                    text="Доступ к друзьям"
+                    onClick={() => getFriendsRatingData(fetchedUser)}
+                    className={style['not-allowed-to-friends-list-button']}
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+          <div className={cn(style['navbar-container'], style[platform])}>
+            <Navbar id={id} go={go} />
+          </div>
+        </MainLayout>
+      )}
+    </Panel>
   );
 };
 
 Rating.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
-  amountCoins: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   friendList: PropTypes.any,
-  fetchedUser: PropTypes.any,
+  fetchedUser: PropTypes.shape({
+    id: PropTypes.number,
+    photo_200: PropTypes.string,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+    city: PropTypes.shape({
+      title: PropTypes.string,
+    }),
+  }),
   getPlaceInLeaderBoard: PropTypes.func,
   getPlaceInFriendsLeaderBoard: PropTypes.func,
   placeInLeaderBoard: PropTypes.any,
@@ -148,6 +236,20 @@ Rating.propTypes = {
   getFriendList: PropTypes.func,
   fetchFriendsToken: PropTypes.func,
   getAllowed: PropTypes.func,
+  topPlayers: PropTypes.arrayOf(PropTypes.shape({
+    photo: PropTypes.string,
+    id: PropTypes.number,
+    firstName: PropTypes.string,
+    secondName: PropTypes.string,
+    coins: PropTypes.number,
+  })),
+  topPlayersFriends: PropTypes.arrayOf(PropTypes.shape({
+    photo: PropTypes.string,
+    id: PropTypes.number,
+    firstName: PropTypes.string,
+    secondName: PropTypes.string,
+    coins: PropTypes.number,
+  })),
 };
 
 export default Rating;

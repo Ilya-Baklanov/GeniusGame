@@ -5,6 +5,7 @@ import { MORE_COINS_CARDS } from '../../../assets/constants/constants';
 
 const useGetMoreCoinsData = (circumstances) => {
     const [cardList, setCardList] = useState(MORE_COINS_CARDS);
+
     useEffect(() => {
         if (circumstances) {
             setCardList((previousCardList) => previousCardList.map((card, index) => ({

@@ -41,6 +41,8 @@ import {
   POSTER_PICTURES,
   ALERT,
   COMMON_PICTURES,
+  DAILY_CHALLENGE_PICTURES,
+  MODAL_EXIT_CONFIRM,
 } from './assets/constants/constants';
 import LossPanel from './panels/lossPanel/LossPanel';
 import WinPanel from './panels/winPanel/WinPanel';
@@ -53,6 +55,8 @@ import { timeHandler } from './shared/timer/Timer';
 import ModalMoreCoinsInviteFriends from './panels/moreCoins/components/ModalMoreCoinsInviteFriends';
 import MyPromoCode from './panels/myPromocodes/MyPromoCode';
 import LoadingPage from './shared/LoadingPage/LoadingPage';
+import DailyChallenge from './panels/dailyChallenge/DailyChallenge';
+import ModalExitConfirm from './panels/moreCoins/components/ModalExitConfirm';
 
 const { body } = document;
 const isMobile = body.offsetWidth <= 480;
@@ -66,8 +70,10 @@ const App = () => {
   const { activeView, activePanel } = useRouterSelector();
   const { toView, toPanel, toBack } = useRouterActions();
 
-  const activateLoader = useCallback(() => { setIsLoaded(false); }, []);
-  const shutdownLoader = useCallback(() => { setIsLoaded(true); }, []);
+  console.log('PLATFORM>>>_____: ', platform);
+
+  const activateLoader = () => setIsLoaded(false);
+  const shutdownLoader = () => setIsLoaded(true);
 
   const { isPicturesLoaded, downloadPercentage } = usePreloadImage([
     ...CARDS.map((card) => card.img),
@@ -83,6 +89,7 @@ const App = () => {
       return pictureList;
     }).flat(),
     ...COMMON_PICTURES.map((item) => item.img),
+    ...DAILY_CHALLENGE_PICTURES.map((item) => item.img),
   ]);
 
   const {
@@ -117,6 +124,7 @@ const App = () => {
     getAllowed,
     fetchStatusToken,
     getUserPromoCodes,
+    promocodesList,
     setStatus,
     getStatus,
   } = useFetchUserData();
@@ -144,6 +152,12 @@ const App = () => {
     [serverTimeProcessed, resetTimeMorning, resetTimeEvening, midnightTime],
   );
 
+  const dailyChallengeCount = userStat?.dailyChallengeCount >= 0
+    ? Number(userStat?.dailyChallengeCount) + 1
+    : 0;
+
+  console.log('dailyChallengeCount: ', userStat?.dailyChallengeCount && userStat?.dailyChallengeCount >= 0);
+
   useEffect(() => {
     if (isPicturesLoaded && isFetchUserLoaded) {
       shutdownLoader();
@@ -161,10 +175,21 @@ const App = () => {
     refetchUserStat(fetchedUser)
       .then((response) => {
         if (+response.gameCount > 0) {
-          go(null, 'gameBoard');
+          go(null, PanelTypes.gameBoard);
+        } else {
+          go(null, PanelTypes.home);
         }
       });
   }, [refetchUserStat, fetchedUser]);
+
+  // const endedAdvanceСountdownTimeHandler = useCallback(
+  //   () => {
+  //     if (userStat && fetchedUser) {
+  //       postEarnedCoins(+userStat.coins, fetchedUser, '-1', null);
+  //     }
+  //   },
+  //   [postEarnedCoins, fetchedUser, userStat],
+  // );
 
   const endGameHandler = useCallback((earnedCoin) => {
     if (earnedCoin >= 0 && userStat && fetchedUser) {
@@ -175,20 +200,9 @@ const App = () => {
     }
   }, [userStat, fetchedUser]);
 
-  const closeGameHandler = useCallback(
-    () => {
-      if (userStat && fetchedUser) {
-        postEarnedCoins(+userStat.coins, fetchedUser, '-1', null);
-      }
-    },
-    [postEarnedCoins, fetchedUser, userStat],
-  );
-
-  const endedTimerUntilNextGame = useCallback(() => {
-    setTimeout(() => {
-      refetchUserStat(fetchedUser);
-    }, 1500);
-  }, [fetchedUser, refetchUserStat]);
+  const endedTimerUntilNextGame = useCallback(() => setTimeout(() => {
+    refetchUserStat(fetchedUser);
+  }, 1500), [fetchedUser, refetchUserStat]);
 
   const closeModal = () => {
     setActiveModal((prev) => ({
@@ -252,11 +266,28 @@ const App = () => {
     });
   }, []);
 
+  const activateModalExitConfirmHandler = useCallback(() => {
+    setActiveModal({
+      id: MODAL_EXIT_CONFIRM,
+    });
+  }, []);
+
   const activateAlert = useCallback(() => {
     setActiveModal({
       id: ALERT,
     });
   }, []);
+
+  const confirmExitGameHandler = useCallback(
+    async () => {
+      if (userStat && fetchedUser) {
+        await postEarnedCoins(+userStat.coins, fetchedUser, '-1', null);
+        go(null, 'home');
+        closeModal();
+      }
+    },
+    [postEarnedCoins, fetchedUser, userStat],
+  );
 
   const modal = useMemo(() => (
     <ModalRoot
@@ -267,16 +298,19 @@ const App = () => {
         id={MODAL_PROMO_CODE}
         content={activeModal ? activeModal.content : null}
         amountCoins={userStat ? (userStat.coins || '0') : '0'}
-        userId={fetchedUser ? fetchedUser.id : 0}
+        fetchedUser={fetchedUser}
         onClose={closeModal}
         onActiveModalGetPromocode={activateModalGetPromoCodeHandler}
         getPromoCode={getPromoCode}
+        getUserPromoCodes={getUserPromoCodes}
+        platform={platform}
       />
       <ModalGetPromoCode
         id={MODAL_GET_PROMO_CODE}
         content={activeModal ? activeModal.content : null}
         onClose={closeModal}
         user={userStat}
+        platform={platform}
       />
       <ModalMoreCoinsStatus
         id={MODAL_MORE_COINS_STATUS}
@@ -284,10 +318,17 @@ const App = () => {
         content={activeModal ? activeModal.content : null}
         onClose={closeModal}
         onSelect={changeStatusHandler}
+        platform={platform}
       />
       <ModalMoreCoinsInviteFriends
         id={MODAL_MORE_COINS_INVITE_FRIENDS}
         activePanelId={activePanel}
+        onClose={closeModal}
+        platform={platform}
+      />
+      <ModalExitConfirm
+        id={MODAL_EXIT_CONFIRM}
+        onConfirm={confirmExitGameHandler}
         onClose={closeModal}
       />
 
@@ -308,6 +349,13 @@ const App = () => {
       />
     </ModalRoot>
   ), [activeModal, userStat]);
+
+  const closeGameHandler = useCallback(
+    () => {
+      activateModalExitConfirmHandler();
+    },
+    [],
+  );
 
   const repostHandler = useCallback(async () => {
     const storiesToken = await fetchStoriesToken(fetchedUser);
@@ -401,7 +449,13 @@ const App = () => {
       default:
         return console.log('Invalid CardId');
     }
-  }, [joinGroupHandler]);
+  }, [
+    joinGroupHandler,
+    goToPosterPage,
+    setStatusHandler,
+    inviteFriendsHandler,
+    subscribeToBotHandler,
+  ]);
 
   return (
     <ConfigProvider appearance={fetchedScheme}>
@@ -417,19 +471,23 @@ const App = () => {
                       id={PanelTypes.home}
                       fetchedUser={fetchedUser}
                       go={go}
-                      onStartGame={startGameHandler}
+                      onStartGame={() => go(null, PanelTypes.dailyChallenge)}
                       amountCoins={userStat?.coins || '0'}
                       isLoading={!isFetchUserStatLoaded}
-                      gamesAvailable={Number(userStat?.gameCount ?? 0)}
+                      gamesAvailable={Number(userStat?.gameCount ?? '0')}
                       timeUntilNextGame={timeUntilNextGameInSeconds}
                       onEndedTimerUntilNextGame={endedTimerUntilNextGame}
                       isMobile={isMobile}
                       platform={platform}
                       placeInLeaderBoard={placeInLeaderBoard}
+                      topPlayers={topPlayers}
+                      promocodesList={promocodesList}
                     />
                     <Game
+                      gamesAvailable={Number(userStat?.gameCount ?? '0')}
                       id={PanelTypes.gameBoard}
                       go={go}
+                      // onEndedAdvanceСountdownTime={endedAdvanceСountdownTimeHandler}
                       onEndGame={endGameHandler}
                       onCloseGame={closeGameHandler}
                       isMobile={isMobile}
@@ -448,8 +506,7 @@ const App = () => {
                       amountCoins={userStat?.coins || '0'}
                       isLoading={!isFetchUserStatLoaded}
                       isMobile={isMobile}
-                      fetchedUser={fetchedUser}
-                      getUserPromoCodes={getUserPromoCodes}
+                      promocodesList={promocodesList}
                     />
                     <MoreCoins
                       id={PanelTypes.moreCoins}
@@ -480,12 +537,14 @@ const App = () => {
                       getFriendList={getFriendList}
                       fetchFriendsToken={fetchFriendsToken}
                       getAllowed={getAllowed}
+                      topPlayers={topPlayers}
+                      topPlayersFriends={topPlayersFriends}
                     />
                     <LossPanel
                       id={PanelTypes.lossGame}
                       go={go}
                       isLoading={!isEarnedCoinsPosted}
-                      isMoreGamesAvailable={Number(userStat?.gameCount ?? 0) > 0}
+                      isMoreGamesAvailable={Number(userStat?.gameCount ?? '0') > 0}
                       timeUntilNextGame={timeUntilNextGameInSeconds}
                       isMobile={isMobile}
                     />
@@ -494,7 +553,7 @@ const App = () => {
                       go={go}
                       earnedCoin={earnedCoinOnCurrentGame}
                       isLoading={!isEarnedCoinsPosted}
-                      isMoreGamesAvailable={Number(userStat?.gameCount ?? 0) > 0}
+                      isMoreGamesAvailable={Number(userStat?.gameCount ?? '0') > 0}
                       timeUntilNextGame={timeUntilNextGameInSeconds}
                       isMobile={isMobile}
                     />
@@ -504,10 +563,19 @@ const App = () => {
                       onRepost={repostHandler}
                       isMobile={isMobile}
                     />
+                    <DailyChallenge
+                      id={PanelTypes.dailyChallenge}
+                      go={go}
+                      isLoading={!isFetchUserStatLoaded}
+                      isMobile={isMobile}
+                      dailyChallengeCount={dailyChallengeCount}
+                      onStartGame={startGameHandler}
+                      platform={platform}
+                    />
                   </View>
                 </Epic>
               ) : (
-                <LoadingPage downloadPercentage={downloadPercentage} />
+                <LoadingPage downloadPercentage={downloadPercentage} platform={platform} />
               )}
             </SplitCol>
           </SplitLayout>

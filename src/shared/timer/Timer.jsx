@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
+import { Text } from '@vkontakte/vkui';
 import PropTypes from 'prop-types';
 
 export const addZero = (number) => (number > 9 ? number : `0${number}`);
@@ -28,10 +29,11 @@ export const timeHandler = (time) => {
  * @param advanceСountdownTime время предварительного отсчёта в секундах
  * @param onEndedAdvanceСountdownTime событие, которое выполнится по окончании обратного отсчёта
  * @param onEndedTime событие, которое выполнится по окончании таймера
+ * @param className класснейм для задания стилей
  * @returns
  */
 const Timer = ({
-  time, advanceСountdownTime, onEndedAdvanceСountdownTime, onEndedTime,
+  time, advanceСountdownTime, onEndedAdvanceСountdownTime, onEndedTime, className,
 }) => {
   const [timeLeft, setTimeLeft] = useState(advanceСountdownTime || time);
   const [mainTimeOver, setMainTimeOver] = useState(false);
@@ -46,8 +48,10 @@ const Timer = ({
   }, [time]);
 
   useEffect(() => {
+    let timerId;
+
     if (!mainTimeOver) {
-      const timerId = setInterval(() => {
+      timerId = setInterval(() => {
         setTimeLeft((previousTimeLeft) => {
           if (previousTimeLeft === 1) {
             clearInterval(timerId);
@@ -56,24 +60,34 @@ const Timer = ({
         });
       }, 1000);
     }
+
+    return () => {
+      clearInterval(timerId);
+    };
   }, [mainTimeOver, isAdvanceTimeOver]);
 
   useEffect(() => {
+    let timeoutId;
+
     if (timeLeft === 0) {
       if (!isAdvanceTimeOver) {
         onEndedAdvanceСountdownTime?.();
         setMainTime();
       } else {
         setMainTimeOver(true);
-        onEndedTime?.();
+        timeoutId = onEndedTime?.();
       }
     }
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [timeLeft, isAdvanceTimeOver]);
 
   return (
-    <div>
+    <Text className={className}>
       {advanceСountdownTime && !isAdvanceTimeOver ? `${secondsLeft}` : `${hoursLeft ? `${addZero(hoursLeft)} : ` : ''}${addZero(minutesLeft)} : ${addZero(secondsLeft)}`}
-    </div>
+    </Text>
   );
 };
 
@@ -82,6 +96,7 @@ Timer.propTypes = {
   advanceСountdownTime: PropTypes.number,
   onEndedAdvanceСountdownTime: PropTypes.func,
   onEndedTime: PropTypes.func,
+  className: PropTypes.string,
 };
 
 export default Timer;

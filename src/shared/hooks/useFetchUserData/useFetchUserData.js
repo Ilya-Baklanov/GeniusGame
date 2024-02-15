@@ -2,7 +2,7 @@
 /* eslint-disable indent */
 import React, { useState, useEffect, useCallback } from 'react';
 import bridge from '@vkontakte/vk-bridge';
-import { POST_MESSAGE, POST_PHOTO_ID } from '../../../assets/constants/constants';
+import { POST_MESSAGE, POST_PHOTO_ID, RATING_LIMIT } from '../../../assets/constants/constants';
 // import { topPlayersResponse } from './topPlayersResponse';
 
 const useFetchUserData = () => {
@@ -15,10 +15,13 @@ const useFetchUserData = () => {
     const [serverTime, setServerTime] = useState('');
     const [friendList, setFriendList] = useState(null);
     const [placeInLeaderBoard, setPlaceInLeaderBoard] = useState(null);
-    const [topPlayers, setTopPlayers] = useState(null);
+    const [topPlayers, setTopPlayers] = useState([]);
     const [placeInFriendsLeaderBoard, setPlaceInFriendsLeaderBoard] = useState(null);
-    const [topPlayersFriends, setTopPlayersFriends] = useState(null);
+    const [topPlayersFriends, setTopPlayersFriends] = useState([]);
+    const [promocodesList, setPromocodesList] = useState();
     const [launchParams, setLaunchParams] = useState(null);
+
+    // console.log('token_outside: ', window.location.href.split('?')[1]);
 
     const getAllowed = useCallback(async (type) => {
         const { result } = await bridge.send('VKWebAppCheckAllowedScopes', {
@@ -112,6 +115,8 @@ const useFetchUserData = () => {
     }, []);
 
     const getTopPlayers = useCallback(async (start, end) => {
+        // console.log('token_inside_getTopPlayers: ', window.location.href.split('?')[1]);
+
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -129,6 +134,7 @@ const useFetchUserData = () => {
         const response = await fetch('https://sbermemory.ru/v1/api/getTopPlayers', requestOptions)
             .catch((error) => console.error('getTopPlayers_error: ', error));
         const json = await response.json();
+        setTopPlayers(json.users);
         return json.users;
         // return topPlayersResponse.users.slice(start, end);
     }, []);
@@ -156,8 +162,8 @@ const useFetchUserData = () => {
         setPlaceInFriendsLeaderBoard(data);
     }, []);
 
-    const getTopPlayersFriends = useCallback(async (friendsList, start, end) => {
-        const friendsIdList = friendsList.map((friends) => friends.id);
+    const getTopPlayersFriends = useCallback(async (friendsList, user, start, end) => {
+        const friendsIdList = friendsList?.map((friends) => friends.id);
 
         const requestOptionsFriends = {
             method: 'POST',
@@ -170,16 +176,17 @@ const useFetchUserData = () => {
             body: JSON.stringify({
                 left: start,
                 right: end,
-                friendsList: [...friendsIdList, fetchedUser.id],
+                friendsList: [...friendsIdList, user.id],
                 vkToken: window.location.href.split('?')[1],
             }),
         };
         const responseFriends = await fetch('https://sbermemory.ru/v1/api/getTopPlayersFriends', requestOptionsFriends)
             .catch((error) => console.error('getTopPlayersFriends_error: ', error));
         const json = await responseFriends.json();
+        setTopPlayersFriends(json.users);
         return json.users;
         // return topPlayersResponse.users.slice(start, end);
-    }, [fetchedUser]);
+    }, []);
 
     const fetchFriendsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
@@ -261,6 +268,7 @@ const useFetchUserData = () => {
         };
         const response = await fetch('https://sbermemory.ru/v1/api/up', requestOptions);
         const data = await response.json();
+        await getTopPlayers(0, RATING_LIMIT);
         setUserStat(data);
         setIsEarnedCoinsPosted(true);
     }, []);
@@ -288,7 +296,7 @@ const useFetchUserData = () => {
     const postStoriesPhoto = useCallback(async (user, token) => {
         const response = await bridge.send('VKWebAppShowStoryBox', {
             background_type: 'image',
-            url: 'https://sun9-8.userapi.com/impg/MIzRsgznJZPCXjMYHp-u8fvXKvGfoLPQge52yg/gECD7hxKOZI.jpg?size=607x1080&quality=95&sign=23d8f94f47955a6dbeef68984af4194b&type=album',
+            url: 'https://sun9-73.userapi.com/impg/PuiZNJVibvBh35I1uBly4Ur6KrwCNvFFLl-6-A/LfpjW_sfgJ4.jpg?size=375x812&quality=95&sign=5b015a68ef6fbff7fce79e36382492b2&type=album',
             attachment: {
                 text: 'book',
                 type: 'photo',
@@ -359,7 +367,7 @@ const useFetchUserData = () => {
         };
         const response = await fetch('https://sbermemory.ru/v1/api/getUserPromoCodes', requestOptions);
         const data = await response.json();
-        console.log('getUserPromoCodes: ', data);
+        setPromocodesList(data.promoList);
         return data;
     }, []);
 
@@ -404,10 +412,9 @@ const useFetchUserData = () => {
         const user = await bridge.send('VKWebAppGetUserInfo');
         setUser(user);
         await fetchUserStat(user);
-        const friendsToken = await fetchFriendsToken(user);
-        const friendsList = await getFriendList(friendsToken);
         await getPlaceInLeaderBoard(user);
-        await getPlaceInFriendsLeaderBoard(user, friendsList);
+        await getTopPlayers(0, RATING_LIMIT);
+        await getUserPromoCodes(user);
         setIsFetchUserLoaded(true);
     }, []);
 
@@ -452,6 +459,7 @@ const useFetchUserData = () => {
         getAllowed,
         fetchStatusToken,
         getUserPromoCodes,
+        promocodesList,
         setStatus,
         getStatus,
     };

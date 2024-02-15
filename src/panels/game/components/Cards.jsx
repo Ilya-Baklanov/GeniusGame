@@ -18,10 +18,14 @@ const Cards = ({ disable, onGuessed, previewDelay }) => {
     let editedCardsList = items?.map((item) => ({ ...item, stat: 'preview' }));
     setItems([...editedCardsList]);
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       editedCardsList = items?.map((item) => ({ ...item, stat: '' }));
       setItems([...editedCardsList]);
     }, previewDelay * 1000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   const check = useCallback((checkableCardIndex) => {
