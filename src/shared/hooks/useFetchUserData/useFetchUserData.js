@@ -60,7 +60,10 @@ const useFetchUserData = () => {
         const response = await fetch(`https://sbermemory.ru/v1/api/getUserData/${user.id}`, requestOptions);
 
         const data = await response.json();
-        setUserStat(data);
+        setUserStat((prev) => ({
+            ...prev,
+            ...data,
+        }));
         setIsFetchUserStatLoaded(true);
         return data;
     }, [userStat]);
@@ -269,7 +272,10 @@ const useFetchUserData = () => {
         const response = await fetch('https://sbermemory.ru/v1/api/up', requestOptions);
         const data = await response.json();
         await getTopPlayers(0, RATING_LIMIT);
-        setUserStat(data);
+        setUserStat((prev) => ({
+            ...prev,
+            ...data,
+        }));
         setIsEarnedCoinsPosted(true);
     }, []);
 
@@ -290,7 +296,10 @@ const useFetchUserData = () => {
         };
         const response = await fetch('https://sbermemory.ru/v1/api/updateCirc', requestOptions);
         const data = await response.json();
-        setUserStat(data);
+        setUserStat((prev) => ({
+            ...prev,
+            ...data,
+        }));
     }, []);
 
     const postStoriesPhoto = useCallback(async (user, token) => {

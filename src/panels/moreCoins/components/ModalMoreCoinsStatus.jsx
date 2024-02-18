@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  AppearanceProvider, ModalPage, ModalPageHeader, IconButton, Text, useAdaptivity,
+  AppearanceProvider, ModalPage, Text,
 } from '@vkontakte/vkui';
 import cn from 'classnames';
 import { CopyToClipboard } from 'react-copy-to-clipboard';

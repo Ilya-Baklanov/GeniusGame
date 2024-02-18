@@ -67,9 +67,7 @@ const App = () => {
 
   const platform = usePlatform();
   const { activeView, activePanel } = useRouterSelector();
-  const { toView, toPanel, toBack } = useRouterActions();
-
-  console.log('PLATFORM>>>_____: ', platform);
+  const { toView, toPanel } = useRouterActions();
 
   const activateLoader = () => setIsLoaded(false);
   const shutdownLoader = () => setIsLoaded(true);
@@ -153,8 +151,6 @@ const App = () => {
   const dailyChallengeCount = userStat?.dailyChallengeCount >= 0
     ? Number(userStat?.dailyChallengeCount) + 1
     : 0;
-
-  console.log('dailyChallengeCount: ', userStat?.dailyChallengeCount && userStat?.dailyChallengeCount >= 0);
 
   useEffect(() => {
     if (isPicturesLoaded && isFetchUserLoaded) {
@@ -465,6 +461,16 @@ const App = () => {
               // {isLoaded ? (
                 <Epic activeStory={activeView}>
                   <View id="main" activePanel={activePanel}>
+                    <DailyChallenge
+                      id={PanelTypes.dailyChallenge}
+                      go={go}
+                      isLoading={!isFetchUserStatLoaded}
+                      isMobile={isMobile}
+                      dailyChallengeCount={dailyChallengeCount}
+                      onStartGame={startGameHandler}
+                      platform={platform}
+                      gamesAvailable={Number(userStat?.gameCount ?? '0')}
+                    />
                     <Home
                       id={PanelTypes.home}
                       fetchedUser={fetchedUser}
@@ -560,15 +566,6 @@ const App = () => {
                       go={go}
                       onRepost={repostHandler}
                       isMobile={isMobile}
-                    />
-                    <DailyChallenge
-                      id={PanelTypes.dailyChallenge}
-                      go={go}
-                      isLoading={!isFetchUserStatLoaded}
-                      isMobile={isMobile}
-                      dailyChallengeCount={dailyChallengeCount}
-                      onStartGame={startGameHandler}
-                      platform={platform}
                     />
                   </View>
                 </Epic>

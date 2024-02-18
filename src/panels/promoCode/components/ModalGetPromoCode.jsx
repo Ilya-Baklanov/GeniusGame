@@ -7,9 +7,7 @@ import {
   AppearanceProvider,
   Link,
   ModalPage,
-  ModalPageHeader,
   Text,
-  useAdaptivity,
   IconButton,
 } from '@vkontakte/vkui';
 
@@ -24,7 +22,6 @@ const ModalGetPromoCode = ({
   platform,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
-  const { viewWidth } = useAdaptivity();
 
   useLayoutEffect(() => {
     // Костыль для копирования текста при загрузке страницы в iframe

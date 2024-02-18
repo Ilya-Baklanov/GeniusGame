@@ -112,7 +112,10 @@ const Rating = ({
       {isLoading ? (
         <ScreenSpinner size="large" />
       ) : (
-        <MainLayout>
+        <MainLayout classNames={{
+          layout: style.main_layout,
+        }}
+        >
           <div
             className={cn(style.content_wrapper, style[platform])}
           >

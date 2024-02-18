@@ -26,6 +26,7 @@
 
 .main_layout.ios,
 .main_layout.android {
+    padding: 50px 16px 35px;
     max-width: none;
     height: 100vh;
 }

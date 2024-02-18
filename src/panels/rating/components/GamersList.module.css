@@ -116,6 +116,7 @@
 
 .List {
     /* height: 55vh !important; */
+    padding-bottom: 80px;
 }
 
 .List::-webkit-scrollbar {

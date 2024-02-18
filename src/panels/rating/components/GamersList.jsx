@@ -84,7 +84,7 @@ const GamersList = ({
   // <div className={cn(style['gamers-list-container'])}>
     <List
       className={cn(style.List)}
-      height={450}
+      height={900}
       itemCount={itemCount}
       itemSize={50}
       width="100%"

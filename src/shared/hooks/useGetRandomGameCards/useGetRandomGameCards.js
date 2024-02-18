@@ -19,7 +19,9 @@ const arrayShuffle = (array) => {
 
 function getRandomNumber(arr) {
     const randomNumber = Math.ceil(Math.random() * CARDS_COUNT);
-    return arr.includes(randomNumber) ? getRandomNumber(arr) : randomNumber;
+    return (arr.includes(randomNumber) || randomNumber >= CARDS_COUNT)
+        ? getRandomNumber(arr)
+        : randomNumber;
 }
 
 function toRandomArray(arrLength) {
@@ -37,12 +39,15 @@ const getRandomGameCards = () => {
     const randomNumbersArray = toRandomArray(NUMBER_UNIQUE_CARDS_IN_GAME);
     const listAllCardsNumberInGame = [...randomNumbersArray, ...randomNumbersArray];
     const shuffledListAllCardsNumberInGame = arrayShuffle(listAllCardsNumberInGame);
-
+    console.log('>>>randomNumbersArray: ', randomNumbersArray);
+    console.log('>>>listAllCardsNumberInGame: ', listAllCardsNumberInGame);
+    console.log('>>>shuffledListAllCardsNumberInGame: ', shuffledListAllCardsNumberInGame);
     return shuffledListAllCardsNumberInGame.map((cardNumber) => CARDS[cardNumber]);
 };
 
 const useGetRandomGameCards = () => {
     const [items, setItems] = useState(getRandomGameCards());
+    console.log('useGetRandomGameCards_items: ', items);
 
     return {
         items,

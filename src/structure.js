@@ -24,6 +24,10 @@ const structure = [
         hash: 'main',
         panels: [
             {
+                id: 'dailyChallenge',
+                hash: '/dailyChallenge',
+            },
+            {
                 id: 'home',
                 hash: '/home',
             },
@@ -58,10 +62,6 @@ const structure = [
             {
                 id: 'poster',
                 hash: '/poster',
-            },
-            {
-                id: 'dailyChallenge',
-                hash: '/dailyChallenge',
             },
         ],
     },

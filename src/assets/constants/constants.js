@@ -3,9 +3,9 @@ export const APP_NAME = 'МегаИгра';
 
 export const CARDS_COUNT = 64;
 export const NUMBER_UNIQUE_CARDS_IN_GAME = 10;
-export const CARDS = Array(CARDS_COUNT).fill().map((_, index) => ({
+export const CARDS = Array(CARDS_COUNT).fill(0).map((_, index) => ({
     id: index,
-    img: `./img/${index + 1}.png`,
+    img: `./img/${index}.png`,
     stat: '',
 }));
 
@@ -94,6 +94,6 @@ export const RATING_LIMIT = 1000;
 
 export const MAX_AVAILABLE_GAMES_COUNT = 2;
 
-export const GAME_DURATION = 10000;
+export const GAME_DURATION = 60;
 
 export const COUNTDOWN = 3;

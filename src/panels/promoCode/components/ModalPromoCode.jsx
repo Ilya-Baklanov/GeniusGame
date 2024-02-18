@@ -6,9 +6,7 @@ import {
   AppearanceProvider,
   Link,
   ModalPage,
-  ModalPageHeader,
   Text,
-  useAdaptivity,
   IconButton,
 } from '@vkontakte/vkui';
 
@@ -28,8 +26,6 @@ const ModalPromoCode = ({
   getUserPromoCodes,
   platform,
 }) => {
-  const { viewWidth } = useAdaptivity();
-
   const availablePromoCode = useMemo(
     () => (+amountCoins >= 1100
       ? ((Math.floor(+amountCoins / 100) > content.denomination / 100)

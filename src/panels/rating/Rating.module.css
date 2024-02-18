@@ -1,15 +1,20 @@
+.main_layout {
+    padding-bottom: 0px;
+}
+
 .content_wrapper {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: calc(100% - 71px);
+    /* height: calc(100% - 71px); */
+    height: 100%;
     gap: 4px;
 }
 
-.content_wrapper.ios,
+/* .content_wrapper.ios,
 .content_wrapper.android {
     height: calc(100% - 80px);
-}
+} */
 
 .rating_wrapper {
     display: flex;
@@ -172,8 +177,8 @@
     gap: 14px;
     width: 100%;
     min-height: calc(100% - 155px);
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 20px 0;
     background: #F2F2F2;
 }
 
@@ -240,13 +245,17 @@
 
 .navbar-container {
     position: absolute;
-    bottom: 10px;
+    bottom: 16px;
     width: 100%;
     height: 49px;
     background-color: #FFF;
+
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.80);
+    backdrop-filter: blur(2.5px);
   }
   
   .navbar-container.ios,
   .navbar-container.android {
-    bottom: 19px;
+    bottom: 25px;
   }

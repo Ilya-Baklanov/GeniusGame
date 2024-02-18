@@ -1,4 +1,6 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, {
+  useCallback, useState, useEffect, useLayoutEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -54,7 +56,7 @@ const Game = ({
     }
   }, [guessedCards]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (gamesAvailable <= 0) {
       go(null, PanelTypes.home);
     }

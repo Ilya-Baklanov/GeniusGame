@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
@@ -23,7 +23,14 @@ const DailyChallenge = ({
   dailyChallengeCount,
   onStartGame,
   platform,
+  gamesAvailable,
 }) => {
+  useLayoutEffect(() => {
+    if (gamesAvailable <= 0) {
+      go(null, PanelTypes.home);
+    }
+  }, []);
+
   const picturePath = DAILY_CHALLENGE_PICTURES
     .find((picture) => picture.dayNumber === dailyChallengeCount)?.img
     ?? DAILY_CHALLENGE_PICTURES[0].img;
@@ -123,6 +130,7 @@ DailyChallenge.propTypes = {
   dailyChallengeCount: PropTypes.number,
   onStartGame: PropTypes.func,
   platform: PropTypes.string,
+  gamesAvailable: PropTypes.number,
 };
 
 export default DailyChallenge;

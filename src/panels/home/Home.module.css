@@ -29,6 +29,7 @@
 
 .home.ios,
 .home.android {
+    padding-top: 43px;
     max-width: none;
     height: 100vh;
 }
