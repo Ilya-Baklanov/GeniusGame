@@ -277,6 +277,8 @@ const useFetchUserData = () => {
             ...data,
         }));
         setIsEarnedCoinsPosted(true);
+
+        return data;
     }, []);
 
     const updateCircumstancesStatus = useCallback(async (user, circumstanceIndex) => {

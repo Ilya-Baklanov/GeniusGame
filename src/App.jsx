@@ -166,6 +166,8 @@ const App = () => {
   }, []);
 
   const startGameHandler = useCallback(() => {
+    setEarnedCoinOnCurrentGame(0);
+
     refetchUserStat(fetchedUser)
       .then((response) => {
         if (+response.gameCount > 0) {
@@ -187,9 +189,11 @@ const App = () => {
 
   const endGameHandler = useCallback((earnedCoin) => {
     if (earnedCoin >= 0 && userStat && fetchedUser) {
-      const allEarnedCoins = +earnedCoin + +userStat.coins;
-      postEarnedCoins(allEarnedCoins, fetchedUser, '-1', null).then(() => {
-        setEarnedCoinOnCurrentGame(earnedCoin);
+      const allEarnedCoins = Number(earnedCoin) + Number(userStat.coins);
+      postEarnedCoins(allEarnedCoins, fetchedUser, '-1', null).then((updatedUserStat) => {
+        const earnedCoins = Number(updatedUserStat.coins) - Number(userStat.coins);
+
+        setEarnedCoinOnCurrentGame(earnedCoins);
       });
     }
   }, [userStat, fetchedUser]);
@@ -475,7 +479,8 @@ const App = () => {
                       id={PanelTypes.home}
                       fetchedUser={fetchedUser}
                       go={go}
-                      onStartGame={() => go(null, PanelTypes.dailyChallenge)}
+                      // onStartGame={() => go(null, PanelTypes.dailyChallenge)}
+                      onStartGame={startGameHandler}
                       amountCoins={userStat?.coins || '0'}
                       isLoading={!isFetchUserStatLoaded}
                       gamesAvailable={Number(userStat?.gameCount ?? '0')}
@@ -556,7 +561,7 @@ const App = () => {
                       id={PanelTypes.winGame}
                       go={go}
                       earnedCoin={earnedCoinOnCurrentGame}
-                      isLoading={!isEarnedCoinsPosted}
+                      isLoading={!isEarnedCoinsPosted || !earnedCoinOnCurrentGame}
                       isMoreGamesAvailable={Number(userStat?.gameCount ?? '0') > 0}
                       timeUntilNextGame={timeUntilNextGameInSeconds}
                       isMobile={isMobile}
