@@ -33,7 +33,7 @@
 
 @media (max-device-width: 480px) {
   .common-panel-main {
-    height: calc(100vh - 75px);
+    height: calc(100dvh - 75px);
   }
 }
 
@@ -96,7 +96,7 @@
   justify-content: center; */
   /* top: 25%; */
   /* width: 100%; */
-  /* min-height: 61vh; */
+  /* min-height: 61dvh; */
 }
 
 .common-button.without-description {

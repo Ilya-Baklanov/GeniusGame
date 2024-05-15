@@ -56,7 +56,7 @@
   position: absolute;
   backface-visibility: hidden;
   max-width: 80%;
-  max-height: 9vh;
+  max-height: 9dvh;
   -webkit-transition: -webkit-transform 1s;
   transition: -webkit-transform 1s;
   -o-transition: transform 1s;
