@@ -193,7 +193,7 @@ const useFetchUserData = () => {
 
     const fetchFriendsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51435598,
+            app_id: 51476270,
             scope: 'friends',
         });
         bridge.send(
@@ -208,7 +208,7 @@ const useFetchUserData = () => {
 
     const fetchGroupsToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51435598,
+            app_id: 51476270,
             scope: 'groups',
         });
         bridge.send(
@@ -223,7 +223,7 @@ const useFetchUserData = () => {
 
     const fetchStoriesToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51435598,
+            app_id: 51476270,
             scope: 'stories',
         });
         bridge.send(
@@ -238,7 +238,7 @@ const useFetchUserData = () => {
 
     const fetchStatusToken = useCallback(async (user) => {
         const value = await bridge.send('VKWebAppGetAuthToken', {
-            app_id: 51435598,
+            app_id: 51476270,
             scope: 'status',
         });
         bridge.send(

@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import cn from "classnames";
 
 import {
   Panel,
@@ -9,13 +9,15 @@ import {
   Text,
   ScreenSpinner,
   usePlatform,
-} from '@vkontakte/vkui';
+} from "@vkontakte/vkui";
 
-import Navbar from '../navbar/Navbar';
-import style from './CommonPanel.module.css';
-import MainLayout from '../mainLayout/MainLayout';
-import { APP_NAME } from '../../assets/constants/constants';
-import { MoreCoins } from '../../assets/image';
+import Navbar from "../navbar/Navbar";
+import style from "./CommonPanel.module.css";
+import MainLayout from "../mainLayout/MainLayout";
+import { APP_NAME } from "../../assets/constants/constants";
+import MoreCoins from "../../assets/image/moreCoins.svg?react";
+import { stringEndFormatterByPoints } from "../../shared/helpers/stringEndFormatterByPoints";
+import { PanelTypes } from "../../structure";
 
 const CommonPanel = ({
   id,
@@ -44,53 +46,66 @@ const CommonPanel = ({
       ) : (
         <MainLayout>
           <div
-            className={cn(style['common-panel-main'], style[platform], {
-              [style['with-scrollbar']]: withScrollbar,
+            className={cn(style["common-panel-main"], style[platform], {
+              [style["with-scrollbar"]]: withScrollbar,
             })}
           >
-            <div className={cn(style['common-header'])}>
+            <div className={cn(style["common-header"])}>
               {title && (
-                <Text className={cn(style['common-title'])}>{title}</Text>
+                <Text className={cn(style["common-title"])}>{title}</Text>
               )}
               {description && (
-                <Text className={cn(style['common-description'])}>
+                <Text className={cn(style["common-description"])}>
                   {description}
                 </Text>
               )}
-              <div className={cn(style['common-action-container'])}>
+              <div className={cn(style["common-action-container"])}>
                 {button && (
-                <div
-                  className={cn(style['common-button'], {
-                    [style['without-description']]:
-                    !description,
-                  })}
-                >
-                  {button}
-                </div>
+                  <div
+                    className={cn(style["common-button"], {
+                      [style["without-description"]]: !description,
+                    })}
+                  >
+                    {button}
+                  </div>
                 )}
-                <div className={cn(style['common-panel-earned'])}>
-                  <MoreCoins />
-                  <Text className={cn(style['common-panel-earned-count'])}>
-                    {amountCoins}
-                  </Text>
-                  <Text className={cn(style['common-panel-earned-count_text'])}>
-                    балла/ов
-                  </Text>
-                </div>
+                {id === PanelTypes.promoCode ? (
+                  <div className={cn(style.exchange)}>
+                    <MoreCoins />
+                    <Text className={cn(style.exchange_coins)}>1</Text>
+                    <Text className={cn(style.exchange_coins_type)}>
+                      {"балл"}
+                    </Text>
+                    <Text className={cn(style.exchange_currency)}>
+                      {"= 1₽"}
+                    </Text>
+                  </div>
+                ) : (
+                  <div className={cn(style["common-panel-earned"])}>
+                    <MoreCoins />
+                    <Text className={cn(style["common-panel-earned-count"])}>
+                      {amountCoins}
+                    </Text>
+                    <Text
+                      className={cn(style["common-panel-earned-count_text"])}
+                    >
+                      {stringEndFormatterByPoints(amountCoins)}
+                    </Text>
+                  </div>
+                )}
               </div>
             </div>
             {children && (
-            <div
-              className={cn(style['common-children'], {
-                [style['without-description']]:
-                    !description,
-              })}
-            >
-              {children}
-            </div>
+              <div
+                className={cn(style["common-children"], {
+                  [style["without-description"]]: !description,
+                })}
+              >
+                {children}
+              </div>
             )}
           </div>
-          <div className={cn(style['navbar-container'], style[platform])}>
+          <div className={cn(style["navbar-container"], style[platform])}>
             <Navbar id={activeTab || id} go={go} />
           </div>
         </MainLayout>

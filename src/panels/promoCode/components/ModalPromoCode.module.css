@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 6px 35px;
+    padding: 16px 16px 35px;
     width: 400px;
     height: 100%;
 }
@@ -18,13 +18,24 @@
 
 .close-button {
     display: flex;
-    width: 39px;
-    height: 39px;
+    width: 44px;
+    height: 44px;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    border-radius: 20px;
+    border-radius: 200px;
     background: rgba(34, 31, 35, 0.05);
+}
+
+.close-button svg path {
+    stroke: #221F23;
+}
+
+.availablePromoCode .close-button {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.availablePromoCode .close-button svg path {
+    stroke: #FFF;
 }
 
 .promocode-modal-promocode-card {
@@ -78,16 +89,110 @@
     color: #FFFFFF;
 }
 
+.alert_wrapper {
+    display: flex;
+    align-items: flex-start;
+    width: 343px;
+    padding: 20px;
+    gap: 12px;
+    border-radius: 10px;
+    border: 1px solid #F2F2F2;
+}
+
+.alert_content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    flex: 1 0 0;
+}
+
+.alert_title {
+    color: #FD2727;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 90%; /* 16.2px */
+}
+
+.alert_description {
+    color: #FD9191;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; /* 14.4px */
+    opacity: 0.8;
+    align-self: stretch;
+}
+
+.balance {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    border-radius: 10px;
+    background: rgba(134, 84, 204, 0.10);
+}
+
+.balance_title {
+    color: var(--accent, #8654CC);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    /* 19.2px */
+}
+
+.balance_value {
+    display: flex;
+    padding: 4px 6px 2px 6px;
+    align-items: center;
+    gap: 4px;
+}
+
+.balance_value>svg>path {
+    fill: #8654CC;
+}
+
+.balance_value_count {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+.balance_value_count_text {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    opacity: 0.6;
+}
+
 .promocode-modal-description-wrapper {
     width: 286px;
-    padding-left: 10px;
+    /* padding-left: 10px; */
 }
 
 .promocode-modal-description-text {
     color: #221F23;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: "Mega Sans J";
-    font-size: 12px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 300;
     line-height: 120%;
@@ -99,7 +204,7 @@
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    padding-left: 10px;
+    /* padding-left: 10px; */
     gap: 14px;
     margin-bottom: 20px;
 }
@@ -117,7 +222,66 @@
     line-height: 100%;
 }
 
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.many_points_explanation_wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.many_points_explanation_text {
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%; /* 14.4px */
+    opacity: 0.4;
+}
+
 .promocode-modal-button-wrapper {
     width: 100%;
-    padding: 0 10px;
+    /* padding: 0 10px; */
+    margin-top: 20px;
+}
+
+.rules {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 6px;
+    margin-top: 30px;
+}
+
+.rules-question {
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    opacity: 0.6;
+}
+
+.rules-link {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
 }

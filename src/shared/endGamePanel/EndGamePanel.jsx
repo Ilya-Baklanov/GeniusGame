@@ -1,19 +1,26 @@
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
+import React, { useMemo } from "react";
+import PropTypes from "prop-types";
+import cn from "classnames";
 
 import {
-  Panel, PanelHeader, PanelHeaderBack, Text, IconButton, ScreenSpinner,
-} from '@vkontakte/vkui';
+  Panel,
+  PanelHeader,
+  PanelHeaderBack,
+  Text,
+  IconButton,
+  ScreenSpinner,
+} from "@vkontakte/vkui";
 
-import {
-  MoreCoins, CloseGray, MainLogo,
-} from '../../assets/image';
-import style from './EndGamePanel.module.css';
-import { APP_NAME } from '../../assets/constants/constants';
-import MainLayout from '../mainLayout/MainLayout';
-import MainButton from '../mainButton/MainButton';
-import Timer from '../timer/Timer';
+import MoreCoins from "../../assets/image/moreCoins.svg?react";
+import CloseGray from "../../assets/image/closeGray.svg?react";
+import MainLogo from "../../assets/image/main_logo.svg?react";
+import style from "./EndGamePanel.module.css";
+import { APP_NAME } from "../../assets/constants/constants";
+import MainLayout from "../mainLayout/MainLayout";
+import MainButton from "../mainButton/MainButton";
+import Timer from "../timer/Timer";
+import { stringEndFormatterByPoints } from "../../shared/helpers/stringEndFormatterByPoints";
+import { BackButton } from "../backButton/BackButton";
 
 const EndGamePanel = ({
   id,
@@ -27,8 +34,14 @@ const EndGamePanel = ({
   isMobile,
   picturePath,
 }) => {
-  const hours = useMemo(() => Math.trunc((timeUntilNextGame / 3600) % 60), [timeUntilNextGame]);
-  const minutes = useMemo(() => Math.trunc((timeUntilNextGame / 60) % 60), [timeUntilNextGame]);
+  const hours = useMemo(
+    () => Math.trunc((timeUntilNextGame / 3600) % 60),
+    [timeUntilNextGame]
+  );
+  const minutes = useMemo(
+    () => Math.trunc((timeUntilNextGame / 60) % 60),
+    [timeUntilNextGame]
+  );
 
   const hoursText = useMemo(() => {
     switch (true) {
@@ -39,69 +52,65 @@ const EndGamePanel = ({
       case hours === 1:
         return `${hours} час`;
       default:
-        return '';
+        return "";
     }
   }, [hours]);
 
   return (
     <Panel id={id}>
       {!isMobile && (
-        <PanelHeader
-          before={<PanelHeaderBack onClick={go} data-to="home" />}
-        >
+        <PanelHeader before={<PanelHeaderBack onClick={go} data-to="home" />}>
           {APP_NAME}
         </PanelHeader>
       )}
       <MainLayout backgroundColor="secondary">
-        <div className={cn(style['end-game-wrapper'])}>
-          <div className={cn(style['end-game-header'])}>
-            <MainLogo />
-            <IconButton
-              aria-label="Крестик для закрытия текущего окна"
-              hasActive={false}
-              hasHover={false}
-              hoverMode=""
-              focusVisibleMode=""
+        <div className={cn(style["end-game-wrapper"])}>
+          <div className={cn(style["end-game-header"])}>
+            <BackButton
               onClick={go}
-              data-to="home"
-              className={cn(style['end-game-close-button'])}
-            >
-              <CloseGray />
-            </IconButton>
+              goTo="home"
+              className={cn(style["end-game-close-button"])}
+            />
           </div>
-          {isLoading ? (<ScreenSpinner size="large" />) : (
+          {isLoading ? (
+            <ScreenSpinner size="large" />
+          ) : (
             <>
               <div className={cn(style.picture)}>
                 <img src={picturePath} alt="Игра окончена" />
               </div>
-              <div className={cn(style['end-game-main-content'])}>
-                <Text className={cn(style['end-game-title'])}>
-                  {loss && 'Не грусти!'}
-                  {win && 'Поздравляем!'}
+              <div className={cn(style["end-game-main-content"])}>
+                <Text className={cn(style["end-game-title"])}>
+                  {loss && "Не грустите!"}
+                  {win && "Поздравляем!"}
                 </Text>
-                <div className={cn(style['end-game-earned-wrapper'])}>
-                  <Text className={cn(style['end-game-earned-title'])}>
+                <div className={cn(style["end-game-earned-wrapper"])}>
+                  <Text className={cn(style["end-game-earned-title"])}>
                     Заработано:
                   </Text>
-                  <div className={cn(style['end-game-earned'])}>
+                  <div className={cn(style["end-game-earned"])}>
                     <MoreCoins />
-                    <Text className={cn(style['end-game-earned-count'])}>
+                    <Text className={cn(style["end-game-earned-count"])}>
                       {earnedCoin}
                     </Text>
-                    <Text className={cn(style['end-game-earned-text'])}>
-                      балла/ов
+                    <Text className={cn(style["end-game-earned-text"])}>
+                      {stringEndFormatterByPoints(earnedCoin)}
                     </Text>
                   </div>
                 </div>
-                <Text className={cn(style['end-game-description'])}>
+                <Text className={cn(style["end-game-description"])}>
                   {isMoreGamesAvailable
-                    ? 'Ты можешь сыграть\nещё одну игру!'
-                    : `Следующая игра станет\nдоступна через ${hoursText} ${minutes ? `${minutes} минут` : ''}.`}
+                    ? "Вы можете сыграть\nещё одну игру"
+                    : `Следующая игра станет\nдоступна через ${hoursText} ${
+                        minutes ? `${minutes} минут` : ""
+                      }`}
                 </Text>
               </div>
               <MainButton
-                text={isMoreGamesAvailable ? 'Играть' : 'На главную'}
-                onClick={() => go(null, isMoreGamesAvailable ? 'gameBoard' : 'home')}
+                text={isMoreGamesAvailable ? "Играть" : "На главную"}
+                onClick={() =>
+                  go(null, isMoreGamesAvailable ? "gameBoard" : "home")
+                }
                 isFullWidth
               />
             </>

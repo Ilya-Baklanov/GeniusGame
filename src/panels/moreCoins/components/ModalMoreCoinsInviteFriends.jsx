@@ -7,7 +7,8 @@ import cn from 'classnames';
 
 import style from './ModalMoreCoinsInviteFriends.module.css';
 import Navbar from '../../../shared/navbar/Navbar';
-import { CloseGray } from '../../../assets/image';
+import CloseGray from '../../../assets/image/closeGray.svg?react';
+import { BackButton } from '../../../shared/backButton/BackButton';
 
 const ModalMoreCoinsInviteFriends = ({
   id,
@@ -25,16 +26,7 @@ const ModalMoreCoinsInviteFriends = ({
       header={(
         <ModalPageHeader
           right={(
-            <IconButton
-              aria-label="Крестик для закрытия текущего окна"
-              hasActive={false}
-              hasHover={false}
-              hoverMode=""
-              focusVisibleMode=""
-              onClick={onClose}
-            >
-              <CloseGray />
-            </IconButton>
+            <BackButton onClick={onClose} />
           )}
         />
       )}

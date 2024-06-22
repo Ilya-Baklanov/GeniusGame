@@ -12,8 +12,11 @@ import {
 import style from './DailyChallenge.module.css';
 import MainButton from '../../shared/mainButton/MainButton';
 import { APP_NAME, DAILY_CHALLENGE_PICTURES } from '../../assets/constants/constants';
-import { CloseGray, MainLogo } from '../../assets/image';
+import CheckMark from '../../assets/image/checkMark.svg?react';
+import MainLogo from '../../assets/image/main_logo.svg?react';
 import { PanelTypes } from '../../structure';
+import { BackButton } from '../../shared/backButton/BackButton';
+import x2ItemImageSrc from '/img/x2_item.png?url';
 
 const DailyChallenge = ({
   id,
@@ -49,21 +52,7 @@ const DailyChallenge = ({
           <div className={cn(style.main_layout, style[platform])}>
             <div className={style.main_layout_top}>
               <div className={cn(style.header)}>
-                <div className={cn(style.logo)}>
-                  <MainLogo />
-                </div>
-                <IconButton
-                  aria-label="Крестик для закрытия текущего окна"
-                  hasActive={false}
-                  hasHover={false}
-                  hoverMode=""
-                  focusVisibleMode=""
-                  onClick={go}
-                  data-to={PanelTypes.home}
-                  className={style.close_button}
-                >
-                  <CloseGray />
-                </IconButton>
+                <BackButton onClick={go} goTo={PanelTypes.home} />
               </div>
               <div className={style.daily_count_wrapper}>
                 {new Array(5).fill(0).map((_, index) => (
@@ -89,13 +78,19 @@ const DailyChallenge = ({
                         </Text>
                       </div>
                       )}
+                      {dailyChallengeCount > index + 1 && <CheckMark width="10px" height="6px" />}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
             <div className={cn(style.daily_challenge_picture_wrapper, style[`day_${dailyChallengeCount}`])}>
-              <img src={picturePath} alt="" />
+              <img src={picturePath} className={cn(style.main_picture)} alt="" />
+              {dailyChallengeCount < 5 && <img src={x2ItemImageSrc} className={cn(style.x2_item)} alt="" />}
+              {dailyChallengeCount < 5 && <img src={x2ItemImageSrc} className={cn(style.x2_item)} alt="" />}
+              {dailyChallengeCount < 5 && <img src={x2ItemImageSrc} className={cn(style.x2_item)} alt="" />}
+              {dailyChallengeCount < 5 && <img src={x2ItemImageSrc} className={cn(style.x2_item)} alt="" />}
+              {dailyChallengeCount < 5 && <img src={x2ItemImageSrc} className={cn(style.x2_item, style.big)} alt="" />}
             </div>
             <div className={style.main_layout_bottom}>
               <div className={style.daily_challenge_description}>
@@ -104,8 +99,8 @@ const DailyChallenge = ({
                 </Text>
                 <Text className={style.daily_challenge_description_text}>
                   {dailyChallengeCount === 5
-                    ? 'Умничка! Сегодня можешь получить\nв два раза больше баллов!'
-                    : 'Заходи в игру пять дней подряд,\nчтобы удвоить свои бонусы!'}
+                    ? 'Отлично! Сегодня можете получить\nв два раза больше баллов!'
+                    : 'Заходите в игру пять дней подряд,\nчтобы удвоить свои баллы!'}
                 </Text>
               </div>
               <MainButton

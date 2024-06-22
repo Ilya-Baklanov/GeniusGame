@@ -8,7 +8,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import style from './ModalMoreCoinsStatus.module.css';
 import Navbar from '../../../shared/navbar/Navbar';
-import { CloseGray } from '../../../assets/image';
+import CloseGray from '../../../assets/image/closeGray.svg?react';
 import { STATUS_LIST } from '../../../assets/constants/constants';
 
 const ModalMoreCoinsStatus = ({

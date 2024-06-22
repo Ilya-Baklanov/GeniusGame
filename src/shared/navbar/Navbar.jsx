@@ -7,9 +7,10 @@ import {
   Text,
 } from '@vkontakte/vkui';
 
-import {
-  UserMain, PromoCode, Rating, MoreCoinsTab,
-} from '../../assets/image';
+import UserMain from '../../assets/image/userMain.svg?react';
+import PromoCode from '../../assets/image/promoCode.svg?react';
+import Rating from '../../assets/image/rating.svg?react';
+import MoreCoinsTab from '../../assets/image/moreCoinsTab.svg?react';
 
 import style from './Navbar.module.css';
 

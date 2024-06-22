@@ -52,7 +52,6 @@ import Poster from './panels/poster/Poster';
 import ModalGetPromoCode from './panels/promoCode/components/ModalGetPromoCode';
 import { timeHandler } from './shared/timer/Timer';
 import ModalMoreCoinsInviteFriends from './panels/moreCoins/components/ModalMoreCoinsInviteFriends';
-import MyPromoCode from './panels/myPromocodes/MyPromoCode';
 import LoadingPage from './shared/LoadingPage/LoadingPage';
 import DailyChallenge from './panels/dailyChallenge/DailyChallenge';
 import ModalExitConfirm from './panels/moreCoins/components/ModalExitConfirm';
@@ -60,7 +59,7 @@ import ModalExitConfirm from './panels/moreCoins/components/ModalExitConfirm';
 const { body } = document;
 const isMobile = body.offsetWidth <= 480;
 
-const App = () => {
+export const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [earnedCoinOnCurrentGame, setEarnedCoinOnCurrentGame] = useState(0);
   const [activeModal, setActiveModal] = useState(null);
@@ -508,13 +507,6 @@ const App = () => {
                       onActivateModal={activateModalPromoCodeHandler}
                       isLoading={!isFetchUserStatLoaded}
                       isMobile={isMobile}
-                    />
-                    <MyPromoCode
-                      id={PanelTypes.myPromoCode}
-                      go={go}
-                      amountCoins={userStat?.coins || '0'}
-                      isLoading={!isFetchUserStatLoaded}
-                      isMobile={isMobile}
                       promocodesList={promocodesList}
                     />
                     <MoreCoins
@@ -584,5 +576,3 @@ const App = () => {
     </ConfigProvider>
   );
 };
-
-export default App;

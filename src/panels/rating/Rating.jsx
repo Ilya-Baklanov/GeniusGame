@@ -19,8 +19,9 @@ import style from './Rating.module.css';
 import { APP_NAME, RATING_LIMIT } from '../../assets/constants/constants';
 import MainLayout from '../../shared/mainLayout/MainLayout';
 import Navbar from '../../shared/navbar/Navbar';
-import { MoreCoins } from '../../assets/image';
+import MoreCoins from '../../assets/image/moreCoins.svg?react';
 import MainButton from '../../shared/mainButton/MainButton';
+import {stringEndFormatterByPoints} from '../../shared/helpers/stringEndFormatterByPoints'
 
 const Rating = ({
   id,
@@ -148,7 +149,7 @@ const Rating = ({
                         src={photo}
                         className={cn(style.rating_avatar)}
                         size={34}
-                        withBorder={false}
+                        noBorder={true}
                       />
                     ) : null}
                     <div className={cn(style.rating_list_item_info)}>
@@ -175,7 +176,7 @@ const Rating = ({
                     {allUserCoins}
                   </Text>
                   <Text className={cn(style['earned-coins_text'])}>
-                    балла/ов
+                    {stringEndFormatterByPoints(allUserCoins)}
                   </Text>
                 </div>
               </div>

@@ -7,7 +7,7 @@ import {
 } from '@vkontakte/vkui';
 
 import style from './Card.module.css';
-import { MoreCoins } from '../../../assets/image';
+import MoreCoins from '../../../assets/image/moreCoins.svg?react';
 
 const Card = ({
   onClick, goTo, title, description, textOnSuccess, additionalCoins, isComplete,

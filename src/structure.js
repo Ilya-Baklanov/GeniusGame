@@ -9,7 +9,6 @@ export const PanelTypes = {
     home: 'home',
     gameBoard: 'gameBoard',
     promoCode: 'promoCode',
-    myPromoCode: 'myPromoCode',
     moreCoins: 'moreCoins',
     rating: 'rating',
     lossGame: 'lossGame',
@@ -38,10 +37,6 @@ const structure = [
             {
                 id: 'promoCode',
                 hash: '/promoCode',
-            },
-            {
-                id: 'myPromoCode',
-                hash: '/myPromoCode',
             },
             {
                 id: 'moreCoins',

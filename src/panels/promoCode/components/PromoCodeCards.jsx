@@ -6,7 +6,7 @@ import cn from 'classnames';
 
 import style from './PromoCodeCards.module.css';
 import { GAME_RULES, PROMOCODES, PROMOTION_RULES } from '../../../assets/constants/constants';
-import { RightArrow } from '../../../assets/image';
+import RightArrow from '../../../assets/image/right_arrow.svg?react';
 
 const PromoCodeCards = ({ amountCoins, onActivateModal }) => {
   const isActivePromoCode = useCallback(

@@ -1,23 +1,45 @@
 import React, {
-  useCallback, useState, useEffect, useLayoutEffect,
-} from 'react';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
+  useCallback,
+  useState,
+  useEffect,
+  useLayoutEffect,
+} from "react";
+import PropTypes from "prop-types";
+import cn from "classnames";
 
 import {
-  Panel, PanelHeader, PanelHeaderBack, Text, IconButton,
-} from '@vkontakte/vkui';
+  Panel,
+  PanelHeader,
+  PanelHeaderBack,
+  Text,
+  IconButton,
+} from "@vkontakte/vkui";
 
-import { MoreCoins, Close, CloseGray } from '../../assets/image';
-import Cards from './components/Cards';
-import style from './Game.module.css';
-import Timer from '../../shared/timer/Timer';
-import { APP_NAME, COUNTDOWN, GAME_DURATION } from '../../assets/constants/constants';
-import MainLayout from '../../shared/mainLayout/MainLayout';
-import { PanelTypes } from '../../structure';
+import MoreCoins from "../../assets/image/moreCoins.svg?react";
+import Close from "../../assets/image/close.svg?react";
+import CloseGray from "../../assets/image/closeGray.svg?react";
+import RightArrow from '../../assets/image/right_arrow.svg?react';
+import Cards from "./components/Cards";
+import style from "./Game.module.css";
+import Timer from "../../shared/timer/Timer";
+import {
+  APP_NAME,
+  COUNTDOWN,
+  GAME_DURATION,
+} from "../../assets/constants/constants";
+import MainLayout from "../../shared/mainLayout/MainLayout";
+import { PanelTypes } from "../../structure";
+import { stringEndFormatterByPoints } from "../../shared/helpers/stringEndFormatterByPoints";
+import { BackButton } from "../../shared/backButton/BackButton";
 
 const Game = ({
-  id, go, onEndGame, onCloseGame, isMobile, onEndedAdvanceСountdownTime, gamesAvailable,
+  id,
+  go,
+  onEndGame,
+  onCloseGame,
+  isMobile,
+  onEndedAdvanceСountdownTime,
+  gamesAvailable,
 }) => {
   const [isDisableGameboard, setIsDisableGameboard] = useState(true);
   const [guessedCards, setGuessedCards] = useState(0);
@@ -65,30 +87,16 @@ const Game = ({
   return (
     <Panel id={id}>
       {!isMobile && (
-        <PanelHeader
-          before={<PanelHeaderBack onClick={closeGameHandler} />}
-        >
+        <PanelHeader before={<PanelHeaderBack onClick={closeGameHandler} />}>
           {APP_NAME}
         </PanelHeader>
       )}
       <MainLayout>
-        <div className={cn(style['game-wrapper'])}>
+        <div className={cn(style["game-wrapper"])}>
           <div className={cn(style.header)}>
-            <div className={cn(style['earned-wrapper'])}>
-              <Text className={cn(style['earned-title'])}>
-                Заработано:
-              </Text>
-              <div className={cn(style.earned)}>
-                <MoreCoins />
-                <Text className={cn(style['earned-count'])}>
-                  {guessedCards}
-                </Text>
-                <Text className={cn(style['earned-text'])}>
-                  балла/ов
-                </Text>
-              </div>
-            </div>
-            <div className={cn(style['timer-and-close-wrapper'])}>
+            <div className={cn(style["timer-and-close-wrapper"])}>
+              <BackButton onClick={closeGameHandler} />
+
               <div className={cn(style.timer)}>
                 <Timer
                   time={GAME_DURATION}
@@ -98,21 +106,27 @@ const Game = ({
                   className={cn(style.time)}
                 />
               </div>
-              <IconButton
-                aria-label="Крестик для закрытия текущего окна"
-                onClick={closeGameHandler}
-                className={cn(style['close-button'])}
-                hasActive={false}
-                hasHover={false}
-                hoverMode=""
-                focusVisibleMode=""
-              >
-                <CloseGray />
-              </IconButton>
+            </div>
+
+            <div className={cn(style["earned-wrapper"])}>
+              <Text className={cn(style["earned-title"])}>Заработано:</Text>
+              <div className={cn(style.earned)}>
+                <MoreCoins />
+                <Text className={cn(style["earned-count"])}>
+                  {guessedCards}
+                </Text>
+                <Text className={cn(style["earned-text"])}>
+                  {stringEndFormatterByPoints(guessedCards)}
+                </Text>
+              </div>
             </div>
           </div>
-          <div className={cn(style['game-board'])}>
-            <Cards disable={isDisableGameboard} onGuessed={guessingHandler} previewDelay={3} />
+          <div className={cn(style["game-board"])}>
+            <Cards
+              disable={isDisableGameboard}
+              onGuessed={guessingHandler}
+              previewDelay={3}
+            />
           </div>
         </div>
       </MainLayout>

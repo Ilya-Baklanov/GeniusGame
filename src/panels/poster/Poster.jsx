@@ -7,13 +7,15 @@ import {
   Panel, PanelHeader, PanelHeaderBack, Text, IconButton,
 } from '@vkontakte/vkui';
 
-import { Close, CloseGray } from '../../assets/image';
+import CloseGray from '../../assets/image/closeGray.svg?react';
+import Close from '../../assets/image/close.svg?react';
 import style from './Poster.module.css';
 import { APP_NAME, POSTER_PICTURES } from '../../assets/constants/constants';
 import MainLayout from '../../shared/mainLayout/MainLayout';
 import Navbar from '../../shared/navbar/Navbar';
 import MainButton from '../../shared/mainButton/MainButton';
 import { PanelTypes } from '../../structure';
+import { BackButton } from '../../shared/backButton/BackButton';
 
 const Poster = ({
   id, go, onRepost, isMobile,
@@ -32,20 +34,9 @@ const Poster = ({
       <MainLayout>
         <div className={cn(style['poster-wrapper'])}>
           <div className={cn(style.top)}>
+            <BackButton onClick={go} goTo={PanelTypes.moreCoins} className={cn(style['close-button'])}/>
             <div className={cn(style.header)}>
               <Text className={cn(style.title)}>{'Раскрась и получи\nмонеты'}</Text>
-              <IconButton
-                aria-label="Крестик для закрытия текущего окна"
-                onClick={go}
-                data-to={PanelTypes.moreCoins}
-                className={cn(style['close-button'])}
-                hasActive={false}
-                hasHover={false}
-                hoverMode=""
-                focusVisibleMode=""
-              >
-                <CloseGray />
-              </IconButton>
             </div>
             <div className={cn(style['description-wrapper'])}>
               <Text className={cn(style.description)}>

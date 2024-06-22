@@ -1,17 +1,133 @@
-.button {
-    padding: 18px 24px;
-    border: none;
-    border-radius: 10px;
-    background: #FFF;
-    cursor: pointer;
+.switcher_wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
 }
 
-.button-text {
+.earned {
+    /* position: absolute; */
+    /* top: 4%; */
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    /* justify-content: flex-start; */
+  }
+  
+  .earned>svg>path {
+    fill: #8654CC;
+  }
+  
+  .earned-count {
     color: #8654CC;
     font-feature-settings: 'clig' off, 'liga' off;
     font-family: "Mega Sans Beta";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 90%;
+    line-height: 120%;
+  }
+  
+  .earned-count_text {
+    color: #8654CC;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans J";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 120%;
+    opacity: 0.6;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    /* height: 65dvh; */
+    overflow: auto;
+    gap: 6px;
+}
+
+.promocode-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  background: rgba(134, 84, 204, 0.10);
+}
+
+.promocode {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.promocode-price {
+  color: var(--accent, #8654CC);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans S";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 90%; /* 32.4px */
+}
+
+.promocode-name {
+  color: var(--accent, #8654CC);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans Beta";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 19.2px */
+  text-transform: uppercase;
+}
+
+/* .promocode-copied {
+
+} */
+
+.promocode_condition_wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.promocode_condition_text {
+  color: var(--accent, #8654CC);
+  text-align: right;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans J";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 120%; /* 14.4px */
+  text-transform: lowercase;
+}
+
+.promocode-rules {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding-left: 10px;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.promocode-rules-link {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #221F23;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: "Mega Sans Beta";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
 }

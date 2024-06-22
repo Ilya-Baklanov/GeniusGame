@@ -1,17 +1,17 @@
 /* eslint-disable react/forbid-prop-types */
-import React, {
-  useCallback, useState, useMemo, useEffect, memo,
-} from 'react';
-import { FixedSizeList as List } from 'react-window';
-import InfiniteLoader from 'react-window-infinite-loader';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
+import React, { useCallback, useState, useMemo, useEffect, memo } from "react";
+import { FixedSizeList as List } from "react-window";
+import InfiniteLoader from "react-window-infinite-loader";
+import PropTypes from "prop-types";
+import cn from "classnames";
 
-import { Avatar, Text, ScreenSpinner } from '@vkontakte/vkui';
+import { Avatar, Text, ScreenSpinner } from "@vkontakte/vkui";
 
-import style from './GamersList.module.css';
-import { FriendsMark, MoreCoins, PersonalMark } from '../../../assets/image';
-import { RATING_LIMIT } from '../../../assets/constants/constants';
+import style from "./GamersList.module.css";
+import FriendsMark from "../../../assets/image/friendsMark.svg?react";
+import MoreCoins from "../../../assets/image/moreCoins.svg?react";
+import PersonalMark from "../../../assets/image/personalMark.svg?react";
+import { RATING_LIMIT } from "../../../assets/constants/constants";
 
 const GamersList = ({
   amountCoins,
@@ -24,17 +24,18 @@ const GamersList = ({
   topPlayersFriends,
   // allowed,
 }) => {
-  const [positionOnRating, setPositionOnRating] = useState('');
-  const [gamersOnRating, setGamersOnRating] = useState('');
+  const [positionOnRating, setPositionOnRating] = useState("");
+  const [gamersOnRating, setGamersOnRating] = useState("");
   // const [gamersListCommon, setGamersListCommon] = useState([]);
   // const [gamersListInFriends, setGamersListInFriends] = useState([]);
   const [currentGamersList, setCurrentGamersList] = useState([]);
 
   const itemCount = useMemo(
-    () => (currentGamersList.length > RATING_LIMIT
-      ? RATING_LIMIT
-      : currentGamersList.length),
-    [currentGamersList],
+    () =>
+      currentGamersList.length > RATING_LIMIT
+        ? RATING_LIMIT
+        : currentGamersList.length,
+    [currentGamersList]
   );
 
   const personalStat = useMemo(() => {
@@ -52,16 +53,22 @@ const GamersList = ({
 
   useEffect(() => {
     if (isAllRating) {
-      const allGamersList = topPlayers && topPlayers.length > 0
-        ? topPlayers.filter((player) => String(player.id) !== String(fetchedUser.id))
-        : [];
+      const allGamersList =
+        topPlayers && topPlayers.length > 0
+          ? topPlayers.filter(
+              (player) => String(player.id) !== String(fetchedUser.id)
+            )
+          : [];
       setPositionOnRating(placeInLeaderBoard?.orderNumber ?? 0);
       setGamersOnRating(placeInLeaderBoard?.totalUsersCount ?? 0);
       setCurrentGamersList([personalStat, ...allGamersList]);
     } else {
-      const friendsGamersList = topPlayersFriends && topPlayersFriends.length > 0
-        ? topPlayersFriends.filter((player) => String(player.id) !== String(fetchedUser.id))
-        : [];
+      const friendsGamersList =
+        topPlayersFriends && topPlayersFriends.length > 0
+          ? topPlayersFriends.filter(
+              (player) => String(player.id) !== String(fetchedUser.id)
+            )
+          : [];
 
       setPositionOnRating(placeInFriendsLeaderBoard?.orderNumber ?? 0);
       setGamersOnRating(placeInFriendsLeaderBoard?.totalUsersCount ?? 0);
@@ -78,67 +85,67 @@ const GamersList = ({
   ]);
 
   return (
-  // (allowed || isAllRating) && (
-  // (isAllRating) && (
-  // <div className={cn(style['gamers-list-wrapper'])}>
-  // <div className={cn(style['gamers-list-container'])}>
+    // (allowed || isAllRating) && (
+    // (isAllRating) && (
+    // <div className={cn(style['gamers-list-wrapper'])}>
+    // <div className={cn(style['gamers-list-container'])}>
     <List
       className={cn(style.List)}
       height={900}
       itemCount={itemCount}
-      itemSize={50}
+      itemSize={56}
       width="100%"
     >
       {currentGamersList.length > 0
         ? ({ index, style: defaultStyle }) => {
-          const gamerInfo = currentGamersList[index];
-          const isPersonalInfo = String(gamerInfo.id) === String(fetchedUser.id);
-          const isFriend = friendsIdList?.includes(String(gamerInfo.id));
+            const gamerInfo = currentGamersList[index];
+            const isPersonalInfo =
+              String(gamerInfo.id) === String(fetchedUser.id);
+            const isFriend = friendsIdList?.includes(String(gamerInfo.id));
 
-          return gamerInfo ? (
-            <div
-              style={defaultStyle}
-              key={index + gamerInfo.id}
-              className={cn(style['gamers-list-item-wrapper'])}
-            >
-              <div className={cn(style['gamers-list-item'])}>
+            return gamerInfo ? (
+              <div
+                style={defaultStyle}
+                key={index + gamerInfo.id}
+                className={cn(style["gamers-list-item-wrapper"])}
+              >
                 <div
-                  className={cn(style['gamers-list-item-user-info'])}
+                  className={cn(style["gamers-list-item"], {
+                    [style.personal_info]: isPersonalInfo,
+                  })}
                 >
-                  <Avatar
-                    src={gamerInfo.photo}
-                    className={cn(style['gamers-list-item-avatar'])}
-                    size={34}
-                  />
-                  <Text
-                    className={cn(style['gamers-list-item-name'], {
-                      [style.personal_info]: isPersonalInfo,
-                    })}
-                  >
-                    {`${gamerInfo.firstName} ${gamerInfo.secondName}`}
-                  </Text>
-                  {isFriend && <FriendsMark />}
-                  {isPersonalInfo && <PersonalMark />}
-                </div>
-                <div
-                  className={cn(
-                    style['gamers-list-item-score-wrapper'],
-                  )}
-                >
-                  <MoreCoins />
-                  <Text className={cn(style['gamers-list-item-score'])}>
-                    {gamerInfo.coins}
-                  </Text>
+                  <div className={cn(style["gamers-list-item-user-info"])}>
+                    <Avatar
+                      src={gamerInfo.photo}
+                      className={cn(style["gamers-list-item-avatar"])}
+                      size={34}
+                    />
+                    <div className={style.gamer_info}>
+                      <span className={style.gamer_place}>{`${index + 1} место`}</span>
+                      <div className={style.gamer_name_wrapper}>
+                        <Text className={cn(style["gamers-list-item-name"])}>
+                          {`${gamerInfo.firstName} ${gamerInfo.secondName}`}
+                        </Text>
+                        {isFriend && <FriendsMark />}
+                        {isPersonalInfo && <PersonalMark />}
+                      </div>
+                    </div>
+                  </div>
+                  <div className={cn(style["gamers-list-item-score-wrapper"])}>
+                    <MoreCoins />
+                    <Text className={cn(style["gamers-list-item-score"])}>
+                      {gamerInfo.coins}
+                    </Text>
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : null;
-        }
+            ) : null;
+          }
         : () => (+gamersOnRating <= 1 ? null : <ScreenSpinner size="large" />)}
     </List>
-  // </div>
-  // </div>
-  // )
+    // </div>
+    // </div>
+    // )
   );
 };
 
@@ -158,20 +165,24 @@ GamersList.propTypes = {
   placeInLeaderBoard: PropTypes.any,
   placeInFriendsLeaderBoard: PropTypes.any,
   // allowed: PropTypes.bool,
-  topPlayers: PropTypes.arrayOf(PropTypes.shape({
-    photo: PropTypes.string,
-    id: PropTypes.number,
-    firstName: PropTypes.string,
-    secondName: PropTypes.string,
-    coins: PropTypes.number,
-  })),
-  topPlayersFriends: PropTypes.arrayOf(PropTypes.shape({
-    photo: PropTypes.string,
-    id: PropTypes.number,
-    firstName: PropTypes.string,
-    secondName: PropTypes.string,
-    coins: PropTypes.number,
-  })),
+  topPlayers: PropTypes.arrayOf(
+    PropTypes.shape({
+      photo: PropTypes.string,
+      id: PropTypes.number,
+      firstName: PropTypes.string,
+      secondName: PropTypes.string,
+      coins: PropTypes.number,
+    })
+  ),
+  topPlayersFriends: PropTypes.arrayOf(
+    PropTypes.shape({
+      photo: PropTypes.string,
+      id: PropTypes.number,
+      firstName: PropTypes.string,
+      secondName: PropTypes.string,
+      coins: PropTypes.number,
+    })
+  ),
 };
 
 export default GamersList;

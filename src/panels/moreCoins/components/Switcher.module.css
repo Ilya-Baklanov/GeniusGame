@@ -24,7 +24,7 @@
     bottom: 0;
     -webkit-transition: .4s;
     transition: .4s;
-    background: #EDC8FF;
+    background: #8654CC;
     border-radius: 10px;
 }
 
@@ -37,12 +37,12 @@
     bottom: 1px;
     -webkit-transition: .4s;
     transition: .4s;
-    background: #BE8BD7;
+    background: #d4d4d4;
     border-radius: 10px;
 }
 
 input:checked+.push-slider::before {
-    background: #8C15A2;
+    background: #FFF;
 }
 
 input:checked+.push-slider::before {

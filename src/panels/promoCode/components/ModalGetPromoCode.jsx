@@ -1,7 +1,7 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import cn from 'classnames';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import PropTypes from "prop-types";
+import cn from "classnames";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import {
   AppearanceProvider,
@@ -9,36 +9,37 @@ import {
   ModalPage,
   Text,
   IconButton,
-} from '@vkontakte/vkui';
+} from "@vkontakte/vkui";
 
-import style from './ModalGetPromoCode.module.css';
-import { CloseGray, RightArrow } from '../../../assets/image';
-import { CONTACTS_HELP, SBERMEGAMARKET_LINK } from '../../../assets/constants/constants';
+import style from "./ModalGetPromoCode.module.css";
+import CloseGray from "../../../assets/image/closeGray.svg?react";
+import RightArrow from "../../../assets/image/right_arrow.svg?react";
+import {
+  CONTACTS_HELP,
+  SBERMEGAMARKET_LINK,
+} from "../../../assets/constants/constants";
+import { BackButton } from "../../../shared/backButton/BackButton";
 
-const ModalGetPromoCode = ({
-  id,
-  content,
-  onClose,
-  platform,
-}) => {
+const ModalGetPromoCode = ({ id, content, onClose, platform }) => {
   const [isCopied, setIsCopied] = useState(false);
 
   useLayoutEffect(() => {
     // Костыль для копирования текста при загрузке страницы в iframe
-    const inp = document.createElement('input');
+    const inp = document.createElement("input");
     inp.value = content.promocode;
     document.body.appendChild(inp);
     inp.select();
 
-    if (document.execCommand('copy')) {
+    if (document.execCommand("copy")) {
       setIsCopied(true);
     } else {
-      navigator.clipboard.writeText(content.promocode)
+      navigator.clipboard
+        .writeText(content.promocode)
         .then(() => {
           setIsCopied(true);
         })
         .catch((err) => {
-          console.error('Не удалось скопировать промокод. ', err);
+          console.error("Не удалось скопировать промокод. ", err);
         });
     }
   }, []);
@@ -49,57 +50,52 @@ const ModalGetPromoCode = ({
         id={id}
         onClose={onClose}
         height="100%"
-        size={platform === 'vkcom' && 400}
+        size={platform === "vkcom" && 400}
         hideCloseButton
       >
         <div className={cn(style.wrapper)}>
-          <div className={cn(style['promocode-modal-content'])}>
-            <div className={cn(style['promocode-card_wrapper'])}>
-              <CopyToClipboard onCopy={() => setIsCopied(true)} text={content.promocode}>
-                <div className={cn(style['promocode-card'])}>
-                  <Text className={cn(style['promocode-card-description'])}>
+          <div className={cn(style["promocode-modal-content"])}>
+            <div className={cn(style["promocode-card_wrapper"])}>
+              <BackButton onClick={onClose} className={style["close-button"]} />
+              <CopyToClipboard
+                onCopy={() => setIsCopied(true)}
+                text={content.promocode}
+              >
+                <div className={cn(style["promocode-card"])}>
+                  <Text className={cn(style["promocode-card-description"])}>
                     Ваш промокод:
                   </Text>
-                  <Text className={cn(style['promocode-card-text'])}>
+                  <Text className={cn(style["promocode-card-text"])}>
                     {content.promocode}
                   </Text>
                 </div>
               </CopyToClipboard>
-              <IconButton
-                aria-label="Крестик для закрытия текущего окна"
-                hasActive={false}
-                hasHover={false}
-                hoverMode=""
-                focusVisibleMode=""
-                onClick={onClose}
-                className={style['close-button']}
-              >
-                <CloseGray />
-              </IconButton>
             </div>
-            <div className={cn(style['description-wrapper'])}>
-              <Text className={cn(style['description-text'])}>
-                {isCopied ? 'Промокод скопирован.' : ''}
+            <div className={cn(style["description-wrapper"])}>
+              <Text className={cn(style["description-text"])}>
+                {isCopied ? "Промокод скопирован." : ""}
               </Text>
             </div>
           </div>
-          <div className={cn(style['promocode-modal-actions'])}>
-            <div className={style['sbermegamarket-button-wrapper']}>
+          <div className={cn(style["promocode-modal-actions"])}>
+            <div className={style["sbermegamarket-button-wrapper"]}>
               <a
-                className={style['sbermegamarket-button']}
+                className={style["sbermegamarket-button"]}
                 target="_blank"
                 href={SBERMEGAMARKET_LINK}
                 rel="noreferrer"
               >
-                <Text className={style['sbermegamarket-button-text']}>
+                <Text className={style["sbermegamarket-button-text"]}>
                   За покупками на СберМегаМаркет!
                 </Text>
               </a>
             </div>
             <div className={cn(style.rules)}>
-              <Text className={cn(style['rules-question'])}>{CONTACTS_HELP.question}</Text>
+              <Text className={cn(style["rules-question"])}>
+                {CONTACTS_HELP.question}
+              </Text>
               <Link
-                className={cn(style['rules-link'])}
+                className={cn(style["rules-link"])}
                 href={CONTACTS_HELP.href}
                 target="_blank"
               >

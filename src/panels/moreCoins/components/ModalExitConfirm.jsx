@@ -7,7 +7,8 @@ import cn from 'classnames';
 
 import style from './ModalExitConfirm.module.css';
 import Navbar from '../../../shared/navbar/Navbar';
-import { CloseGray } from '../../../assets/image';
+import CloseGray from '../../../assets/image/closeGray.svg?react';
+
 
 const ModalExitConfirm = ({
   id,

@@ -13,7 +13,8 @@ import {
   Link,
 } from '@vkontakte/vkui';
 
-import { MainLogo, MoreCoins } from '../../assets/image';
+import MoreCoins from '../../assets/image/moreCoins.svg?react';
+import MainLogo from '../../assets/image/main_logo.svg?react';
 import Navbar from '../../shared/navbar/Navbar';
 import style from './Home.module.css';
 import {
@@ -23,6 +24,7 @@ import {
 import MainButton from '../../shared/mainButton/MainButton';
 import Timer from '../../shared/timer/Timer';
 import { PanelTypes } from '../../structure';
+import {stringEndFormatterByPoints} from '../../shared/helpers/stringEndFormatterByPoints'
 
 const Home = ({
   id,
@@ -55,7 +57,7 @@ const Home = ({
               <div className={cn(style['game-block'])}>
                 <div className={cn(style['game-block_header'])}>
                   <div className={cn(style['game-block_logo'])}>
-                    <MainLogo />
+                    <MainLogo width="80px" height="10px" />
                   </div>
                   <div className={cn(style['game-block_picture'])}>
                     <img src="/img/Home_MainCards.png" alt="Home_MainCardsImage" />
@@ -97,7 +99,7 @@ const Home = ({
                         src={fetchedUser.photo_200}
                         className={cn(style.profile_avatar)}
                         size={34}
-                        withBorder={false}
+                        noBorder={true}
                       />
                     ) : null}
                     <div className={cn(style.profile_info)}>
@@ -120,7 +122,7 @@ const Home = ({
                       {amountCoins}
                     </Text>
                     <Text className={cn(style['earned-coins_text'])}>
-                      балла/ов
+                      {stringEndFormatterByPoints(amountCoins)}
                     </Text>
                   </div>
                 </div>
@@ -161,7 +163,7 @@ const Home = ({
                           src={photo}
                           className={cn(style.rating_avatar)}
                           size={34}
-                          withBorder={false}
+                          noBorder={true}
                         />
                       ) : null}
                       <div className={cn(style.rating_list_item_info)}>

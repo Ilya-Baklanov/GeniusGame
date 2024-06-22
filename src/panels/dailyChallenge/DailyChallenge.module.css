@@ -138,19 +138,24 @@
     opacity: 0.6;
 }
 
+.daily_count_item.complete .daily_count_text {
+    margin-right: 6px;
+}
+
 .daily_challenge_picture_wrapper {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
 }
 
-.daily_challenge_picture_wrapper.day_4 {
-    justify-content: flex-end;
+.main_picture {
+    width: 80%;
 }
 
-.daily_challenge_picture_wrapper img {
-    width: 80%;
+.daily_challenge_picture_wrapper.day_4 {
+    justify-content: flex-end;
 }
 
 .daily_challenge_picture_wrapper.day_4 img {
@@ -159,6 +164,42 @@
 
 .daily_challenge_picture_wrapper.day_5 img {
     width: 100%;
+}
+
+.x2_item {
+    position: absolute;
+    width: 22px;
+}
+
+.x2_item:nth-child(2) {
+    top: 12%;
+    left: 28%;
+    transform: rotate(42deg);
+}
+
+.x2_item:nth-child(3) {
+    top: 20%;
+    left: 36%;
+    transform: rotate(55deg);
+}
+
+.x2_item:nth-child(4) {
+    top: 27%;
+    left: 26%;
+    transform: rotate(11deg);
+}
+
+.x2_item:nth-child(5) {
+    top: 31%;
+    left: 38%;
+    transform: rotate(55deg);
+}
+
+.x2_item.big {
+    right: 12%;
+    bottom: 26%;
+    width: 36px;
+    transform: rotate(55deg);
 }
 
 .daily_challenge_description {

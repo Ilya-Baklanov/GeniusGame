@@ -1,0 +1,133 @@
+.switcher {
+    position: relative;
+    display: inline-block;
+    width: 230;
+    height: 34px;
+    cursor: pointer;
+}
+
+.switcher input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50px;
+    background: rgba(134, 84, 204, 0.10);
+}
+
+.slider::before {
+    position: absolute;
+    box-sizing: border-box;
+    content: "";
+    width: 115px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0px;
+    bottom: 0px;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50px;
+    background: #8654CC;
+}
+
+input:checked+.slider::before {
+    -webkit-transform: translateX(115px);
+    -ms-transform: translateX(115px);
+    transform: translateX(115px);
+    width: 115px;
+}
+
+.content-wrapper {
+    display: flex;
+    align-items: center;
+    /* justify-content: space-around; */
+    width: 230px;
+    height: 34px;
+}
+
+.content-wrapper * {
+    z-index: 10;
+}
+
+.switcher-label-left-text-wrapper,
+.switcher-label-right-text-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    border-radius: 50px;
+}
+
+.switcher-label-left-text-wrapper {
+    width: 115px;
+}
+
+.switcher-label-right-text-wrapper {
+    width: 115px;
+}
+
+.switcher-label-left-text {
+    color: #FFF;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: lowercase;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked~.content-wrapper .switcher-label-left-text {
+    color: #221F23;
+}
+
+.switcher-label-right-text {
+    color: #221F23;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-family: "Mega Sans Beta";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: lowercase;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked~.content-wrapper .switcher-label-right-text {
+    color: #FFFFFF;
+}
+
+/* .ios-rate-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 36px;
+
+}
+
+.ios-rate-text {
+    display: block;
+    width: 117px;
+    height: 36px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+    background: #7E03B1;
+    border-radius: 18px;
+} */

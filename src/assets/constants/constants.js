@@ -38,16 +38,16 @@ export const DAILY_CHALLENGE_PICTURES = [
 ];
 
 export const PROMOCODES = [
-    { denomination: 100, description: 'Можно\nиспользовать\nпри заказе\nот 500₽' },
-    { denomination: 200, description: 'Можно\nиспользовать\nпри заказе\nот 700₽' },
-    { denomination: 300, description: 'Можно\nиспользовать\nпри заказе\nот 1000₽' },
-    { denomination: 400, description: 'Можно\nиспользовать\nпри заказе\nот 1300₽' },
-    { denomination: 500, description: 'Можно\nиспользовать\nпри заказе\nот 1700₽' },
-    { denomination: 600, description: 'Можно\nиспользовать\nпри заказе\nот 2000₽' },
-    { denomination: 700, description: 'Можно\nиспользовать\nпри заказе\nот 2500₽' },
-    { denomination: 800, description: 'Можно\nиспользовать\nпри заказе\nот 3500₽' },
-    { denomination: 900, description: 'Можно\nиспользовать\nпри заказе\nот 4000₽' },
-    { denomination: 1000, description: 'Можно использовать при заказе от 5000₽' },
+    { denomination: 100, description: 'Можно\nиспользовать\nпри заказе\nот 500₽', condition: 'промокод\nпри заказе\nот 500₽' },
+    { denomination: 200, description: 'Можно\nиспользовать\nпри заказе\nот 700₽', condition: 'промокод\nпри заказе\nот 700₽' },
+    { denomination: 300, description: 'Можно\nиспользовать\nпри заказе\nот 1000₽', condition: 'промокод\nпри заказе\nот 1000₽' },
+    { denomination: 400, description: 'Можно\nиспользовать\nпри заказе\nот 1300₽', condition: 'промокод\nпри заказе\nот 1300₽' },
+    { denomination: 500, description: 'Можно\nиспользовать\nпри заказе\nот 1700₽', condition: 'промокод\nпри заказе\nот 1700₽' },
+    { denomination: 600, description: 'Можно\nиспользовать\nпри заказе\nот 2000₽', condition: 'промокод\nпри заказе\nот 2000₽' },
+    { denomination: 700, description: 'Можно\nиспользовать\nпри заказе\nот 2500₽', condition: 'промокод\nпри заказе\nот 2500₽' },
+    { denomination: 800, description: 'Можно\nиспользовать\nпри заказе\nот 3500₽', condition: 'промокод\nпри заказе\nот 3500₽' },
+    { denomination: 900, description: 'Можно\nиспользовать\nпри заказе\nот 4000₽', condition: 'промокод\nпри заказе\nот 4000₽' },
+    { denomination: 1000, description: 'Можно использовать при заказе от 5000₽', condition: 'промокод\nпри заказе\nот 5000₽' },
 ];
 
 export const MORE_COINS_CARDS = [
@@ -56,9 +56,6 @@ export const MORE_COINS_CARDS = [
 },
     {
  id: 'REPOST', additionalCoins: 10, title: 'Раскрась баннер', description: 'Раскрась баннер игры\nи поделись им в своих историях.', textOnSuccess: 'получено',
-},
-    {
- id: 'STATUS', additionalCoins: 10, title: 'Подбери статус ', description: 'Подбери фирменный статус\nпо настроению.', textOnSuccess: 'получено',
 },
 ];
 
@@ -94,6 +91,6 @@ export const RATING_LIMIT = 1000;
 
 export const MAX_AVAILABLE_GAMES_COUNT = 2;
 
-export const GAME_DURATION = 60;
+export const GAME_DURATION = 60000;
 
 export const COUNTDOWN = 3;

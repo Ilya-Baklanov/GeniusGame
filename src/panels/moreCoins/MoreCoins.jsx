@@ -56,20 +56,6 @@ const MoreCoins = ({
     >
       <MoreCoinsCards circumstances={circumstances} onClickToCard={onClickToCard} />
       <div className={cn(style['additional-actions'])}>
-        <div className={cn(style['invite-friends'])}>
-          <Text className={cn(style['invite-friends_title'])}>
-            {'Пригласи друзей\nк участию'}
-          </Text>
-          <button
-            onClick={() => onClickToCard('INVITE_FRIENDS')}
-            className={cn(style['invite-friends_button'])}
-            type="button"
-          >
-            <Text className={cn(style['invite-friends_button_text'])}>
-              Пригласить
-            </Text>
-          </button>
-        </div>
         <div className={cn(style['push-notification'])}>
           <Text className={cn(style['push-notification_title'])}>
             {'Подпишись на push - уведомления,\nчтобы не пропустить новые игры.'}
