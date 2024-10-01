@@ -16,7 +16,7 @@ import CloseGray from "../../../assets/image/closeGray.svg?react";
 import RightArrow from "../../../assets/image/right_arrow.svg?react";
 import {
   CONTACTS_HELP,
-  SBERMEGAMARKET_LINK,
+  MEGAMARKET_LINK,
 } from "../../../assets/constants/constants";
 import { BackButton } from "../../../shared/backButton/BackButton";
 
@@ -82,11 +82,11 @@ const ModalGetPromoCode = ({ id, content, onClose, platform }) => {
               <a
                 className={style["sbermegamarket-button"]}
                 target="_blank"
-                href={SBERMEGAMARKET_LINK}
+                href={MEGAMARKET_LINK}
                 rel="noreferrer"
               >
                 <Text className={style["sbermegamarket-button-text"]}>
-                  За покупками на СберМегаМаркет!
+                  За покупками на МегаМаркет!
                 </Text>
               </a>
             </div>

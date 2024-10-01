@@ -21,7 +21,7 @@ const ModalExitConfirm = ({
       onClose={onClose}
       size={350}
       header={(
-        <ModalPageHeader>
+        <ModalPageHeader style={{color: '#252822'}}>
           Вы точно хотите выйти из игры?
         </ModalPageHeader>
       )}

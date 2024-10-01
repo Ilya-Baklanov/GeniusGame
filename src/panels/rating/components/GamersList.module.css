@@ -97,7 +97,13 @@
 
 .gamer_name_wrapper {
     display: flex;
+    align-items: center;
     flex-grow: 1;
+}
+
+.personal-mark {
+    width: 9px;
+    height: 9px;
 }
 
 .gamers-list-item-name {

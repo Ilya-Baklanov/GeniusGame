@@ -12,7 +12,7 @@ import Switcher from "./components/Switcher";
 import CopyToClipboard from "react-copy-to-clipboard";
 import { stringEndFormatterByPoints } from "../../shared/helpers/stringEndFormatterByPoints";
 import RightArrow from "../../assets/image/right_arrow.svg?react";
-import { GAME_RULES, PROMOCODES, PROMOTION_RULES } from "../../assets/constants/constants";
+import { GAME_RULES, MEGAMARKET_VK, PROMOCODES, PROMOTION_RULES } from "../../assets/constants/constants";
 
 const PromoCode = ({
   id,
@@ -37,7 +37,15 @@ const PromoCode = ({
       amountCoins={amountCoins}
       title="Промокоды"
       description={
-        "Обменивай монеты на промокоды\nи совершай покупки на Мегамаркете!"
+        <>
+          {"Обменивайте баллы на промокоды на первый\nзаказ и совершайте покупки на Мегамаркете"}
+          <Link
+            target="_blank"
+            href={MEGAMARKET_VK.href}
+          >
+            {MEGAMARKET_VK.title}
+          </Link>
+        </>
       }
       isLoading={isLoading}
       isMobile={isMobile}
@@ -63,18 +71,7 @@ const PromoCode = ({
         />
       ) : promocodesList ? (
         <div className={style.wrapper}>
-          {[
-            ...promocodesList,
-            ...promocodesList,
-            ...promocodesList,
-            ...promocodesList,
-            ...promocodesList,
-            ...promocodesList,
-            ...promocodesList,
-            ...promocodesList,
-            ...promocodesList,
-            ...promocodesList,
-          ].map(({ promo, price }, index) => (
+          {promocodesList.map(({ promo, price }, index) => (
             <CopyToClipboard
               key={index}
               onCopy={() => setIsCopied(promo)}
@@ -82,9 +79,9 @@ const PromoCode = ({
             >
               <div className={style["promocode-wrapper"]}>
                 <div className={style.promocode}>
-                <Text className={style["promocode-price"]}>{`${price}₽`}</Text>
-                <Text className={style["promocode-name"]}>{promo}</Text>
-                {/* {isCopied === promo && (
+                  <Text className={style["promocode-price"]}>{`${price}₽`}</Text>
+                  <Text className={style["promocode-name"]}>{promo}</Text>
+                  {/* {isCopied === promo && (
                   <Text className={style["promocode-copied"]}>
                     {"Промокод скопирован."}
                   </Text>
@@ -92,7 +89,7 @@ const PromoCode = ({
                 </div>
 
                 <div className={style.promocode_condition_wrapper}>
-                  <Text className={style.promocode_condition_text}>{PROMOCODES.find(({denomination}) => denomination === +price)?.condition}</Text>
+                  <Text className={style.promocode_condition_text}>{PROMOCODES.find(({ denomination }) => denomination === +price)?.condition}</Text>
                 </div>
               </div>
             </CopyToClipboard>

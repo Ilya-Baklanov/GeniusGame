@@ -19,7 +19,7 @@ const useFetchUserData = () => {
     const [placeInFriendsLeaderBoard, setPlaceInFriendsLeaderBoard] = useState(null);
     const [topPlayersFriends, setTopPlayersFriends] = useState([]);
     const [promocodesList, setPromocodesList] = useState();
-    const [launchParams, setLaunchParams] = useState(null);
+    const [allUserCoins, setAllUserCoins] = useState(0);
 
     // console.log('token_outside: ', window.location.href.split('?')[1]);
 
@@ -114,7 +114,8 @@ const useFetchUserData = () => {
         };
         const response = await fetch('https://sbermemory.ru/v1/api/getPlaceInTop', requestOptions);
         const data = await response.json();
-        setPlaceInLeaderBoard(data);
+
+        return data;
     }, []);
 
     const getTopPlayers = useCallback(async (start, end) => {
@@ -136,10 +137,9 @@ const useFetchUserData = () => {
         };
         const response = await fetch('https://sbermemory.ru/v1/api/getTopPlayers', requestOptions)
             .catch((error) => console.error('getTopPlayers_error: ', error));
-        const json = await response.json();
-        setTopPlayers(json.users);
-        return json.users;
-        // return topPlayersResponse.users.slice(start, end);
+        const data = await response.json();
+
+        return data;
     }, []);
 
     const getPlaceInFriendsLeaderBoard = useCallback(async (user, friendsList) => {
@@ -253,6 +253,7 @@ const useFetchUserData = () => {
 
     const postEarnedCoins = useCallback(async (allEarnedCoins, user, gameCountChange, circsIndex) => {
         setIsEarnedCoinsPosted(false);
+
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -271,11 +272,14 @@ const useFetchUserData = () => {
         };
         const response = await fetch('https://sbermemory.ru/v1/api/up', requestOptions);
         const data = await response.json();
+
         await getTopPlayers(0, RATING_LIMIT);
+
         setUserStat((prev) => ({
             ...prev,
             ...data,
         }));
+
         setIsEarnedCoinsPosted(true);
 
         return data;
@@ -296,8 +300,10 @@ const useFetchUserData = () => {
                 vkToken: window.location.href.split('?')[1],
             }),
         };
+
         const response = await fetch('https://sbermemory.ru/v1/api/updateCirc', requestOptions);
         const data = await response.json();
+        
         setUserStat((prev) => ({
             ...prev,
             ...data,
@@ -423,8 +429,16 @@ const useFetchUserData = () => {
         const user = await bridge.send('VKWebAppGetUserInfo');
         setUser(user);
         await fetchUserStat(user);
-        await getPlaceInLeaderBoard(user);
-        await getTopPlayers(0, RATING_LIMIT);
+        const placeInLeaderBoardResponse = await getPlaceInLeaderBoard(user);
+        setPlaceInLeaderBoard(placeInLeaderBoardResponse);
+        const topPlayersByUserRangeResponse = await getTopPlayers(placeInLeaderBoardResponse.orderNumber - 500, RATING_LIMIT);
+        topPlayersByUserRangeResponse?.users?.forEach((player) => {
+            if (player?.id === user?.id) {
+                setAllUserCoins(player?.coins)
+            }
+        })
+        const topPlayersResponse = await getTopPlayers(0, RATING_LIMIT);
+        setTopPlayers(topPlayersResponse?.users);
         await getUserPromoCodes(user);
         setIsFetchUserLoaded(true);
     }, []);
@@ -473,6 +487,7 @@ const useFetchUserData = () => {
         promocodesList,
         setStatus,
         getStatus,
+        allUserCoins,
     };
 };
 

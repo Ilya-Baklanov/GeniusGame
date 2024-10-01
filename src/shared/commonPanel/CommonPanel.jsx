@@ -118,7 +118,7 @@ CommonPanel.propTypes = {
   id: PropTypes.string.isRequired,
   go: PropTypes.func.isRequired,
   title: PropTypes.string,
-  description: PropTypes.string,
+  description: PropTypes.node,
   children: PropTypes.node,
   amountCoins: PropTypes.string,
   isLoading: PropTypes.bool,

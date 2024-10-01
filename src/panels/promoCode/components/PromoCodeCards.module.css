@@ -7,21 +7,18 @@
     /* padding: 0 12px 0 17px; */
 
     overflow: auto;
+    scrollbar-width: none;
 }
 
 .promocode-cards-container {
-    /* display: flex;
-    width: 100%;
-    gap: 5px;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center; */
     display: grid;
     width: 100%;
     gap: 5px;
+    /* grid-template-columns: repeat(3, 31%); */
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     margin-bottom: 24px;
+    /* justify-content: center; */
 }
 
 .promocode-card {
@@ -29,7 +26,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    padding: 20px;
+    padding: 14px;
     cursor: pointer;
     border-radius: 10px;
     border: 1px solid #F2F2F2;

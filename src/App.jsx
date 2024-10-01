@@ -122,6 +122,7 @@ export const App = () => {
     promocodesList,
     setStatus,
     getStatus,
+    allUserCoins,
   } = useFetchUserData();
 
   const serverTimeProcessed = useMemo(() => timeHandler(serverTime), [serverTime]);
@@ -342,7 +343,7 @@ export const App = () => {
           >
             Отлично!
           </Button>
-              )}
+        )}
       />
     </ModalRoot>
   ), [activeModal, userStat]);
@@ -357,9 +358,9 @@ export const App = () => {
   const repostHandler = useCallback(async () => {
     const storiesToken = await fetchStoriesToken(fetchedUser);
     if (userStat && storiesToken && fetchedUser && storiesToken) {
-      postStoriesPhoto(fetchedUser, storiesToken).then(() => {
-        postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 1);
-        updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
+      postStoriesPhoto(fetchedUser, storiesToken).then(async () => {
+        await postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 1);
+        await updateCircumstancesStatus(fetchedUser, 1).then(() => go(null, 'moreCoins'));
       });
     }
   }, [userStat, fetchedUser, fetchStoriesToken]);
@@ -388,10 +389,10 @@ export const App = () => {
           bridge.send('VKWebAppJoinGroup', {
             group_id: 131445697,
           })
-            .then((data) => {
+            .then(async (data) => {
               if (data.result) {
-                postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 0);
-                updateCircumstancesStatus(fetchedUser, 0);
+                await postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 0);
+                await updateCircumstancesStatus(fetchedUser, 0);
               }
             })
             .catch((error) => {
@@ -401,12 +402,12 @@ export const App = () => {
 
         const isSub = await checkIsUserSubscribed(fetchedUser.id, groupToken);
         if (isSub) {
-        // eslint-disable-next-line no-alert
+          // eslint-disable-next-line no-alert
           activateAlert();
-          postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 0);
-          updateCircumstancesStatus(fetchedUser, 0);
+          await postEarnedCoins(+userStat.coins + 10, fetchedUser, '0', 0);
+          await updateCircumstancesStatus(fetchedUser, 0);
         } else {
-          joinGroup();
+          await joinGroup();
         }
       }
     }
@@ -461,7 +462,7 @@ export const App = () => {
           <SplitLayout modal={modal}>
             <SplitCol animate>
               {isLoaded && userStat ? (
-              // {isLoaded ? (
+                // {isLoaded ? (
                 <Epic activeStory={activeView}>
                   <View id="main" activePanel={activePanel}>
                     <DailyChallenge
@@ -540,6 +541,7 @@ export const App = () => {
                       getAllowed={getAllowed}
                       topPlayers={topPlayers}
                       topPlayersFriends={topPlayersFriends}
+                      allUserCoins={allUserCoins}
                     />
                     <LossPanel
                       id={PanelTypes.lossGame}

@@ -41,15 +41,16 @@ const Rating = ({
   getAllowed,
   topPlayers,
   topPlayersFriends,
+  allUserCoins,
 }) => {
   const [isAllRating, setIsAllRating] = useState(true);
   const [allowed, setAllowed] = useState(false);
 
   const platform = usePlatform();
 
-  const allUserCoins = String(topPlayers?.find(
-    (player) => +player.id === fetchedUser.id,
-  )?.coins);
+  // const allUserCoins = String(topPlayers?.find(
+  //   (player) => +player.id === fetchedUser.id,
+  // )?.coins);
 
   const friendsIdList = friendList?.map((friends) => String(friends.id));
 
@@ -254,6 +255,7 @@ Rating.propTypes = {
     secondName: PropTypes.string,
     coins: PropTypes.number,
   })),
+  allUserCoins: PropTypes.number,
 };
 
 export default Rating;

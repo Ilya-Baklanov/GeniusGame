@@ -39,7 +39,7 @@ const ModalPromoCode = ({
     [amountCoins, content]
   );
 
-  const isManyPoints = useMemo(() => Math.floor(+amountCoins / 100) > content.denomination / 100, [amountCoins, content.denomination]);
+  const isManyPoints = useMemo(() => +amountCoins < 5000 && Math.floor(+amountCoins / 100) > content.denomination / 100, [amountCoins, content.denomination]);
   const isFewPoints = useMemo(() => Math.floor(+amountCoins / 100) < content.denomination / 100 ||
   amountCoins === "0", [amountCoins, content.denomination]);
 

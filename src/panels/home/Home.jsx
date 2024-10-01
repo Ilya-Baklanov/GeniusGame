@@ -25,6 +25,7 @@ import MainButton from '../../shared/mainButton/MainButton';
 import Timer from '../../shared/timer/Timer';
 import { PanelTypes } from '../../structure';
 import {stringEndFormatterByPoints} from '../../shared/helpers/stringEndFormatterByPoints'
+import CommonPanel from "../../shared/commonPanel/CommonPanel.jsx";
 
 const Home = ({
   id,
@@ -126,7 +127,7 @@ const Home = ({
                     </Text>
                   </div>
                 </div>
-                <div onClick={() => go(null, PanelTypes.myPromoCode)} className={cn(style.promo)}>
+                <div onClick={() => go(null, PanelTypes.promoCode)} className={cn(style.promo)}>
                   <div className={cn(style.promo_content)}>
                     <Text className={cn(style.promo_title)}>
                       Промокоды

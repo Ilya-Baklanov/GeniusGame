@@ -4,6 +4,7 @@
     /* TODO заменить font-family */
     /* font-family: 'SB Sans Display'; */
     font-style: normal;
+    scrollbar-width: none;
 }
 
 span {

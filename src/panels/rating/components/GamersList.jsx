@@ -24,7 +24,7 @@ const GamersList = ({
   topPlayersFriends,
   // allowed,
 }) => {
-  const [positionOnRating, setPositionOnRating] = useState("");
+  const [personalPositionOnRating, setPersonalPositionOnRating] = useState("");
   const [gamersOnRating, setGamersOnRating] = useState("");
   // const [gamersListCommon, setGamersListCommon] = useState([]);
   // const [gamersListInFriends, setGamersListInFriends] = useState([]);
@@ -55,22 +55,22 @@ const GamersList = ({
     if (isAllRating) {
       const allGamersList =
         topPlayers && topPlayers.length > 0
-          ? topPlayers.filter(
+          ? topPlayers.map((gamerInfo, index) => ({...gamerInfo, order: index + 1})).filter(
               (player) => String(player.id) !== String(fetchedUser.id)
             )
           : [];
-      setPositionOnRating(placeInLeaderBoard?.orderNumber ?? 0);
+      setPersonalPositionOnRating(placeInLeaderBoard?.orderNumber ?? 0);
       setGamersOnRating(placeInLeaderBoard?.totalUsersCount ?? 0);
       setCurrentGamersList([personalStat, ...allGamersList]);
     } else {
       const friendsGamersList =
         topPlayersFriends && topPlayersFriends.length > 0
-          ? topPlayersFriends.filter(
+          ? topPlayersFriends.map((gamerInfo, index) => ({...gamerInfo, order: index + 1})).filter(
               (player) => String(player.id) !== String(fetchedUser.id)
             )
           : [];
 
-      setPositionOnRating(placeInFriendsLeaderBoard?.orderNumber ?? 0);
+      setPersonalPositionOnRating(placeInFriendsLeaderBoard?.orderNumber ?? 0);
       setGamersOnRating(placeInFriendsLeaderBoard?.totalUsersCount ?? 0);
       setCurrentGamersList([personalStat, ...friendsGamersList]);
     }
@@ -121,13 +121,13 @@ const GamersList = ({
                       size={34}
                     />
                     <div className={style.gamer_info}>
-                      <span className={style.gamer_place}>{`${index + 1} место`}</span>
+                      <span className={style.gamer_place}>{`${isPersonalInfo ? personalPositionOnRating : gamerInfo.order} место`}</span>
                       <div className={style.gamer_name_wrapper}>
                         <Text className={cn(style["gamers-list-item-name"])}>
                           {`${gamerInfo.firstName} ${gamerInfo.secondName}`}
                         </Text>
                         {isFriend && <FriendsMark />}
-                        {isPersonalInfo && <PersonalMark />}
+                        {isPersonalInfo && <PersonalMark className={cn(style["personal-mark"])} />}
                       </div>
                     </div>
                   </div>

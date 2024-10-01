@@ -24,6 +24,9 @@ const MainLayout = ({ children, backgroundColor = 'primary', classNames }) => {
           {children}
         </div>
       </div>
+      {/* <div className={cn(style['footer-whiteline'])}>
+
+      </div> */}
     </div>
   );
 };

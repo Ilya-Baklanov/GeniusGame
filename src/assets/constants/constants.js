@@ -38,16 +38,16 @@ export const DAILY_CHALLENGE_PICTURES = [
 ];
 
 export const PROMOCODES = [
-    { denomination: 100, description: 'Можно\nиспользовать\nпри заказе\nот 500₽', condition: 'промокод\nпри заказе\nот 500₽' },
-    { denomination: 200, description: 'Можно\nиспользовать\nпри заказе\nот 700₽', condition: 'промокод\nпри заказе\nот 700₽' },
-    { denomination: 300, description: 'Можно\nиспользовать\nпри заказе\nот 1000₽', condition: 'промокод\nпри заказе\nот 1000₽' },
-    { denomination: 400, description: 'Можно\nиспользовать\nпри заказе\nот 1300₽', condition: 'промокод\nпри заказе\nот 1300₽' },
-    { denomination: 500, description: 'Можно\nиспользовать\nпри заказе\nот 1700₽', condition: 'промокод\nпри заказе\nот 1700₽' },
-    { denomination: 600, description: 'Можно\nиспользовать\nпри заказе\nот 2000₽', condition: 'промокод\nпри заказе\nот 2000₽' },
-    { denomination: 700, description: 'Можно\nиспользовать\nпри заказе\nот 2500₽', condition: 'промокод\nпри заказе\nот 2500₽' },
-    { denomination: 800, description: 'Можно\nиспользовать\nпри заказе\nот 3500₽', condition: 'промокод\nпри заказе\nот 3500₽' },
-    { denomination: 900, description: 'Можно\nиспользовать\nпри заказе\nот 4000₽', condition: 'промокод\nпри заказе\nот 4000₽' },
-    { denomination: 1000, description: 'Можно использовать при заказе от 5000₽', condition: 'промокод\nпри заказе\nот 5000₽' },
+    { denomination: 100, description: 'Можно\nиспользовать\nпри первом\nзаказе\nот 500₽', condition: 'промокод\nпри первом\nзаказе\nот 500₽' },
+    { denomination: 200, description: 'Можно\nиспользовать\nпри первом\nзаказе\nот 700₽', condition: 'промокод\nпри первом\nзаказе\nот 700₽' },
+    { denomination: 300, description: 'Можно\nиспользовать\nпри первом\nзаказе\nот 1000₽', condition: 'промокод\nпри первом\nзаказе\nот 1000₽' },
+    { denomination: 400, description: 'Можно\nиспользовать\nпри первом\nзаказе\nот 1300₽', condition: 'промокод\nпри первом\nзаказе\nот 1300₽' },
+    { denomination: 500, description: 'Можно\nиспользовать\nпри первом\nзаказе\nот 1700₽', condition: 'промокод\nпри первом\nзаказе\nот 1700₽' },
+    { denomination: 600, description: 'Можно\nиспользовать\nпри первом\nзаказе\nот 2000₽', condition: 'промокод\nпри первом\nзаказе\nот 2000₽' },
+    { denomination: 700, description: 'Можно\nиспользовать\nпри первом\nзаказе\nот 2500₽', condition: 'промокод\nпри первом\nзаказе\nот 2500₽' },
+    { denomination: 800, description: 'Можно\nиспользовать\nпри первом\nзаказе\nот 3500₽', condition: 'промокод\nпри первом\nзаказе\nот 3500₽' },
+    { denomination: 900, description: 'Можно\nиспользовать\nпри первом\nзаказе\nот 4000₽', condition: 'промокод\nпри первом\nзаказе\nот 4000₽' },
+    { denomination: 1000, description: 'Можно использовать при первом заказе от 5000₽', condition: 'промокод\nпри первом\nзаказе\nот 5000₽' },
 ];
 
 export const MORE_COINS_CARDS = [
@@ -66,31 +66,36 @@ export const MODAL_MORE_COINS_INVITE_FRIENDS = 'modal_more_coins_invite_friends'
 export const MODAL_EXIT_CONFIRM = 'modal_exit_confirm';
 export const ALERT = 'alert';
 
-export const POST_MESSAGE = 'Астрологи объявили неделю обмена монет из игры на реальные промокоды. Неделя продлится долго, скорей играй и получай подарки от СберМегаМаркета.';
+export const POST_MESSAGE = 'Астрологи объявили неделю обмена монет из игры на реальные промокоды. Неделя продлится долго, скорей играй и получай подарки от МегаМаркета.';
 export const POST_PHOTO_ID = '142880902_457244137';
 
 export const PROMOTION_RULES = {
     title: 'Правила акции',
-    href: 'https://vk.com/@sbermm-pravila-ispolzovaniya-igrovogo-prilozheniya-megaigra',
+    href: 'https://vk.com/@megamrkt-pravila-ispolzovaniya-igrovogo-prilozheniya-megaigra',
 };
 
 export const GAME_RULES = {
     title: 'Правила игры',
-    href: 'https://vk.com/@sbermm-megaigra-faq',
+    href: 'https://vk.com/@megamrkt-megaigra-faq',
+};
+
+export const MEGAMARKET_VK = {
+    title: ' Мегамаркете!',
+    href: 'https://vk.com/megamrkt',
 };
 
 export const CONTACTS_HELP = {
     title: 'Свяжись с нами',
-    href: 'mailto:smm@sbermegamarket.ru',
+    href: 'mailto:smm@megamarket.ru',
     question: 'Нужна помощь?',
 };
 
-export const SBERMEGAMARKET_LINK = 'https://sbermegamarket.ru';
+export const MEGAMARKET_LINK = 'https://megamarket.ru';
 
 export const RATING_LIMIT = 1000;
 
 export const MAX_AVAILABLE_GAMES_COUNT = 2;
 
-export const GAME_DURATION = 60000;
+export const GAME_DURATION = 60;
 
 export const COUNTDOWN = 3;
