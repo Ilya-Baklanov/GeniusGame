@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-export const APP_NAME = 'МегаИгра';
+export const APP_NAME = 'Мегаигра';
 
 export const CARDS_COUNT = 64;
 export const NUMBER_UNIQUE_CARDS_IN_GAME = 10;
